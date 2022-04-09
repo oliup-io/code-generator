@@ -1,5 +1,6 @@
 {
     "name": "oliup/code-generator",
+    "version": "1.0.0",
     "description": "Simple code generator for PHP.",
     "require": {
         "php": ">=8.1"
