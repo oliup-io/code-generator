@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace OLIUP\CG\Traits;
 
+use OLIUP\CG\PHPTrait;
 use OLIUP\CG\PHPUseTrait;
 
 /**
@@ -54,13 +55,19 @@ trait UseTraitsAwareTrait
 	}
 
 	/**
-	 * @param PHPUseTrait $use_trait
+	 * @param \OLIUP\CG\PHPTrait|\OLIUP\CG\PHPUseTrait|string $trait
 	 *
 	 * @return $this
 	 */
-	public function useTrait(PHPUseTrait $use_trait): static
+	public function useTrait(string|PHPTrait|PHPUseTrait $trait): static
 	{
-		$this->used_traits[$use_trait->getName()] = $this->validateUseTrait($use_trait);
+		if (\is_string($trait)) {
+			$trait = new PHPUseTrait(new PHPTrait($trait));
+		} elseif ($trait instanceof PHPTrait) {
+			$trait =  new PHPUseTrait($trait);
+		}
+
+		$this->used_traits[$trait->getName()] = $this->validateUseTrait($trait);
 
 		return $this;
 	}
