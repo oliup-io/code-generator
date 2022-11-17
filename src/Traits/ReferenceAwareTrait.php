@@ -30,9 +30,13 @@ trait ReferenceAwareTrait
 
 	/**
 	 * @param bool $by_reference
+	 *
+	 * @return $this
 	 */
-	public function reference(bool $by_reference = true): void
+	public function reference(bool $by_reference = true): static
 	{
 		$this->by_reference = $by_reference;
+
+		return $this;
 	}
 }
