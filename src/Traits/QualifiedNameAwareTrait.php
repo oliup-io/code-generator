@@ -36,10 +36,11 @@ trait QualifiedNameAwareTrait
 
 	/**
 	 * @param bool $use
+	 * @param bool $trait
 	 *
 	 * @return string
 	 */
-	public function getFullyQualifiedName(bool $use = false): string
+	public function getFullyQualifiedName(bool $use = false, bool $trait = false): string
 	{
 		$ns   = $this->getNamespace();
 		$name = $this->getName();
@@ -47,7 +48,7 @@ trait QualifiedNameAwareTrait
 		if ($ns) {
 			$name = ($ns->isGlobal() ? '\\' : '\\' . $ns->getName() . '\\') . $name;
 		}
-		if ($use) {
+		if ($use && !$trait) {
 			return \ltrim($name, '\\');
 		}
 

@@ -200,7 +200,7 @@ class PHPPrinter
 	{
 		$this->validate($v);
 		$t     = $v->getTrait();
-		$out   = 'use ' . $t->getFullyQualifiedName(true);
+		$out   = 'use ' . $t->getFullyQualifiedName(true, true);
 		$rules = $v->getRules();
 
 		if (!empty($rules)) {
