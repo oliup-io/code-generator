@@ -18,5 +18,8 @@ namespace OLIUP\CG\Traits;
  */
 trait ValidateAwareTrait
 {
+	/**
+	 * Validates the object.
+	 */
 	abstract public function validate(): void;
 }

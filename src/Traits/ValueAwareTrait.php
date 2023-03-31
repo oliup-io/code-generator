@@ -29,7 +29,7 @@ trait ValueAwareTrait
 	 */
 	public function setValue(mixed $value): static
 	{
-		if (!($value instanceof PHPValue)) {
+		if (!$value instanceof PHPValue) {
 			$value = new PHPValue($value);
 		}
 

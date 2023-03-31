@@ -64,7 +64,7 @@ trait UseTraitsAwareTrait
 		if (\is_string($trait)) {
 			$trait = new PHPUseTrait(new PHPTrait($trait));
 		} elseif ($trait instanceof PHPTrait) {
-			$trait =  new PHPUseTrait($trait);
+			$trait = new PHPUseTrait($trait);
 		}
 
 		$this->used_traits[$trait->getName()] = $this->validateUseTrait($trait);

@@ -16,7 +16,7 @@ namespace OLIUP\CG\Enums;
 /**
  * Enum VisibilityEnum.
  */
-enum VisibilityEnum:string
+enum VisibilityEnum: string
 {
 	case PUBLIC =  'public';
 
