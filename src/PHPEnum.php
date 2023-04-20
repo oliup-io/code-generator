@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace OLIUP\CG;
 
+use InvalidArgumentException;
 use OLIUP\CG\Traits\CommentAwareTrait;
 use OLIUP\CG\Traits\CommonTrait;
 use OLIUP\CG\Traits\QualifiedNameAwareTrait;
@@ -56,6 +57,10 @@ class PHPEnum
 	 */
 	protected function validateName(string $name): string
 	{
+		if (!\preg_match(PHPClass::CLASS_NAME_PATTERN, $name)) {
+			throw new InvalidArgumentException(\sprintf('Invalid enum name: %s', $name));
+		}
+
 		return $name;
 	}
 

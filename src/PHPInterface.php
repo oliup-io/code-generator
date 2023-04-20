@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace OLIUP\CG;
 
+use InvalidArgumentException;
 use OLIUP\CG\Traits\ChildrenAwareTrait;
 use OLIUP\CG\Traits\CommentAwareTrait;
 use OLIUP\CG\Traits\CommonTrait;
@@ -70,6 +71,10 @@ class PHPInterface
 	 */
 	protected function validateName(string $name): string
 	{
+		if (!\preg_match(PHPClass::CLASS_NAME_PATTERN, $name)) {
+			throw new InvalidArgumentException(\sprintf('Invalid interface name: %s', $name));
+		}
+
 		return $name;
 	}
 

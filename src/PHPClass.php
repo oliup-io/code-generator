@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace OLIUP\CG;
 
+use InvalidArgumentException;
 use OLIUP\CG\Traits\AbstractAwareTrait;
 use OLIUP\CG\Traits\ChildrenAwareTrait;
 use OLIUP\CG\Traits\CommentAwareTrait;
@@ -121,8 +122,11 @@ class PHPClass
 	 */
 	protected function validateName(string $name): string
 	{
+		if (empty($name)) {
+			return '';
+		}
 		if (!\preg_match(self::CLASS_NAME_PATTERN, $name)) {
-			throw new RuntimeException(\sprintf('Invalid class name: %s', $name));
+			throw new InvalidArgumentException(\sprintf('Invalid class name: %s', $name));
 		}
 
 		return $name;

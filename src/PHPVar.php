@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace OLIUP\CG;
 
+use InvalidArgumentException;
 use OLIUP\CG\Traits\CommentAwareTrait;
 use OLIUP\CG\Traits\CommonTrait;
 use OLIUP\CG\Traits\NameAwareTrait;
@@ -30,6 +31,8 @@ class PHPVar
 	use ReferenceAwareTrait;
 	use ValueAwareTrait;
 
+	public const VAR_NAME_PATTERN = '#^[a-zA-Z_][a-zA-Z0-9_]*$#';
+
 	public function __construct(string $name = '')
 	{
 		$this->setName($name);
@@ -40,6 +43,10 @@ class PHPVar
 	 */
 	protected function validateName(string $name): string
 	{
+		if (!\preg_match(self::VAR_NAME_PATTERN, $name)) {
+			throw new InvalidArgumentException('Invalid var name: ' . $name);
+		}
+
 		return $name;
 	}
 

@@ -33,7 +33,6 @@ class PHPArgument
 	use ValueAwareTrait;
 	use VisibilityAwareTrait;
 
-	public const ARG_NAME_PATTERN = '#^[a-zA-Z_][a-zA-Z0-9_]*$#';
 	protected bool $promoted      = false;
 	protected bool $variadic      = false;
 
@@ -87,7 +86,7 @@ class PHPArgument
 	 */
 	protected function validateName(string $name): string
 	{
-		if (!\preg_match(self::ARG_NAME_PATTERN, $name)) {
+		if (!\preg_match(PHPVar::VAR_NAME_PATTERN, $name)) {
 			throw new InvalidArgumentException('Invalid argument name: ' . $name);
 		}
 
