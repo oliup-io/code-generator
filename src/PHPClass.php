@@ -47,6 +47,12 @@ class PHPClass
 	use UseTraitsAwareTrait;
 	use ValidateAwareTrait;
 
+	// according to "http://php.net/manual/en/language.oop5.basic.php" visited on 1st Sept. 2017
+	// php class name in regexp should be : ^[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*$
+	// but we constrain the class name to start with a letter
+	// and to contain only letters, numbers and underscores and underscores
+	public const CLASS_NAME_PATTERN = '#^[a-zA-Z_][a-zA-Z0-9_]*$#';
+
 	protected ?PHPClass $parent_class = null;
 
 	public function __construct(string $name = '')
@@ -115,6 +121,10 @@ class PHPClass
 	 */
 	protected function validateName(string $name): string
 	{
+		if (!\preg_match(self::CLASS_NAME_PATTERN, $name)) {
+			throw new RuntimeException(\sprintf('Invalid class name: %s', $name));
+		}
+
 		return $name;
 	}
 
