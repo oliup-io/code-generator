@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace OLIUP\CG;
 
+use InvalidArgumentException;
 use OLIUP\CG\Enums\VisibilityEnum;
 use OLIUP\CG\Traits\CommentAwareTrait;
 use OLIUP\CG\Traits\CommonTrait;
@@ -20,7 +21,6 @@ use OLIUP\CG\Traits\QualifiedNameAwareTrait;
 use OLIUP\CG\Traits\ValidateAwareTrait;
 use OLIUP\CG\Traits\ValueAwareTrait;
 use OLIUP\CG\Traits\VisibilityAwareTrait;
-use OLIUP\CG\Utils\Utils;
 use RuntimeException;
 
 /**
@@ -34,6 +34,8 @@ class PHPConstant
 	use ValidateAwareTrait;
 	use ValueAwareTrait;
 	use VisibilityAwareTrait;
+
+	public const CONSTANT_NAME_PATTERN = '#^[a-zA-Z_][a-zA-Z0-9_]*$#';
 
 	public function __construct(string $name, mixed $value = null)
 	{
@@ -56,7 +58,11 @@ class PHPConstant
 	 */
 	protected function validateName(string $name): string
 	{
-		return Utils::validateConstantName($name);
+		if (!\preg_match(self::CONSTANT_NAME_PATTERN, $name)) {
+			throw new InvalidArgumentException('Invalid constant name: ' . $name);
+		}
+
+		return $name;
 	}
 
 	/**

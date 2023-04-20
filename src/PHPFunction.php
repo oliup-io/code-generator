@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace OLIUP\CG;
 
+use InvalidArgumentException;
 use OLIUP\CG\Traits\ArgumentsAwareTrait;
 use OLIUP\CG\Traits\ChildrenAwareTrait;
 use OLIUP\CG\Traits\CommentAwareTrait;
@@ -20,7 +21,6 @@ use OLIUP\CG\Traits\CommonTrait;
 use OLIUP\CG\Traits\QualifiedNameAwareTrait;
 use OLIUP\CG\Traits\StaticAwareTrait;
 use OLIUP\CG\Traits\ValidateAwareTrait;
-use OLIUP\CG\Utils\Utils;
 
 /**
  * Class PHPFunction.
@@ -34,6 +34,8 @@ class PHPFunction
 	use QualifiedNameAwareTrait;
 	use StaticAwareTrait;
 	use ValidateAwareTrait;
+
+	public const FUNCTION_NAME_PATTERN = '#^[a-zA-Z_][a-zA-Z0-9_]*$#';
 
 	/** @var PHPVar[] */
 	protected array    $uses        = [];
@@ -118,7 +120,11 @@ class PHPFunction
 			return '';
 		}
 
-		return Utils::validateFunctionName($name);
+		if (!\preg_match(self::FUNCTION_NAME_PATTERN, $name)) {
+			throw new InvalidArgumentException('Invalid function name: ' . $name);
+		}
+
+		return $name;
 	}
 
 	/**

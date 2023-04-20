@@ -13,13 +13,13 @@ declare(strict_types=1);
 
 namespace OLIUP\CG;
 
+use InvalidArgumentException;
 use OLIUP\CG\Enums\VisibilityEnum;
 use OLIUP\CG\Traits\NameAwareTrait;
 use OLIUP\CG\Traits\ReferenceAwareTrait;
 use OLIUP\CG\Traits\TypeAwareTrait;
 use OLIUP\CG\Traits\ValueAwareTrait;
 use OLIUP\CG\Traits\VisibilityAwareTrait;
-use OLIUP\CG\Utils\Utils;
 use RuntimeException;
 
 /**
@@ -33,8 +33,9 @@ class PHPArgument
 	use ValueAwareTrait;
 	use VisibilityAwareTrait;
 
-	protected bool $promoted = false;
-	protected bool $variadic = false;
+	public const ARG_NAME_PATTERN = '#^[a-zA-Z_][a-zA-Z0-9_]*$#';
+	protected bool $promoted      = false;
+	protected bool $variadic      = false;
 
 	public function __construct(string $name, null|string|PHPType $type = null)
 	{
@@ -86,7 +87,11 @@ class PHPArgument
 	 */
 	protected function validateName(string $name): string
 	{
-		return Utils::validateArgName($name);
+		if (!\preg_match(self::ARG_NAME_PATTERN, $name)) {
+			throw new InvalidArgumentException('Invalid argument name: ' . $name);
+		}
+
+		return $name;
 	}
 
 	/**

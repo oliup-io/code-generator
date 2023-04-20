@@ -13,12 +13,12 @@ declare(strict_types=1);
 
 namespace OLIUP\CG;
 
+use InvalidArgumentException;
 use OLIUP\CG\Enums\VisibilityEnum;
 use OLIUP\CG\Traits\CommentAwareTrait;
 use OLIUP\CG\Traits\CommonTrait;
 use OLIUP\CG\Traits\NameAwareTrait;
 use OLIUP\CG\Traits\VisibilityAwareTrait;
-use OLIUP\CG\Utils\Utils;
 
 /**
  * Class PHPUseTraitMethodRule.
@@ -75,7 +75,11 @@ class PHPUseTraitMethodRule
 	 */
 	protected function validateName(string $name): string
 	{
-		return Utils::validateMethodName($name);
+		if (!\preg_match(PHPMethod::METHOD_NAME_PATTERN, $name)) {
+			throw new InvalidArgumentException('Invalid use trait method name: ' . $name);
+		}
+
+		return $name;
 	}
 
 	/**

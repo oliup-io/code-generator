@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace OLIUP\CG;
 
+use InvalidArgumentException;
 use OLIUP\CG\Enums\VisibilityEnum;
 use OLIUP\CG\Traits\AbstractAwareTrait;
 use OLIUP\CG\Traits\ArgumentsAwareTrait;
@@ -24,7 +25,6 @@ use OLIUP\CG\Traits\NameAwareTrait;
 use OLIUP\CG\Traits\StaticAwareTrait;
 use OLIUP\CG\Traits\ValidateAwareTrait;
 use OLIUP\CG\Traits\VisibilityAwareTrait;
-use OLIUP\CG\Utils\Utils;
 use RuntimeException;
 
 /**
@@ -43,7 +43,8 @@ class PHPMethod
 	use ValidateAwareTrait;
 	use VisibilityAwareTrait;
 
-	protected ?PHPType $return_type = null;
+	public const METHOD_NAME_PATTERN   = '#^[a-zA-Z_][a-zA-Z0-9_]*$#';
+	protected ?PHPType $return_type    = null;
 
 	public function __construct(string $name = '')
 	{
@@ -85,7 +86,11 @@ class PHPMethod
 	 */
 	protected function validateName(string $name): string
 	{
-		return Utils::validateMethodName($name);
+		if (!\preg_match(self::METHOD_NAME_PATTERN, $name)) {
+			throw new InvalidArgumentException('Invalid method name: ' . $name);
+		}
+
+		return $name;
 	}
 
 	/**

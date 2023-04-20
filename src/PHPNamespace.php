@@ -13,11 +13,11 @@ declare(strict_types=1);
 
 namespace OLIUP\CG;
 
+use InvalidArgumentException;
 use OLIUP\CG\Traits\ChildrenAwareTrait;
 use OLIUP\CG\Traits\CommonTrait;
 use OLIUP\CG\Traits\NameAwareTrait;
 use OLIUP\CG\Traits\NamespaceAwareTrait;
-use OLIUP\CG\Utils\Utils;
 use PHPUtils\ClassUtils;
 
 /**
@@ -28,6 +28,8 @@ class PHPNamespace
 	use ChildrenAwareTrait;
 	use CommonTrait;
 	use NameAwareTrait;
+
+	public const NAMESPACE_PATTERN     = '#^[a-zA-Z_][a-zA-Z0-9_]*(\\\\[a-zA-Z_][a-zA-Z0-9_]*)*$#';
 
 	public function __construct(string $namespace)
 	{
@@ -65,7 +67,15 @@ class PHPNamespace
 	 */
 	protected function validateName(string $name): string
 	{
-		return empty($name) ? '' : \trim(Utils::validateNamespace($name), '\\');
+		if (empty($name)) {
+			return '';
+		}
+
+		if (!\preg_match(self::NAMESPACE_PATTERN, $name)) {
+			throw new InvalidArgumentException('Invalid namespace name: ' . $name);
+		}
+
+		return \trim($name, '\\');
 	}
 
 	/**

@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace OLIUP\CG;
 
+use InvalidArgumentException;
 use OLIUP\CG\Enums\VisibilityEnum;
 use OLIUP\CG\Traits\CommentAwareTrait;
 use OLIUP\CG\Traits\CommonTrait;
@@ -21,7 +22,6 @@ use OLIUP\CG\Traits\StaticAwareTrait;
 use OLIUP\CG\Traits\TypeAwareTrait;
 use OLIUP\CG\Traits\ValueAwareTrait;
 use OLIUP\CG\Traits\VisibilityAwareTrait;
-use OLIUP\CG\Utils\Utils;
 
 /**
  * Class PHPConstant.
@@ -36,6 +36,8 @@ class PHPProperty
 	use ValueAwareTrait;
 	use VisibilityAwareTrait;
 
+	public const PROPERTY_NAME_PATTERN = '#^[a-zA-Z_][a-zA-Z0-9_]*$#';
+
 	public function __construct(string $name, ?PHPValue $value = null)
 	{
 	}
@@ -45,7 +47,11 @@ class PHPProperty
 	 */
 	protected function validateName(string $name): string
 	{
-		return Utils::validatePropertyName($name);
+		if (!\preg_match(self::PROPERTY_NAME_PATTERN, $name)) {
+			throw new InvalidArgumentException('Invalid property name: ' . $name);
+		}
+
+		return $name;
 	}
 
 	/**
