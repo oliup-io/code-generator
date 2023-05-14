@@ -31,9 +31,30 @@ class PHPNamespace
 
 	public const NAMESPACE_PATTERN     = '#^[a-zA-Z_][a-zA-Z0-9_]*(\\\\[a-zA-Z_][a-zA-Z0-9_]*)*$#';
 
+	protected array $uses = [];
+
 	public function __construct(string $namespace)
 	{
 		$this->setName($namespace);
+	}
+
+	public function use(PHPClass|PHPFunction|PHPConstant|PHPInterface|string $fqn_name): self
+	{
+		if (!\is_string($fqn_name)) {
+			$fqn_name = $fqn_name->getFullyQualifiedName(true);
+		}
+
+		$this->uses[$fqn_name] = $fqn_name;
+
+		return $this;
+	}
+
+	/**
+	 * @return array
+	 */
+	public function getUses(): array
+	{
+		return $this->uses;
 	}
 
 	public function newClass(string $name): PHPClass

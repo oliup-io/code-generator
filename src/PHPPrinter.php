@@ -407,7 +407,13 @@ class PHPPrinter
 		[$start, $end] = $scoped ? ['{' . \PHP_EOL, '}' . \PHP_EOL] : [';' . \PHP_EOL . \PHP_EOL, ''];
 		$out .= $start;
 
-		$body = '';
+		$uses_str = '';
+		foreach ($v->getUses() as $use) {
+			$uses_str .= 'use ' . $use . ';' . \PHP_EOL;
+		}
+
+		$body = empty($uses_str) ? '' : $uses_str . \PHP_EOL;
+
 		foreach ($v->getChildren() as $child) {
 			$body .= $this->print($child);
 		}
