@@ -38,13 +38,13 @@ class PHPNamespace
 		$this->setName($namespace);
 	}
 
-	public function use(PHPClass|PHPFunction|PHPConstant|PHPInterface|string $fqn_name): self
+	public function use(PHPClass|PHPFunction|PHPConstant|PHPInterface|string $fqn_name, string $as = null): self
 	{
 		if (!\is_string($fqn_name)) {
 			$fqn_name = $fqn_name->getFullyQualifiedName(true);
 		}
 
-		$this->uses[$fqn_name] = $fqn_name;
+		$this->uses[$fqn_name] = $as;
 
 		return $this;
 	}

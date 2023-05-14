@@ -408,8 +408,8 @@ class PHPPrinter
 		$out .= $start;
 
 		$uses_str = '';
-		foreach ($v->getUses() as $use) {
-			$uses_str .= 'use ' . $use . ';' . \PHP_EOL;
+		foreach ($v->getUses() as $use => $alias) {
+			$uses_str .= 'use ' . $use . ($alias ? ' as ' . $alias : '') . ';' . \PHP_EOL;
 		}
 
 		$body = empty($uses_str) ? '' : $uses_str . \PHP_EOL;
