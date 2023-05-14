@@ -25,11 +25,11 @@ final class PHPTypeIntersection
 {
 	use CommonTrait;
 
-	/** @var array<string, PHPClass|PHPInterface> */
+	/** @var array<string, PHPClass|PHPEnum|PHPInterface> */
 	private array  $types = [];
 	private string $name;
 
-	public function __construct(PHPInterface|PHPClass ...$types)
+	public function __construct(PHPInterface|PHPEnum|PHPClass ...$types)
 	{
 		foreach ($types as $type) {
 			if (($type instanceof PHPClass) && $type->isAnonymous()) {
@@ -45,7 +45,7 @@ final class PHPTypeIntersection
 
 		\sort($names);
 
-		$this->name = \implode('|', $names);
+		$this->name = \implode('&', $names);
 	}
 
 	/**
@@ -57,7 +57,7 @@ final class PHPTypeIntersection
 	}
 
 	/**
-	 * @return array<string, PHPClass|PHPInterface>
+	 * @return array<string, PHPClass|PHPEnum|PHPInterface>
 	 */
 	public function getTypes(): array
 	{

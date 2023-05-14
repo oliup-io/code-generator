@@ -52,11 +52,11 @@ class PHPMethod
 	}
 
 	/**
-	 * @param null|PHPClass|PHPInterface|PHPType|string $return_type
+	 * @param null|\OLIUP\CG\PHPClass|\OLIUP\CG\PHPEnum|\OLIUP\CG\PHPInterface|\OLIUP\CG\PHPType|string $return_type
 	 *
 	 * @return $this
 	 */
-	public function setReturnType(null|string|PHPType|PHPClass|PHPInterface $return_type): static
+	public function setReturnType(null|string|PHPType|PHPClass|PHPEnum|PHPInterface $return_type): static
 	{
 		$this->return_type = (null === $return_type || $return_type instanceof PHPType) ? $return_type : new PHPType($return_type);
 

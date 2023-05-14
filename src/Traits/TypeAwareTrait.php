@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace OLIUP\CG\Traits;
 
 use OLIUP\CG\PHPClass;
+use OLIUP\CG\PHPEnum;
 use OLIUP\CG\PHPInterface;
 use OLIUP\CG\PHPType;
 
@@ -25,11 +26,11 @@ trait TypeAwareTrait
 	protected ?PHPType $type = null;
 
 	/**
-	 * @param null|PHPClass|PHPInterface|PHPType|string $type
+	 * @param null|\OLIUP\CG\PHPClass|\OLIUP\CG\PHPEnum|\OLIUP\CG\PHPInterface|\OLIUP\CG\PHPType|string $type
 	 *
 	 * @return $this
 	 */
-	public function setType(null|string|PHPType|PHPClass|PHPInterface $type): static
+	public function setType(null|string|PHPType|PHPClass|PHPEnum|PHPInterface $type): static
 	{
 		$this->type = (null === $type || $type instanceof PHPType) ? $type : new PHPType($type);
 

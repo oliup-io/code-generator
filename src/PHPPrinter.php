@@ -337,12 +337,12 @@ class PHPPrinter
 		$count = 0;
 
 		foreach ($types as $t) {
-			if ($t instanceof PHPTypeIntersection) {
-				$temp[] = \implode('&', $t->getTypes());
-			} elseif ($t instanceof PHPClass || $t instanceof PHPInterface) {
-				$temp[] = $t->getFullyQualifiedName();
-			} else {
+			if (\is_string($t)) {
 				$temp[] = $t;
+			} elseif ($t instanceof PHPTypeIntersection) {
+				$temp[] = $t->getName();
+			} else {
+				$temp[] = $t->getFullyQualifiedName();
 			}
 			++$count;
 		}

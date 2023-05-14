@@ -23,26 +23,26 @@ class PHPType
 {
 	use CommonTrait;
 
-	/** @var array<string, PHPClass|PHPInterface|PHPTypeIntersection|string> */
+	/** @var array<string, PHPClass|PHPEnum|PHPInterface|PHPTypeIntersection|string> */
 	private array $types = [];
 
-	public function __construct(string|PHPInterface|PHPClass|PHPTypeIntersection ...$types)
+	public function __construct(string|PHPInterface|PHPClass|PHPEnum|PHPTypeIntersection ...$types)
 	{
 		$this->add(...$types);
 	}
 
 	/**
-	 * @param PHPClass|PHPInterface ...$types
+	 * @param \OLIUP\CG\PHPClass|\OLIUP\CG\PHPEnum|\OLIUP\CG\PHPInterface ...$types
 	 *
 	 * @return PHPTypeIntersection
 	 */
-	public static function intersection(PHPInterface|PHPClass ...$types): PHPTypeIntersection
+	public static function intersection(PHPInterface|PHPEnum|PHPClass ...$types): PHPTypeIntersection
 	{
 		return new PHPTypeIntersection(...$types);
 	}
 
 	/**
-	 * @return array<string, PHPClass|PHPInterface|PHPTypeIntersection|string>
+	 * @return array<string, PHPClass|PHPEnum|PHPInterface|PHPTypeIntersection|string>
 	 */
 	public function getTypes(): array
 	{
@@ -74,11 +74,11 @@ class PHPType
 	}
 
 	/**
-	 * @param PHPClass|PHPInterface|PHPTypeIntersection|string ...$types
+	 * @param \OLIUP\CG\PHPClass|\OLIUP\CG\PHPEnum|\OLIUP\CG\PHPInterface|\OLIUP\CG\PHPTypeIntersection|string ...$types
 	 *
 	 * @return $this
 	 */
-	public function add(string|PHPInterface|PHPClass|PHPTypeIntersection ...$types): static
+	public function add(string|PHPInterface|PHPEnum|PHPClass|PHPTypeIntersection ...$types): static
 	{
 		foreach ($types as $type) {
 			if (!empty($type)) {
@@ -104,11 +104,11 @@ class PHPType
 	}
 
 	/**
-	 * @param PHPClass|PHPInterface|PHPTypeIntersection|string $type
+	 * @param \OLIUP\CG\PHPClass|\OLIUP\CG\PHPEnum|\OLIUP\CG\PHPInterface|\OLIUP\CG\PHPTypeIntersection|string $type
 	 *
 	 * @return bool
 	 */
-	public function isAllowed(string|PHPInterface|PHPClass|PHPTypeIntersection $type): bool
+	public function isAllowed(string|PHPInterface|PHPClass|PHPEnum|PHPTypeIntersection $type): bool
 	{
 		if (\is_string($type)) {
 			$key = $type;
