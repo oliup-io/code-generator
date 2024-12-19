@@ -38,7 +38,7 @@ class PHPFunction
 	public const FUNCTION_NAME_PATTERN = '#^[a-zA-Z_][a-zA-Z0-9_]*$#';
 
 	/** @var PHPVar[] */
-	protected array    $uses        = [];
+	protected array $uses           = [];
 	protected ?PHPType $return_type = null;
 
 	public function __construct(string $name = '')
@@ -55,11 +55,11 @@ class PHPFunction
 	}
 
 	/**
-	 * @param null|\OLIUP\CG\PHPClass|\OLIUP\CG\PHPEnum|\OLIUP\CG\PHPInterface|\OLIUP\CG\PHPType|string $return_type
+	 * @param null|PHPClass|PHPEnum|PHPInterface|PHPType|string $return_type
 	 *
 	 * @return $this
 	 */
-	public function setReturnType(null|string|PHPType|PHPEnum|PHPClass|PHPInterface $return_type): static
+	public function setReturnType(null|PHPClass|PHPEnum|PHPInterface|PHPType|string $return_type): static
 	{
 		$this->return_type = (null === $return_type || $return_type instanceof PHPType) ? $return_type : new PHPType($return_type);
 
@@ -87,7 +87,7 @@ class PHPFunction
 	 *
 	 * @return bool
 	 */
-	public function isUsing(string|PHPVar $var): bool
+	public function isUsing(PHPVar|string $var): bool
 	{
 		return isset($this->uses[\is_string($var) ? $var : $var->getName()]);
 	}
@@ -107,9 +107,7 @@ class PHPFunction
 	/**
 	 * {@inheritDoc}
 	 */
-	public function validate(): void
-	{
-	}
+	public function validate(): void {}
 
 	/**
 	 * {@inheritDoc}

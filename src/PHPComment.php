@@ -25,12 +25,10 @@ class PHPComment
 
 	protected CommentKindEnum $kind = CommentKindEnum::DOC;
 
-	public function __construct(protected string $content)
-	{
-	}
+	public function __construct(protected string $content) {}
 
 	/**
-	 * @param \OLIUP\CG\Enums\CommentKindEnum $kind
+	 * @param CommentKindEnum $kind
 	 *
 	 * @return $this
 	 */
@@ -42,7 +40,7 @@ class PHPComment
 	}
 
 	/**
-	 * @return \OLIUP\CG\Enums\CommentKindEnum
+	 * @return CommentKindEnum
 	 */
 	public function getKind(): CommentKindEnum
 	{

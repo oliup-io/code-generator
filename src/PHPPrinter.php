@@ -25,9 +25,7 @@ use PHPUtils\Str;
  */
 class PHPPrinter
 {
-	public function __construct(protected string $indent = "\t")
-	{
-	}
+	public function __construct(protected string $indent = "\t") {}
 
 	public function printArgument(PHPArgument $v, bool $allow_promoted = false, bool $allow_reference = true): string
 	{

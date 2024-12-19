@@ -29,7 +29,7 @@ class PHPNamespace
 	use CommonTrait;
 	use NameAwareTrait;
 
-	public const NAMESPACE_PATTERN     = '#^[a-zA-Z_][a-zA-Z0-9_]*(\\\\[a-zA-Z_][a-zA-Z0-9_]*)*$#';
+	public const NAMESPACE_PATTERN     = '#^[a-zA-Z_][a-zA-Z0-9_]*(\\\[a-zA-Z_][a-zA-Z0-9_]*)*$#';
 
 	protected array $uses = [];
 
@@ -38,7 +38,7 @@ class PHPNamespace
 		$this->setName($namespace);
 	}
 
-	public function use(PHPClass|PHPEnum|PHPFunction|PHPConstant|PHPInterface|string $fqn_name, string $as = null): self
+	public function use(PHPClass|PHPConstant|PHPEnum|PHPFunction|PHPInterface|string $fqn_name, ?string $as = null): self
 	{
 		if (!\is_string($fqn_name)) {
 			$fqn_name = $fqn_name->getFullyQualifiedName(true);
@@ -74,7 +74,7 @@ class PHPNamespace
 	}
 
 	/**
-	 * @param \OLIUP\CG\PHPNamespace $namespace
+	 * @param PHPNamespace $namespace
 	 *
 	 * @return bool
 	 */

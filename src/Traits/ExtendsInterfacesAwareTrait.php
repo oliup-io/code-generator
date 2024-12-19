@@ -36,7 +36,7 @@ trait ExtendsInterfacesAwareTrait
 	 *
 	 * @return bool
 	 */
-	public function hasInterface(string|PHPInterface $interface): bool
+	public function hasInterface(PHPInterface|string $interface): bool
 	{
 		return isset($this->extends[\is_string($interface) ? $interface : $interface->getFullyQualifiedName()]);
 	}
@@ -56,7 +56,7 @@ trait ExtendsInterfacesAwareTrait
 	 *
 	 * @return $this
 	 */
-	public function extends(string|PHPInterface $interface): static
+	public function extends(PHPInterface|string $interface): static
 	{
 		if (\is_string($interface)) {
 			$interface = new PHPInterface($interface);

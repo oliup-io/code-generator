@@ -26,11 +26,11 @@ trait TypeAwareTrait
 	protected ?PHPType $type = null;
 
 	/**
-	 * @param null|\OLIUP\CG\PHPClass|\OLIUP\CG\PHPEnum|\OLIUP\CG\PHPInterface|\OLIUP\CG\PHPType|string $type
+	 * @param null|PHPClass|PHPEnum|PHPInterface|PHPType|string $type
 	 *
 	 * @return $this
 	 */
-	public function setType(null|string|PHPType|PHPClass|PHPEnum|PHPInterface $type): static
+	public function setType(null|PHPClass|PHPEnum|PHPInterface|PHPType|string $type): static
 	{
 		$this->type = (null === $type || $type instanceof PHPType) ? $type : new PHPType($type);
 

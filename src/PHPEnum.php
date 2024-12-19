@@ -48,9 +48,7 @@ class PHPEnum
 	/**
 	 * {@inheritDoc}
 	 */
-	public function validate(): void
-	{
-	}
+	public function validate(): void {}
 
 	/**
 	 * {@inheritDoc}

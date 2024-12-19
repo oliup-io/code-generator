@@ -38,7 +38,7 @@ trait ConstantsAwareTrait
 	 *
 	 * @return bool
 	 */
-	public function hasConstant(string|PHPConstant $constant): bool
+	public function hasConstant(PHPConstant|string $constant): bool
 	{
 		return isset($this->constants[\is_string($constant) ? $constant : $constant->getName()]);
 	}

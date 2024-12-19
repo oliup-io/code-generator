@@ -33,7 +33,7 @@ class PHPUseTraitMethodRule
 	protected ?PHPTrait $hidden_from_trait = null;
 	protected PHPMethod $method;
 
-	public function __construct(string|PHPMethod $method)
+	public function __construct(PHPMethod|string $method)
 	{
 		$this->method = \is_string($method) ? new PHPMethod($method) : $method;
 	}
@@ -59,7 +59,7 @@ class PHPUseTraitMethodRule
 	 *
 	 * @return $this
 	 */
-	public function hideFrom(null|string|PHPTrait $trait): static
+	public function hideFrom(null|PHPTrait|string $trait): static
 	{
 		if (\is_string($trait)) {
 			$trait = new PHPTrait($trait);

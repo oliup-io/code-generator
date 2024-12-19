@@ -66,9 +66,9 @@ trait ArgumentsAwareTrait
 	}
 
 	/**
-	 * @param \OLIUP\CG\PHPArgument $argument
+	 * @param PHPArgument $argument
 	 *
-	 * @return \OLIUP\CG\PHPArgument
+	 * @return PHPArgument
 	 */
 	abstract protected function validateArgument(PHPArgument $argument): PHPArgument;
 }

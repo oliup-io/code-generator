@@ -26,10 +26,10 @@ final class PHPTypeIntersection
 	use CommonTrait;
 
 	/** @var array<string, PHPClass|PHPEnum|PHPInterface> */
-	private array  $types = [];
+	private array $types = [];
 	private string $name;
 
-	public function __construct(PHPInterface|PHPEnum|PHPClass ...$types)
+	public function __construct(PHPClass|PHPEnum|PHPInterface ...$types)
 	{
 		foreach ($types as $type) {
 			if (($type instanceof PHPClass) && $type->isAnonymous()) {

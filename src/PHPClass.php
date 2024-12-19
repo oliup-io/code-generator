@@ -84,7 +84,7 @@ class PHPClass
 	 *
 	 * @return $this
 	 */
-	public function extends(null|string|PHPClass $class): static
+	public function extends(null|self|string $class): static
 	{
 		$this->parent_class = \is_string($class) ? new self($class) : $class;
 

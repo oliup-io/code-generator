@@ -36,7 +36,7 @@ trait ImplementsAwareTrait
 	 *
 	 * @return bool
 	 */
-	public function hasInterface(string|PHPInterface $interface): bool
+	public function hasInterface(PHPInterface|string $interface): bool
 	{
 		return isset($this->implements[\is_string($interface) ? $interface : $interface->getFullyQualifiedName()]);
 	}
@@ -56,7 +56,7 @@ trait ImplementsAwareTrait
 	 *
 	 * @return $this
 	 */
-	public function implements(string|PHPInterface $interface): static
+	public function implements(PHPInterface|string $interface): static
 	{
 		if (\is_string($interface)) {
 			$interface = new PHPInterface($interface);

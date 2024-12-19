@@ -38,7 +38,7 @@ trait MethodsAwareTrait
 	 *
 	 * @return bool
 	 */
-	public function hasMethod(string|PHPMethod $method): bool
+	public function hasMethod(PHPMethod|string $method): bool
 	{
 		return isset($this->methods[\is_string($method) ? $method : $method->getName()]);
 	}

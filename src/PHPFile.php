@@ -26,9 +26,7 @@ class PHPFile
 	use CommentAwareTrait;
 	use CommonTrait;
 
-	public function __construct(protected bool $strict = true)
-	{
-	}
+	public function __construct(protected bool $strict = true) {}
 
 	/**
 	 * @return bool

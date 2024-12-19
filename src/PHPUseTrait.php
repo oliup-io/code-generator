@@ -29,9 +29,7 @@ class PHPUseTrait
 	 */
 	protected array $rules = [];
 
-	public function __construct(protected PHPTrait $trait)
-	{
-	}
+	public function __construct(protected PHPTrait $trait) {}
 
 	/**
 	 * @return string

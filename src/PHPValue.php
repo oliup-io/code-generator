@@ -22,9 +22,7 @@ class PHPValue
 {
 	use CommonTrait;
 
-	public function __construct(protected mixed $value)
-	{
-	}
+	public function __construct(protected mixed $value) {}
 
 	/**
 	 * @return mixed

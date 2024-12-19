@@ -62,9 +62,7 @@ class PHPInterface
 	/**
 	 * {@inheritDoc}
 	 */
-	public function validate(): void
-	{
-	}
+	public function validate(): void {}
 
 	/**
 	 * {@inheritDoc}

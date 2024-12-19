@@ -38,7 +38,7 @@ trait PropertiesAwareTrait
 	 *
 	 * @return bool
 	 */
-	public function hasProperty(string|PHPProperty $property): bool
+	public function hasProperty(PHPProperty|string $property): bool
 	{
 		return isset($this->properties[\is_string($property) ? $property : $property->getName()]);
 	}

@@ -22,9 +22,7 @@ class PHPRaw
 {
 	use CommonTrait;
 
-	public function __construct(protected string $source)
-	{
-	}
+	public function __construct(protected string $source) {}
 
 	/**
 	 * @return string

@@ -34,7 +34,6 @@ $rules = [
 		'separate'     => 'both',
 		'location'     => 'after_open'
 	],
-	'comment_to_phpdoc' => [],
 ];
 
 return (new PhpCS())->mergeRules($finder, $rules)

@@ -36,7 +36,7 @@ trait ChildrenAwareTrait
 	 *
 	 * @return $this
 	 */
-	public function addChild(string|object $child): static
+	public function addChild(object|string $child): static
 	{
 		if (\is_string($child)) {
 			$child = new PHPRaw($child);
@@ -52,7 +52,7 @@ trait ChildrenAwareTrait
 	 *
 	 * @return $this
 	 */
-	public function setContent(string|object $child): static
+	public function setContent(object|string $child): static
 	{
 		if (\is_string($child)) {
 			$child = new PHPRaw($child);

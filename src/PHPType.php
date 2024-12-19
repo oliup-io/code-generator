@@ -26,17 +26,17 @@ class PHPType
 	/** @var array<string, PHPClass|PHPEnum|PHPInterface|PHPTypeIntersection|string> */
 	private array $types = [];
 
-	public function __construct(string|PHPInterface|PHPClass|PHPEnum|PHPTypeIntersection ...$types)
+	public function __construct(PHPClass|PHPEnum|PHPInterface|PHPTypeIntersection|string ...$types)
 	{
 		$this->add(...$types);
 	}
 
 	/**
-	 * @param \OLIUP\CG\PHPClass|\OLIUP\CG\PHPEnum|\OLIUP\CG\PHPInterface ...$types
+	 * @param PHPClass|PHPEnum|PHPInterface ...$types
 	 *
 	 * @return PHPTypeIntersection
 	 */
-	public static function intersection(PHPInterface|PHPEnum|PHPClass ...$types): PHPTypeIntersection
+	public static function intersection(PHPClass|PHPEnum|PHPInterface ...$types): PHPTypeIntersection
 	{
 		return new PHPTypeIntersection(...$types);
 	}
@@ -74,11 +74,11 @@ class PHPType
 	}
 
 	/**
-	 * @param \OLIUP\CG\PHPClass|\OLIUP\CG\PHPEnum|\OLIUP\CG\PHPInterface|\OLIUP\CG\PHPTypeIntersection|string ...$types
+	 * @param PHPClass|PHPEnum|PHPInterface|PHPTypeIntersection|string ...$types
 	 *
 	 * @return $this
 	 */
-	public function add(string|PHPInterface|PHPEnum|PHPClass|PHPTypeIntersection ...$types): static
+	public function add(PHPClass|PHPEnum|PHPInterface|PHPTypeIntersection|string ...$types): static
 	{
 		foreach ($types as $type) {
 			if (!empty($type)) {
@@ -104,11 +104,11 @@ class PHPType
 	}
 
 	/**
-	 * @param \OLIUP\CG\PHPClass|\OLIUP\CG\PHPEnum|\OLIUP\CG\PHPInterface|\OLIUP\CG\PHPTypeIntersection|string $type
+	 * @param PHPClass|PHPEnum|PHPInterface|PHPTypeIntersection|string $type
 	 *
 	 * @return bool
 	 */
-	public function isAllowed(string|PHPInterface|PHPClass|PHPEnum|PHPTypeIntersection $type): bool
+	public function isAllowed(PHPClass|PHPEnum|PHPInterface|PHPTypeIntersection|string $type): bool
 	{
 		if (\is_string($type)) {
 			$key = $type;

@@ -55,11 +55,11 @@ trait UseTraitsAwareTrait
 	}
 
 	/**
-	 * @param \OLIUP\CG\PHPTrait|\OLIUP\CG\PHPUseTrait|string $trait
+	 * @param PHPTrait|PHPUseTrait|string $trait
 	 *
 	 * @return $this
 	 */
-	public function useTrait(string|PHPTrait|PHPUseTrait $trait): static
+	public function useTrait(PHPTrait|PHPUseTrait|string $trait): static
 	{
 		if (\is_string($trait)) {
 			$trait = new PHPUseTrait(new PHPTrait($trait));
