@@ -18,6 +18,11 @@
 			"url": "https://github.com/oliup-io/oliup-cs-php"
 		}
 	},
+	"archive": {
+		"exclude": [
+			"/tests"
+		]
+	},
 	"autoload": {
 		"psr-4": {
 			"OLIUP\\CG\\": "src/"
