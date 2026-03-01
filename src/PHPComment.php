@@ -23,9 +23,10 @@ class PHPComment
 {
 	use CommonTrait;
 
-	protected CommentKindEnum $kind = CommentKindEnum::DOC;
-
-	public function __construct(protected string $content) {}
+	public function __construct(
+		protected string $content,
+		protected CommentKindEnum $kind = CommentKindEnum::DOC
+	) {}
 
 	/**
 	 * @param CommentKindEnum $kind
@@ -77,5 +78,53 @@ class PHPComment
 		$this->content .= \PHP_EOL . $lines;
 
 		return $this;
+	}
+
+	/**
+	 * Create an inline comment.
+	 *
+	 * @param string $content
+	 *
+	 * @return self
+	 */
+	public static function inline(string $content): self
+	{
+		return new self($content, CommentKindEnum::SLASH);
+	}
+
+	/**
+	 * Create a hash comment.
+	 *
+	 * @param string $content
+	 *
+	 * @return self
+	 */
+	public static function hash(string $content): self
+	{
+		return new self($content, CommentKindEnum::HASH);
+	}
+
+	/**
+	 * Create a multiline comment.
+	 *
+	 * @param string $content
+	 *
+	 * @return self
+	 */
+	public static function multiline(string $content): self
+	{
+		return new self($content, CommentKindEnum::MULTILINE);
+	}
+
+	/**
+	 * Create a doc comment.
+	 *
+	 * @param string $content
+	 *
+	 * @return self
+	 */
+	public static function doc(string $content): self
+	{
+		return new self($content, CommentKindEnum::DOC);
 	}
 }
