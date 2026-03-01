@@ -20,7 +20,11 @@
 	},
 	"autoload": {
 		"psr-4": {
-			"OLIUP\\CG\\": "src/",
+			"OLIUP\\CG\\": "src/"
+		}
+	},
+	"autoload-dev": {
+		"psr-4": {
 			"OLIUP\\CG\\Tests\\": "tests/"
 		}
 	},
