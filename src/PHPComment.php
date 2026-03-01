@@ -81,7 +81,7 @@ class PHPComment
 	}
 
 	/**
-	 * Create an inline comment.
+	 * Create an inline comment with slashes '//'.
 	 *
 	 * @param string $content
 	 *
@@ -93,7 +93,7 @@ class PHPComment
 	}
 
 	/**
-	 * Create a hash comment.
+	 * Create a inline comment with a hash '#'.
 	 *
 	 * @param string $content
 	 *
