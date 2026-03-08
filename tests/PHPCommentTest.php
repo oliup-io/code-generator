@@ -17,68 +17,73 @@ use OLIUP\CG\Enums\CommentKindEnum;
 use OLIUP\CG\PHPComment;
 use OLIUP\CG\PHPPrinter;
 
-class PHPCommentTest extends TestCase
+/**
+ * @internal
+ *
+ * @coversNothing
+ */
+final class PHPCommentTest extends TestCase
 {
-    private PHPPrinter $printer;
+	private PHPPrinter $printer;
 
-    protected function setUp(): void
-    {
-        $this->printer = new PHPPrinter();
-    }
+	protected function setUp(): void
+	{
+		$this->printer = new PHPPrinter();
+	}
 
-    public function testDocBlock(): void
-    {
-        $c   = PHPComment::doc('@param int $x');
-        $out = $this->printer->printComment($c);
-        $this->assertHasStr('opens /**', '/**', $out);
-        $this->assertHasStr('closes */', ' */', $out);
-    }
+	public function testDocBlock(): void
+	{
+		$c   = PHPComment::doc('@param int $x');
+		$out = $this->printer->printComment($c);
+		$this->assertHasStr('opens /**', '/**', $out);
+		$this->assertHasStr('closes */', ' */', $out);
+	}
 
-    public function testInlineSlash(): void
-    {
-        $out = $this->printer->printComment(PHPComment::inline('note'));
-        $this->assertHasStr('// prefix', '//', $out);
-        $this->assertHasStr('content', 'note', $out);
-    }
+	public function testInlineSlash(): void
+	{
+		$out = $this->printer->printComment(PHPComment::inline('note'));
+		$this->assertHasStr('// prefix', '//', $out);
+		$this->assertHasStr('content', 'note', $out);
+	}
 
-    public function testHash(): void
-    {
-        $out = $this->printer->printComment(PHPComment::hash('note'));
-        $this->assertHasStr('# prefix', '#', $out);
-    }
+	public function testHash(): void
+	{
+		$out = $this->printer->printComment(PHPComment::hash('note'));
+		$this->assertHasStr('# prefix', '#', $out);
+	}
 
-    public function testMultiline(): void
-    {
-        $out = $this->printer->printComment(PHPComment::multiline('block'));
-        $this->assertHasStr('opens /*', '/*', $out);
-        $this->assertHasStr('closes */', '*/', $out);
-        $this->assertNotHasStr('not a doc block', '/**', $out);
-    }
+	public function testMultiline(): void
+	{
+		$out = $this->printer->printComment(PHPComment::multiline('block'));
+		$this->assertHasStr('opens /*', '/*', $out);
+		$this->assertHasStr('closes */', '*/', $out);
+		$this->assertNotHasStr('not a doc block', '/**', $out);
+	}
 
-    public function testAddLines(): void
-    {
-        $c = PHPComment::inline('line1');
-        $c->addLines('line2');
-        $this->assertHasStr('line2 appended', 'line2', $c->getContent());
-    }
+	public function testAddLines(): void
+	{
+		$c = PHPComment::inline('line1');
+		$c->addLines('line2');
+		$this->assertHasStr('line2 appended', 'line2', $c->getContent());
+	}
 
-    public function testSetContent(): void
-    {
-        $c = PHPComment::inline('old');
-        $c->setContent('new');
-        $this->assertEq('content replaced', 'new', $c->getContent());
-    }
+	public function testSetContent(): void
+	{
+		$c = PHPComment::inline('old');
+		$c->setContent('new');
+		$this->assertEq('content replaced', 'new', $c->getContent());
+	}
 
-    public function testSetKind(): void
-    {
-        $c = new PHPComment('text');
-        $c->setKind(CommentKindEnum::SLASH);
-        $this->assertEq('kind updated', CommentKindEnum::SLASH, $c->getKind());
-    }
+	public function testSetKind(): void
+	{
+		$c = new PHPComment('text');
+		$c->setKind(CommentKindEnum::SLASH);
+		$this->assertEq('kind updated', CommentKindEnum::SLASH, $c->getKind());
+	}
 
-    public function testDefaultKindIsDoc(): void
-    {
-        $c = new PHPComment('text');
-        $this->assertEq('default kind', CommentKindEnum::DOC, $c->getKind());
-    }
+	public function testDefaultKindIsDoc(): void
+	{
+		$c = new PHPComment('text');
+		$this->assertEq('default kind', CommentKindEnum::DOC, $c->getKind());
+	}
 }

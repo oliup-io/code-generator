@@ -18,12 +18,12 @@ $update = \in_array('--update-snapshots', $argv ?? [], true);
 $env    = $update ? 'UPDATE_SNAPSHOTS=1 ' : '';
 
 \passthru($env . \dirname(__DIR__) . '/vendor/bin/phpunit --testdox --do-not-cache-result', $exitCode);
-\exit($exitCode);
 
+exit($exitCode);
 
 // Require all *Test.php files in the tests/ directory
 foreach (\glob(__DIR__ . '/*Test.php') as $file) {
-    require_once $file;
+	require_once $file;
 }
 
 use OLIUP\CG\Tests\TestCase;
@@ -32,13 +32,13 @@ $totalPassed = 0;
 $totalFailed = 0;
 
 foreach (\get_declared_classes() as $class) {
-    if (\is_subclass_of($class, TestCase::class)) {
-        echo \PHP_EOL . '--- ' . $class . ' ---' . \PHP_EOL;
-        $instance = new $class();
-        $instance->runTests();
-        $totalPassed += $instance->getPassed();
-        $totalFailed += $instance->getFailed();
-    }
+	if (\is_subclass_of($class, TestCase::class)) {
+		echo \PHP_EOL . '--- ' . $class . ' ---' . \PHP_EOL;
+		$instance = new $class();
+		$instance->runTests();
+		$totalPassed += $instance->getPassed();
+		$totalFailed += $instance->getFailed();
+	}
 }
 
 $total = $totalPassed + $totalFailed;
@@ -46,7 +46,7 @@ $total = $totalPassed + $totalFailed;
 echo \PHP_EOL . "Total: {$totalPassed}/{$total} passed";
 
 if ($totalFailed > 0) {
-    echo ", {$totalFailed} FAILED";
+	echo ", {$totalFailed} FAILED";
 }
 
 echo \PHP_EOL;

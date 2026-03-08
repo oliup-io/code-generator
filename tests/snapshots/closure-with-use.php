@@ -3,7 +3,13 @@ declare(strict_types=1);
 
 namespace App\Utils;
 
-function(string $input) use ($prefix = 'PREFIX_';): string
+class Transformer
 {
-	return $prefix . strtoupper($input);
+	public function createTransformer(string $prefix = 'PREFIX_'): \Closure
+	{
+		return function(string $input) use ($prefix): string
+		{
+			return $prefix . strtoupper($input);
+		};
+	}
 }
