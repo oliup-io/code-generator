@@ -112,6 +112,12 @@ class PHPNamespace
 	 */
 	protected function validateChild(object $child): object
 	{
+		if ($child instanceof PHPFunction && $child->isAnonymous()) {
+			throw new InvalidArgumentException(
+				'Anonymous functions cannot be added directly to a namespace; assign the closure to a variable or return it from a named function.'
+			);
+		}
+
 		if (ClassUtils::hasTrait($child, NamespaceAwareTrait::class)) {
 			/** @var PHPClass $child */
 			$child->setNamespace($this);
