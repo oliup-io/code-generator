@@ -73,7 +73,7 @@ class PHPPrinter
 		$methods          = $v->getMethods();
 
 		if (!empty($interfaces)) {
-			$out .= ' implements ' . \implode(' , ', \array_map(static fn ($it) => $it->getFullyQualifiedName(), $interfaces));
+			$out .= ' implements ' . \implode(', ', \array_map(static fn($it) => $it->getFullyQualifiedName(), $interfaces));
 		}
 
 		$out .= \PHP_EOL . '{';
@@ -81,18 +81,18 @@ class PHPPrinter
 		$body_parts = [];
 
 		if (!empty($use_traits)) {
-			$body_parts[] = \implode(\PHP_EOL, \array_map(fn ($ut) => $this->printUseTrait($ut), $use_traits));
+			$body_parts[] = \implode(\PHP_EOL, \array_map(fn($ut) => $this->printUseTrait($ut), $use_traits));
 		}
 
 		if (!empty($constants)) {
-			$body_parts[] = \implode(\PHP_EOL, \array_map(fn ($c) => $this->printConstant($c), $constants));
+			$body_parts[] = \implode(\PHP_EOL, \array_map(fn($c) => $this->printConstant($c), $constants));
 		}
 
 		if (!empty($properties)) {
-			$body_parts[] = \implode(\PHP_EOL, \array_map(fn ($c) => $this->printProperty($c), $properties));
+			$body_parts[] = \implode(\PHP_EOL, \array_map(fn($c) => $this->printProperty($c), $properties));
 		}
 		if (!empty($methods)) {
-			$body_parts[] = \implode(\PHP_EOL . \PHP_EOL, \array_map(fn ($c) => $this->printMethod($c), $methods));
+			$body_parts[] = \implode(\PHP_EOL . \PHP_EOL, \array_map(fn($c) => $this->printMethod($c), $methods));
 		}
 		foreach ($v->getChildren() as $child) {
 			$body_parts[] = $this->print($child);
@@ -120,7 +120,7 @@ class PHPPrinter
 		$methods   = $v->getMethods();
 
 		if (!empty($extends)) {
-			$out .= ' extends ' . \implode(' , ', \array_map(static fn ($it) => $it->getFullyQualifiedName(), $extends));
+			$out .= ' extends ' . \implode(', ', \array_map(static fn($it) => $it->getFullyQualifiedName(), $extends));
 		}
 
 		$out .= \PHP_EOL . '{';
@@ -128,11 +128,11 @@ class PHPPrinter
 		$body_parts = [];
 
 		if (!empty($constants)) {
-			$body_parts[] = \implode(\PHP_EOL, \array_map(fn ($c) => $this->printConstant($c), $constants));
+			$body_parts[] = \implode(\PHP_EOL, \array_map(fn($c) => $this->printConstant($c), $constants));
 		}
 
 		if (!empty($methods)) {
-			$body_parts[] = \implode(\PHP_EOL . \PHP_EOL, \array_map(fn ($c) => $this->printMethod($c), $methods));
+			$body_parts[] = \implode(\PHP_EOL . \PHP_EOL, \array_map(fn($c) => $this->printMethod($c, declaration: true), $methods));
 		}
 		foreach ($v->getChildren() as $child) {
 			$body_parts[] = $this->print($child);
@@ -164,14 +164,14 @@ class PHPPrinter
 		$body_parts = [];
 
 		if (!empty($use_traits)) {
-			$body_parts[] = \implode(\PHP_EOL, \array_map(fn ($ut) => $this->printUseTrait($ut), $use_traits));
+			$body_parts[] = \implode(\PHP_EOL, \array_map(fn($ut) => $this->printUseTrait($ut), $use_traits));
 		}
 
 		if (!empty($properties)) {
-			$body_parts[] = \implode(\PHP_EOL, \array_map(fn ($c) => $this->printProperty($c), $properties));
+			$body_parts[] = \implode(\PHP_EOL, \array_map(fn($c) => $this->printProperty($c), $properties));
 		}
 		if (!empty($methods)) {
-			$body_parts[] = \implode(\PHP_EOL . \PHP_EOL, \array_map(fn ($c) => $this->printMethod($c), $methods));
+			$body_parts[] = \implode(\PHP_EOL . \PHP_EOL, \array_map(fn($c) => $this->printMethod($c), $methods));
 		}
 		foreach ($v->getChildren() as $child) {
 			$body_parts[] = $this->print($child);
@@ -218,7 +218,7 @@ class PHPPrinter
 				}
 			}
 
-			$out .= '{' . \PHP_EOL . Str::indent($body, $this->indent) . '}';
+			$out .= ' {' . \PHP_EOL . Str::indent($body, $this->indent) . '}';
 		} else {
 			$out .= ';';
 		}
@@ -236,7 +236,7 @@ class PHPPrinter
 			$out .= $v->getName() . '(';
 			$args = $v->getArguments();
 			if (!empty($args)) {
-				$out .= \implode(', ', \array_map(fn ($arg) => $this->printArgument($arg), $args));
+				$out .= \implode(', ', \array_map(fn($arg) => $this->printArgument($arg), $args));
 			}
 			$out .= ')';
 
@@ -263,7 +263,7 @@ class PHPPrinter
 		$arg_allow_promoted_arg = '__construct' === $method_name;
 
 		if (!empty($args)) {
-			$out .= \implode(', ', \array_map(fn ($arg) => $this->printArgument($arg, $arg_allow_promoted_arg), $args));
+			$out .= \implode(', ', \array_map(fn($arg) => $this->printArgument($arg, $arg_allow_promoted_arg), $args));
 		}
 
 		$out .= ')';
@@ -299,14 +299,14 @@ class PHPPrinter
 
 		$args = $v->getArguments();
 		if (!empty($args)) {
-			$out .= \implode(', ', \array_map(fn ($arg) => $this->printArgument($arg), $args));
+			$out .= \implode(', ', \array_map(fn($arg) => $this->printArgument($arg), $args));
 		}
 
 		$out .= ')';
 
 		$uses = $v->getUses();
 		if (!empty($uses)) {
-			$out .= ' use (' . \implode(', ', \array_map(fn ($var) => $this->printVar($var), $uses)) . ')';
+			$out .= ' use (' . \implode(', ', \array_map(fn($var) => $this->printVar($var), $uses)) . ')';
 		}
 
 		$out .= ($type = $v->getReturnType()) ? ': ' . $this->printType($type) : '';
