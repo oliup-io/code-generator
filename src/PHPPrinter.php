@@ -306,7 +306,7 @@ class PHPPrinter
 
 		$uses = $v->getUses();
 		if (!empty($uses)) {
-			$out .= ' use (' . \implode(', ', \array_map(fn($var) => $this->printVar($var), $uses)) . ')';
+			$out .= ' use (' . \implode(', ', \array_map(fn($var) => $this->printVar($var, false), $uses)) . ')';
 		}
 
 		$out .= ($type = $v->getReturnType()) ? ': ' . $this->printType($type) : '';
@@ -385,7 +385,7 @@ class PHPPrinter
 		return $out;
 	}
 
-	public function printVar(PHPVar $v): string
+	public function printVar(PHPVar $v, bool $standalone = true): string
 	{
 		$this->validate($v);
 
@@ -394,7 +394,9 @@ class PHPPrinter
 
 		if (!$v->isByReference()) {
 			$out .= ($value = $v->getValue()) ? ' = ' . $this->printValue($value) : '';
-			$out .= ';';
+			if ($standalone) {
+				$out .= ';';
+			}
 		}
 
 		return $out;
