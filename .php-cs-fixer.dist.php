@@ -15,7 +15,7 @@ $finder->in([
 	->notPath('vendor')
 	->notPath('samples')
 	->notPath('ignore')
-	->notPath('tests/snapshots')
+	->notPath('snapshots')
 	->ignoreDotFiles(true)
 	->ignoreVCS(true);
 
