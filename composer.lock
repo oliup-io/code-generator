@@ -65,12 +65,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/silassare/php-utils.git",
-                "reference": "961e48dfc0d2693582ede76fa3fc6ba34b8d8179"
+                "reference": "03e938886c4502582ef9e6adf44c2942c56065ea"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/silassare/php-utils/zipball/961e48dfc0d2693582ede76fa3fc6ba34b8d8179",
-                "reference": "961e48dfc0d2693582ede76fa3fc6ba34b8d8179",
+                "url": "https://api.github.com/repos/silassare/php-utils/zipball/03e938886c4502582ef9e6adf44c2942c56065ea",
+                "reference": "03e938886c4502582ef9e6adf44c2942c56065ea",
                 "shasum": ""
             },
             "require": {
@@ -116,7 +116,7 @@
                 "source": "https://github.com/silassare/php-utils/tree/2.0.0",
                 "issues": "https://github.com/silassare/php-utils/issues"
             },
-            "time": "2026-03-08T18:20:09+00:00"
+            "time": "2026-03-08T19:25:10+00:00"
         }
     ],
     "packages-dev": [
