@@ -38,7 +38,13 @@ class PHPProperty
 
 	public const PROPERTY_NAME_PATTERN = '#^[a-zA-Z_][a-zA-Z0-9_]*$#';
 
-	public function __construct(string $name, ?PHPValue $value = null) {}
+	public function __construct(string $name, ?PHPValue $value = null)
+	{
+		$this->setName($name);
+		if (null !== $value) {
+			$this->setValue($value);
+		}
+	}
 
 	/**
 	 * {@inheritDoc}
