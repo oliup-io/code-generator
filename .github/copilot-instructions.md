@@ -78,8 +78,6 @@ echo $file;  // full PHP source
 ./vendor/bin/oliup-cs fix       # code style fix only
 ./vendor/bin/phpunit --testdox  # run all tests
 UPDATE_SNAPSHOTS=1 ./vendor/bin/phpunit  # regenerate snapshot files
-php tests/run-tests.php         # same as phpunit (convenience wrapper)
-php tests/run-tests.php --update-snapshots  # same as UPDATE_SNAPSHOTS=1
 ```
 
 ## Test Structure
