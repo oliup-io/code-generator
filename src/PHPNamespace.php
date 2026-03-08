@@ -65,6 +65,14 @@ class PHPNamespace
 		return $class;
 	}
 
+	public function newInterface(string $name): PHPInterface
+	{
+		$interface = new PHPInterface($name);
+		$this->addChild($interface);
+
+		return $interface;
+	}
+
 	/**
 	 * @return bool
 	 */
