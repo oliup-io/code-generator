@@ -36,7 +36,7 @@ class PHPArgument
 	protected bool $promoted      = false;
 	protected bool $variadic      = false;
 
-	public function __construct(string $name, null|PHPType|string $type = null)
+	public function __construct(string $name, PHPType|string|null $type = null)
 	{
 		$this->setName($name)
 			->setType($type);

@@ -30,7 +30,7 @@ trait TypeAwareTrait
 	 *
 	 * @return $this
 	 */
-	public function setType(null|PHPClass|PHPEnum|PHPInterface|PHPType|string $type): static
+	public function setType(PHPClass|PHPEnum|PHPInterface|PHPType|string|null $type): static
 	{
 		$this->type = (null === $type || $type instanceof PHPType) ? $type : new PHPType($type);
 

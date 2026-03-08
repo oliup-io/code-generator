@@ -27,7 +27,7 @@ trait CommentAwareTrait
 	 *
 	 * @return $this
 	 */
-	public function setComment(null|PHPComment|string $comment): static
+	public function setComment(PHPComment|string|null $comment): static
 	{
 		$this->comment = \is_string($comment) ? new PHPComment($comment) : $comment;
 

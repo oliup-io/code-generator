@@ -59,7 +59,7 @@ class PHPUseTraitMethodRule
 	 *
 	 * @return $this
 	 */
-	public function hideFrom(null|PHPTrait|string $trait): static
+	public function hideFrom(PHPTrait|string|null $trait): static
 	{
 		if (\is_string($trait)) {
 			$trait = new PHPTrait($trait);

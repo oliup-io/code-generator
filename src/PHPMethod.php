@@ -56,7 +56,7 @@ class PHPMethod
 	 *
 	 * @return $this
 	 */
-	public function setReturnType(null|PHPClass|PHPEnum|PHPInterface|PHPType|string $return_type): static
+	public function setReturnType(PHPClass|PHPEnum|PHPInterface|PHPType|string|null $return_type): static
 	{
 		$this->return_type = (null === $return_type || $return_type instanceof PHPType) ? $return_type : new PHPType($return_type);
 

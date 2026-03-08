@@ -35,7 +35,7 @@ trait NamespaceAwareTrait
 	 *
 	 * @return $this
 	 */
-	public function setNamespace(null|PHPNamespace|string $namespace): static
+	public function setNamespace(PHPNamespace|string|null $namespace): static
 	{
 		if (\is_string($namespace)) {
 			$namespace  = new PHPNamespace($namespace);
