@@ -1,4 +1,4 @@
-# Copilot Instructions — oliup/code-generator
+# Copilot Instructions - oliup/code-generator
 
 > IMPORTANT: no hallucination or invention. Go through the entire code base to understand before generating code, the `.github/copilot-instructions.md` or docs. Focus on what can be directly observed in the codebase, not on idealized practices or assumptions.
 > When a bug or issue is found in the codebase, do not fix it directly, but rather ask for feedback and approval.
@@ -17,7 +17,7 @@ PHPMethod -> arguments[] + children[] (body as PHPRaw lines)
 ```
 
 - **`PHPPrinter`** is the sole rendering engine; use `$printer->print($node)` or cast `(string) $node`.
-- **`PHPRaw`**: passthrough for raw PHP source — `addChild('return $x;')` auto-wraps strings.
+- **`PHPRaw`**: passthrough for raw PHP source - `addChild('return $x;')` auto-wraps strings.
 - **`PHPValue`**: wraps any PHP value and renders via `var_export()`; anonymous `PHPClass` renders as `new class { ... }`.
 - **`PHPType`**: union types via constructor varargs; `PHPType::intersection(...)` for `A&B`; `->nullable()` adds `null`.
 
@@ -25,10 +25,10 @@ PHPMethod -> arguments[] + children[] (body as PHPRaw lines)
 
 Functionality is assembled from focused traits in `src/Traits/`. Key ones:
 
-- `QualifiedNameAwareTrait` — parses `Foo\Bar\Baz` into namespace + short name; used by class/interface/trait/function.
-- `ChildrenAwareTrait` — `addChild()` in `PHPClass`/`PHPInterface`/`PHPTrait` dispatches by type to the right collection.
-- `VisibilityAwareTrait` — adds `->public()`, `->protected()`, `->private()` fluent shortcuts.
-- `CommonTrait` — provides `__toString()` and deep-clone `__clone()` for every class.
+- `QualifiedNameAwareTrait` - parses `Foo\Bar\Baz` into namespace + short name; used by class/interface/trait/function.
+- `ChildrenAwareTrait` - `addChild()` in `PHPClass`/`PHPInterface`/`PHPTrait` dispatches by type to the right collection.
+- `VisibilityAwareTrait` - adds `->public()`, `->protected()`, `->private()` fluent shortcuts.
+- `CommonTrait` - provides `__toString()` and deep-clone `__clone()` for every class.
 
 ## Fluent API Pattern
 
@@ -59,8 +59,8 @@ echo $file;  // full PHP source
 
 ## Enums
 
-- `VisibilityEnum` — `PUBLIC | PRIVATE | PROTECTED`
-- `CommentKindEnum` — `DOC (/**)` | `MULTILINE (/*)` | `HASH (#)` | `SLASH (//)`; static factories: `PHPComment::doc()`, `::inline()`, `::hash()`, `::multiline()`.
+- `VisibilityEnum` - `PUBLIC | PRIVATE | PROTECTED`
+- `CommentKindEnum` - `DOC (/**)` | `MULTILINE (/*)` | `HASH (#)` | `SLASH (//)`; static factories: `PHPComment::doc()`, `::inline()`, `::hash()`, `::multiline()`.
 
 ## PHPNamespace Side-Effect
 
@@ -68,7 +68,7 @@ echo $file;  // full PHP source
 
 ## Known Limitation
 
-`PHPPrinter::printEnum()` currently returns `''` — enum printing is not yet implemented.
+`PHPPrinter::printEnum()` currently returns `''` - enum printing is not yet implemented.
 
 ## Developer Workflow
 
@@ -76,17 +76,42 @@ echo $file;  // full PHP source
 ./csfix           # runs psalm --no-cache then oliup-cs fix (linting + formatting)
 ./vendor/bin/psalm --no-cache   # static analysis only (error level 4)
 ./vendor/bin/oliup-cs fix       # code style fix only
+./vendor/bin/phpunit --testdox  # run all tests
+UPDATE_SNAPSHOTS=1 ./vendor/bin/phpunit  # regenerate snapshot files
+php tests/run-tests.php         # same as phpunit (convenience wrapper)
+php tests/run-tests.php --update-snapshots  # same as UPDATE_SNAPSHOTS=1
 ```
 
-There is no automated test runner configured; the `tests/` folder has only a`autoload.php` and a `tmp/` scratch directory.
+## Test Structure
+
+Tests live in `tests/` and use PHPUnit 9 with a custom `TestCase` base class.
+
+- `tests/TestCase.php` - abstract base class extending `PHPUnit\Framework\TestCase`; provides `assertEq`, `assertHasStr`, `assertNotHasStr`, `assertThrows`, `assertSnapshot`; all take a description string as the first argument.
+- One test class per source class (e.g. `PHPClassTest`, `PHPMethodTest`, etc.).
+- `tests/SnapshotTest.php` - full-file PHP output compared against stored snapshots in `tests/snapshots/`.
+
+`TestCase::assertSnapshot($file, $actual)` writes the snapshot on first run and compares on subsequent runs (`UPDATE_SNAPSHOTS=1` to regenerate).
 
 ## Code Style Rules
 
 - PHP 8.1+ syntax; strict types always on.
 - Every `.php` file gets the OLIUP copyright PHPDoc header (enforced by `php-cs-fixer`).
-- In comments and documentation, always write operator/symbol literals directly — never use Unicode look-alikes:
-  - use `->` not `→`, `<-` not `←`, `-->` not `───▶`
-  - use `>=` not `>=`, `<=` not `<=`, `!=` not `!=`
-  - use `*` not `x`, `/` not `/`, `-` not `--` or `-`
-  - use `IN` / `NOT IN` not `∈` / `∉`, `...` not `...`
-- Comments should be concise and human — avoid verbose or redundant prose.
+- **No Unicode shortcut characters in comments or docblocks.** Always use plain ASCII equivalents:
+
+| use      | don't use   |
+| -------- | ----------- |
+| `->`     | `→`         |
+| `<-`     | `←`         |
+| `<->`    | `↔`         |
+| `-->`    | `───▶`      |
+| `>=`     | `≥`         |
+| `<=`     | `≤`         |
+| `!=`     | `≠`         |
+| `*`      | `×`         |
+| `/`      | `÷`         |
+| `-`      | ` —` or `–` |
+| `IN`     | `∈`         |
+| `NOT IN` | `∉`         |
+| `...`    | `…`         |
+
+- Comments should be concise and human - avoid verbose or redundant prose.
