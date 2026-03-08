@@ -1,0 +1,92 @@
+# Copilot Instructions — oliup/code-generator
+
+> IMPORTANT: no hallucination or invention. Go through the entire code base to understand before generating code, the `.github/copilot-instructions.md` or docs. Focus on what can be directly observed in the codebase, not on idealized practices or assumptions.
+> When a bug or issue is found in the codebase, do not fix it directly, but rather ask for feedback and approval.
+> If `AGENTS.md`, `CLAUDE.md`, `GEMINI.md` do not exist, symlink them to `.github/copilot-instructions.md`.
+
+## Project Overview
+
+A fluent PHP 8.1+ code-generation library. Namespace root: `OLIUP\CG\`. Every node implements `__toString()` via `CommonTrait`, which internally calls `(new PHPPrinter())->print($this)`.
+
+## Architecture
+
+```
+PHPFile -> PHPNamespace -> PHPClass | PHPInterface | PHPTrait | PHPEnum | PHPFunction
+PHPClass  -> constants[] + properties[] + methods[] + used_traits[] + implements[]
+PHPMethod -> arguments[] + children[] (body as PHPRaw lines)
+```
+
+- **`PHPPrinter`** is the sole rendering engine; use `$printer->print($node)` or cast `(string) $node`.
+- **`PHPRaw`**: passthrough for raw PHP source — `addChild('return $x;')` auto-wraps strings.
+- **`PHPValue`**: wraps any PHP value and renders via `var_export()`; anonymous `PHPClass` renders as `new class { ... }`.
+- **`PHPType`**: union types via constructor varargs; `PHPType::intersection(...)` for `A&B`; `->nullable()` adds `null`.
+
+## Trait Composition
+
+Functionality is assembled from focused traits in `src/Traits/`. Key ones:
+
+- `QualifiedNameAwareTrait` — parses `Foo\Bar\Baz` into namespace + short name; used by class/interface/trait/function.
+- `ChildrenAwareTrait` — `addChild()` in `PHPClass`/`PHPInterface`/`PHPTrait` dispatches by type to the right collection.
+- `VisibilityAwareTrait` — adds `->public()`, `->protected()`, `->private()` fluent shortcuts.
+- `CommonTrait` — provides `__toString()` and deep-clone `__clone()` for every class.
+
+## Fluent API Pattern
+
+```php
+$file = new PHPFile();
+$ns   = new PHPNamespace('App\Models');
+$file->addChild($ns);
+
+$class = $ns->newClass('User');          // creates, registers, returns
+$class->extends('App\Base\Model')->final();
+
+$prop = $class->newProperty('id');
+$prop->setType('int')->public();
+
+$ctor = $class->newMethod('__construct');
+$arg  = $ctor->newArgument('id');
+$arg->setType('int')->setPromoted(true)->public();  // constructor promotion
+
+$class->newMethod('getId')
+      ->public()
+      ->setReturnType('int')
+      ->addChild('return $this->id;');
+
+echo $file;  // full PHP source
+```
+
+`new*(string $name)` factory methods (e.g., `newMethod`, `newProperty`, `newArgument`) always create, register in the parent, and return the new object.
+
+## Enums
+
+- `VisibilityEnum` — `PUBLIC | PRIVATE | PROTECTED`
+- `CommentKindEnum` — `DOC (/**)` | `MULTILINE (/*)` | `HASH (#)` | `SLASH (//)`; static factories: `PHPComment::doc()`, `::inline()`, `::hash()`, `::multiline()`.
+
+## PHPNamespace Side-Effect
+
+`PHPNamespace::validateChild()` automatically calls `$child->setNamespace($this)` for any child that uses `NamespaceAwareTrait`. Adding a class to a namespace sets its namespace automatically.
+
+## Known Limitation
+
+`PHPPrinter::printEnum()` currently returns `''` — enum printing is not yet implemented.
+
+## Developer Workflow
+
+```sh
+./csfix           # runs psalm --no-cache then oliup-cs fix (linting + formatting)
+./vendor/bin/psalm --no-cache   # static analysis only (error level 4)
+./vendor/bin/oliup-cs fix       # code style fix only
+```
+
+There is no automated test runner configured; the `tests/` folder has only a`autoload.php` and a `tmp/` scratch directory.
+
+## Code Style Rules
+
+- PHP 8.1+ syntax; strict types always on.
+- Every `.php` file gets the OLIUP copyright PHPDoc header (enforced by `php-cs-fixer`).
+- In comments and documentation, always write operator/symbol literals directly — never use Unicode look-alikes:
+  - use `->` not `→`, `<-` not `←`, `-->` not `───▶`
+  - use `>=` not `>=`, `<=` not `<=`, `!=` not `!=`
+  - use `*` not `x`, `/` not `/`, `-` not `--` or `-`
+  - use `IN` / `NOT IN` not `∈` / `∉`, `...` not `...`
+- Comments should be concise and human — avoid verbose or redundant prose.
