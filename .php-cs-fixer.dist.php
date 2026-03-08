@@ -15,6 +15,7 @@ $finder->in([
 	->notPath('vendor')
 	->notPath('samples')
 	->notPath('ignore')
+	->notPath('tests/snapshots')
 	->ignoreDotFiles(true)
 	->ignoreVCS(true);
 
@@ -37,4 +38,4 @@ $rules = [
 ];
 
 return (new PhpCS())->mergeRules($finder, $rules)
-					->setRiskyAllowed(true);
+	->setRiskyAllowed(true);
