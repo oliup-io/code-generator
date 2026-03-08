@@ -346,7 +346,10 @@ class PHPPrinter
 		}
 
 		if ($v->isNullable()) {
-			return 1 === $count ? '?' . $temp[0] : 'null|' . \implode('|', $temp);
+			// 'mixed' already includes null - never prefix with ? or null|
+			if (!\in_array('mixed', $temp, true)) {
+				return 1 === $count ? '?' . $temp[0] : 'null|' . \implode('|', $temp);
+			}
 		}
 
 		return \implode('|', $temp);
