@@ -33,8 +33,8 @@ class PHPArgument
 	use ValueAwareTrait;
 	use VisibilityAwareTrait;
 
-	protected bool $promoted      = false;
-	protected bool $variadic      = false;
+	protected bool $promoted = false;
+	protected bool $variadic = false;
 
 	public function __construct(string $name, PHPType|string|null $type = null)
 	{
@@ -45,24 +45,28 @@ class PHPArgument
 	/**
 	 * @param bool $promoted
 	 */
-	public function setPromoted(bool $promoted): void
+	public function setPromoted(bool $promoted): static
 	{
 		if ($promoted && $this->isVariadic()) {
 			throw new RuntimeException('Cannot declare variadic promoted property');
 		}
 
 		$this->promoted = $promoted;
+
+		return $this;
 	}
 
 	/**
 	 * @param bool $variadic
 	 */
-	public function setVariadic(bool $variadic): void
+	public function setVariadic(bool $variadic): static
 	{
 		if ($variadic && $this->isPromoted()) {
 			throw new RuntimeException('Cannot declare variadic promoted property.');
 		}
 		$this->variadic = $variadic;
+
+		return $this;
 	}
 
 	/**

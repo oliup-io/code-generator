@@ -27,7 +27,7 @@ trait QualifiedNameAwareTrait
 	{
 		Utils::parseQualifiedName($name, $namespace, $short_name);
 
-		$this->name = $this->validateName($short_name);
+		$this->name = $this->validateName($short_name ?? $name);
 
 		$namespace && $this->setNamespace($namespace);
 
