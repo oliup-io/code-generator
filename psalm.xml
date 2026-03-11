@@ -13,4 +13,10 @@
 			<directory name="tests/snapshots"/>
 		</ignoreFiles>
 	</projectFiles>
+
+
+    <issueHandlers>
+        <MissingOverrideAttribute errorLevel="suppress"/>
+        <PossiblyUnusedMethod errorLevel="suppress"/>
+    </issueHandlers>
 </psalm>
