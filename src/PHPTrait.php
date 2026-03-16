@@ -22,6 +22,7 @@ use OLIUP\CG\Traits\PropertiesAwareTrait;
 use OLIUP\CG\Traits\QualifiedNameAwareTrait;
 use OLIUP\CG\Traits\UseTraitsAwareTrait;
 use OLIUP\CG\Traits\ValidateAwareTrait;
+use Override;
 
 /**
  * Class PHPTrait.
@@ -62,11 +63,13 @@ class PHPTrait
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function validate(): void {}
 
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	protected function validateName(string $name): string
 	{
 		if (!\preg_match(PHPClass::CLASS_NAME_PATTERN, $name)) {
@@ -79,6 +82,7 @@ class PHPTrait
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	protected function validateMethod(PHPMethod $method): PHPMethod
 	{
 		return $method;
@@ -87,6 +91,7 @@ class PHPTrait
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	protected function validateProperty(PHPProperty $property): PHPProperty
 	{
 		return $property;
@@ -95,6 +100,7 @@ class PHPTrait
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	protected function validateNamespace(?PHPNamespace $namespace): ?PHPNamespace
 	{
 		return $namespace;
@@ -103,6 +109,7 @@ class PHPTrait
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	protected function validateUseTrait(PHPUseTrait $use_trait): PHPUseTrait
 	{
 		return $use_trait;
@@ -111,6 +118,7 @@ class PHPTrait
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	protected function validateChild(object $child): object
 	{
 		return $child;

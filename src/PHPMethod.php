@@ -25,6 +25,7 @@ use OLIUP\CG\Traits\NameAwareTrait;
 use OLIUP\CG\Traits\StaticAwareTrait;
 use OLIUP\CG\Traits\ValidateAwareTrait;
 use OLIUP\CG\Traits\VisibilityAwareTrait;
+use Override;
 use RuntimeException;
 
 /**
@@ -74,6 +75,7 @@ class PHPMethod
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function validate(): void
 	{
 		if ($this->isFinal() && $this->isAbstract()) {
@@ -84,6 +86,7 @@ class PHPMethod
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	protected function validateName(string $name): string
 	{
 		if (!\preg_match(self::METHOD_NAME_PATTERN, $name)) {
@@ -96,6 +99,7 @@ class PHPMethod
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	protected function validateArgument(PHPArgument $argument): PHPArgument
 	{
 		return $argument;
@@ -104,6 +108,7 @@ class PHPMethod
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	protected function validateChild(object $child): object
 	{
 		return $child;
@@ -112,6 +117,7 @@ class PHPMethod
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	protected function validateVisibility(?VisibilityEnum $visibility): ?VisibilityEnum
 	{
 		return $visibility;

@@ -21,6 +21,7 @@ use OLIUP\CG\Traits\CommonTrait;
 use OLIUP\CG\Traits\QualifiedNameAwareTrait;
 use OLIUP\CG\Traits\StaticAwareTrait;
 use OLIUP\CG\Traits\ValidateAwareTrait;
+use Override;
 
 /**
  * Class PHPFunction.
@@ -107,11 +108,13 @@ class PHPFunction
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function validate(): void {}
 
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	protected function validateName(string $name): string
 	{
 		if (empty($name)) {
@@ -128,6 +131,7 @@ class PHPFunction
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	protected function validateNamespace(?PHPNamespace $namespace): ?PHPNamespace
 	{
 		return $namespace;
@@ -136,6 +140,7 @@ class PHPFunction
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	protected function validateArgument(PHPArgument $argument): PHPArgument
 	{
 		return $argument;
@@ -144,6 +149,7 @@ class PHPFunction
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	protected function validateChild(object $child): object
 	{
 		return $child;

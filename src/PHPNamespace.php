@@ -18,6 +18,7 @@ use OLIUP\CG\Traits\ChildrenAwareTrait;
 use OLIUP\CG\Traits\CommonTrait;
 use OLIUP\CG\Traits\NameAwareTrait;
 use OLIUP\CG\Traits\NamespaceAwareTrait;
+use Override;
 use PHPUtils\ClassUtils;
 
 /**
@@ -94,6 +95,7 @@ class PHPNamespace
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	protected function validateName(string $name): string
 	{
 		if (empty($name)) {
@@ -110,6 +112,7 @@ class PHPNamespace
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	protected function validateChild(object $child): object
 	{
 		if ($child instanceof PHPFunction && $child->isAnonymous()) {

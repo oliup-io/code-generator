@@ -19,6 +19,7 @@ use OLIUP\CG\Traits\CommonTrait;
 use OLIUP\CG\Traits\NameAwareTrait;
 use OLIUP\CG\Traits\ReferenceAwareTrait;
 use OLIUP\CG\Traits\ValueAwareTrait;
+use Override;
 
 /**
  * Class PHPVarName.
@@ -41,6 +42,7 @@ class PHPVar
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	protected function validateName(string $name): string
 	{
 		if (!\preg_match(self::VAR_NAME_PATTERN, $name)) {
@@ -53,6 +55,7 @@ class PHPVar
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	protected function validateValue(?PHPValue $value): ?PHPValue
 	{
 		return $value;

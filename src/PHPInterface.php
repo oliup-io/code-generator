@@ -22,6 +22,7 @@ use OLIUP\CG\Traits\ExtendsInterfacesAwareTrait;
 use OLIUP\CG\Traits\MethodsAwareTrait;
 use OLIUP\CG\Traits\QualifiedNameAwareTrait;
 use OLIUP\CG\Traits\ValidateAwareTrait;
+use Override;
 
 /**
  * Class PHPInterface.
@@ -62,11 +63,13 @@ class PHPInterface
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function validate(): void {}
 
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	protected function validateName(string $name): string
 	{
 		if (!\preg_match(PHPClass::CLASS_NAME_PATTERN, $name)) {
@@ -79,6 +82,7 @@ class PHPInterface
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	protected function validateNamespace(?PHPNamespace $namespace): ?PHPNamespace
 	{
 		return $namespace;
@@ -87,6 +91,7 @@ class PHPInterface
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	protected function validateChild(object $child): object
 	{
 		return $child;
@@ -95,6 +100,7 @@ class PHPInterface
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	protected function validateExtendsInterface(self $interface): self
 	{
 		return $interface;
@@ -103,6 +109,7 @@ class PHPInterface
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	protected function validateConstant(PHPConstant $constant): PHPConstant
 	{
 		return $constant;
@@ -111,6 +118,7 @@ class PHPInterface
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	protected function validateMethod(PHPMethod $method): PHPMethod
 	{
 		return $method;

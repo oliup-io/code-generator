@@ -21,6 +21,7 @@ use OLIUP\CG\Traits\QualifiedNameAwareTrait;
 use OLIUP\CG\Traits\ValidateAwareTrait;
 use OLIUP\CG\Traits\ValueAwareTrait;
 use OLIUP\CG\Traits\VisibilityAwareTrait;
+use Override;
 use RuntimeException;
 
 /**
@@ -46,6 +47,7 @@ class PHPConstant
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function validate(): void
 	{
 		if (null === $this->getValue()) {
@@ -56,6 +58,7 @@ class PHPConstant
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	protected function validateName(string $name): string
 	{
 		if (!\preg_match(self::CONSTANT_NAME_PATTERN, $name)) {
@@ -68,6 +71,7 @@ class PHPConstant
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	protected function validateVisibility(?VisibilityEnum $visibility): ?VisibilityEnum
 	{
 		return $visibility;
@@ -76,6 +80,7 @@ class PHPConstant
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	protected function validateValue(?PHPValue $value): ?PHPValue
 	{
 		return $value;
@@ -84,6 +89,7 @@ class PHPConstant
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	protected function validateNamespace(?PHPNamespace $namespace): ?PHPNamespace
 	{
 		return $namespace;

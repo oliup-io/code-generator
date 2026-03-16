@@ -22,6 +22,7 @@ use OLIUP\CG\Traits\StaticAwareTrait;
 use OLIUP\CG\Traits\TypeAwareTrait;
 use OLIUP\CG\Traits\ValueAwareTrait;
 use OLIUP\CG\Traits\VisibilityAwareTrait;
+use Override;
 
 /**
  * Class PHPConstant.
@@ -49,6 +50,7 @@ class PHPProperty
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	protected function validateName(string $name): string
 	{
 		if (!\preg_match(self::PROPERTY_NAME_PATTERN, $name)) {
@@ -61,6 +63,7 @@ class PHPProperty
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	protected function validateVisibility(?VisibilityEnum $visibility): ?VisibilityEnum
 	{
 		return $visibility;
@@ -69,6 +72,7 @@ class PHPProperty
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	protected function validateValue(?PHPValue $value): ?PHPValue
 	{
 		return $value;
@@ -77,6 +81,7 @@ class PHPProperty
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	protected function validateType(?PHPType $type): ?PHPType
 	{
 		return $type;

@@ -16,6 +16,7 @@ namespace OLIUP\CG;
 use OLIUP\CG\Traits\ChildrenAwareTrait;
 use OLIUP\CG\Traits\CommentAwareTrait;
 use OLIUP\CG\Traits\CommonTrait;
+use Override;
 
 /**
  * Class PHPFile.
@@ -47,6 +48,7 @@ class PHPFile
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	protected function validateChild(object $child): object
 	{
 		return $child;

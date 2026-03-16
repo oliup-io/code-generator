@@ -20,6 +20,7 @@ use OLIUP\CG\Traits\ReferenceAwareTrait;
 use OLIUP\CG\Traits\TypeAwareTrait;
 use OLIUP\CG\Traits\ValueAwareTrait;
 use OLIUP\CG\Traits\VisibilityAwareTrait;
+use Override;
 use RuntimeException;
 
 /**
@@ -88,6 +89,7 @@ class PHPArgument
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	protected function validateName(string $name): string
 	{
 		if (!\preg_match(PHPVar::VAR_NAME_PATTERN, $name)) {
@@ -100,6 +102,7 @@ class PHPArgument
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	protected function validateType(?PHPType $type): ?PHPType
 	{
 		return $type;
@@ -108,6 +111,7 @@ class PHPArgument
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	protected function validateVisibility(?VisibilityEnum $visibility): ?VisibilityEnum
 	{
 		$this->setPromoted(null !== $visibility);
@@ -118,6 +122,7 @@ class PHPArgument
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	protected function validateValue(?PHPValue $value): ?PHPValue
 	{
 		return $value;

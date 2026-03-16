@@ -19,6 +19,7 @@ use OLIUP\CG\Traits\CommentAwareTrait;
 use OLIUP\CG\Traits\CommonTrait;
 use OLIUP\CG\Traits\NameAwareTrait;
 use OLIUP\CG\Traits\VisibilityAwareTrait;
+use Override;
 
 /**
  * Class PHPUseTraitMethodRule.
@@ -73,6 +74,7 @@ class PHPUseTraitMethodRule
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	protected function validateName(string $name): string
 	{
 		if (!\preg_match(PHPMethod::METHOD_NAME_PATTERN, $name)) {
@@ -85,6 +87,7 @@ class PHPUseTraitMethodRule
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	protected function validateVisibility(?VisibilityEnum $visibility): ?VisibilityEnum
 	{
 		return $visibility;

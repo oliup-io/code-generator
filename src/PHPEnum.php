@@ -19,6 +19,7 @@ use OLIUP\CG\Traits\CommonTrait;
 use OLIUP\CG\Traits\QualifiedNameAwareTrait;
 use OLIUP\CG\Traits\TypeAwareTrait;
 use OLIUP\CG\Traits\ValidateAwareTrait;
+use Override;
 use RuntimeException;
 
 /**
@@ -48,11 +49,13 @@ class PHPEnum
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function validate(): void {}
 
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	protected function validateName(string $name): string
 	{
 		if (!\preg_match(PHPClass::CLASS_NAME_PATTERN, $name)) {
@@ -65,6 +68,7 @@ class PHPEnum
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	protected function validateType(?PHPType $type): ?PHPType
 	{
 		$t_str = $type ? (string) $type : '';
@@ -79,6 +83,7 @@ class PHPEnum
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	protected function validateNamespace(?PHPNamespace $namespace): ?PHPNamespace
 	{
 		return $namespace;

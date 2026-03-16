@@ -26,6 +26,7 @@ use OLIUP\CG\Traits\PropertiesAwareTrait;
 use OLIUP\CG\Traits\QualifiedNameAwareTrait;
 use OLIUP\CG\Traits\UseTraitsAwareTrait;
 use OLIUP\CG\Traits\ValidateAwareTrait;
+use Override;
 use RuntimeException;
 
 /**
@@ -110,6 +111,7 @@ class PHPClass
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function validate(): void
 	{
 		if ($this->isFinal() && $this->isAbstract()) {
@@ -120,6 +122,7 @@ class PHPClass
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	protected function validateName(string $name): string
 	{
 		if (empty($name)) {
@@ -135,6 +138,7 @@ class PHPClass
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	protected function validateNamespace(?PHPNamespace $namespace): ?PHPNamespace
 	{
 		return $namespace;
@@ -143,6 +147,7 @@ class PHPClass
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	protected function validateConstant(PHPConstant $constant): PHPConstant
 	{
 		return $constant;
@@ -151,6 +156,7 @@ class PHPClass
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	protected function validateMethod(PHPMethod $method): PHPMethod
 	{
 		return $method;
@@ -159,6 +165,7 @@ class PHPClass
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	protected function validateProperty(PHPProperty $property): PHPProperty
 	{
 		return $property;
@@ -167,6 +174,7 @@ class PHPClass
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	protected function validateUseTrait(PHPUseTrait $use_trait): PHPUseTrait
 	{
 		return $use_trait;
@@ -175,6 +183,7 @@ class PHPClass
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	protected function validateImplements(PHPInterface $interface): PHPInterface
 	{
 		return $interface;
@@ -183,6 +192,7 @@ class PHPClass
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	protected function validateChild(object $child): object
 	{
 		return $child;
