@@ -31,7 +31,7 @@ class PHPComment
 	/**
 	 * @param CommentKindEnum $kind
 	 *
-	 * @return $this
+	 * @return static
 	 */
 	public function setKind(CommentKindEnum $kind): static
 	{
@@ -59,7 +59,7 @@ class PHPComment
 	/**
 	 * @param string $content
 	 *
-	 * @return $this
+	 * @return static
 	 */
 	public function setContent(string $content): static
 	{
@@ -71,7 +71,7 @@ class PHPComment
 	/**
 	 * @param string $lines
 	 *
-	 * @return $this
+	 * @return static
 	 */
 	public function addLines(string $lines): static
 	{

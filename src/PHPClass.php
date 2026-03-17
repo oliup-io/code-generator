@@ -83,7 +83,7 @@ class PHPClass
 	/**
 	 * @param null|PHPClass|string $class
 	 *
-	 * @return $this
+	 * @return static
 	 */
 	public function extends(self|string|null $class): static
 	{

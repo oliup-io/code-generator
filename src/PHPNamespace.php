@@ -39,7 +39,7 @@ class PHPNamespace
 		$this->setName($namespace);
 	}
 
-	public function use(PHPClass|PHPConstant|PHPEnum|PHPFunction|PHPInterface|string $fqn_name, ?string $as = null): self
+	public function use(PHPClass|PHPConstant|PHPEnum|PHPFunction|PHPInterface|string $fqn_name, ?string $as = null): static
 	{
 		if (!\is_string($fqn_name)) {
 			$fqn_name = $fqn_name->getFullyQualifiedName(true);

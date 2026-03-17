@@ -50,7 +50,7 @@ trait ChildrenAwareTrait
 	/**
 	 * @param object|string $child
 	 *
-	 * @return $this
+	 * @return static
 	 */
 	public function setContent(object|string $child): static
 	{

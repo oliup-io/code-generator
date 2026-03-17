@@ -101,7 +101,7 @@ class PHPInterface
 	 * {@inheritDoc}
 	 */
 	#[Override]
-	protected function validateExtendsInterface(self $interface): self
+	protected function validateExtendsInterface(PHPInterface $interface): PHPInterface
 	{
 		return $interface;
 	}

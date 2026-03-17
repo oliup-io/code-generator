@@ -25,7 +25,7 @@ trait VisibilityAwareTrait
 	/**
 	 * @param null|VisibilityEnum $visibility
 	 *
-	 * @return $this
+	 * @return static
 	 */
 	public function setVisibility(?VisibilityEnum $visibility): static
 	{
@@ -43,7 +43,7 @@ trait VisibilityAwareTrait
 	}
 
 	/**
-	 * @return $this
+	 * @return static
 	 */
 	public function private(): static
 	{
@@ -51,7 +51,7 @@ trait VisibilityAwareTrait
 	}
 
 	/**
-	 * @return $this
+	 * @return static
 	 */
 	public function protected(): static
 	{
@@ -59,7 +59,7 @@ trait VisibilityAwareTrait
 	}
 
 	/**
-	 * @return $this
+	 * @return static
 	 */
 	public function public(): static
 	{
