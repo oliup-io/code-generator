@@ -1,7 +1,7 @@
 {
 	"name": "oliup/code-generator",
-	"version": "1.0.0",
 	"description": "Simple code generator for PHP.",
+	"type": "library",
 	"license": "MIT",
 	"require": {
 		"php": ">=8.1",
@@ -52,7 +52,7 @@
 			"php": "8.1.31"
 		},
 		"allow-plugins": {
-			"dealerdirect/phpcodesniffer-composer-installer": false
+			"dealerdirect/phpcodesniffer-composer-installer": true
 		}
 	}
 }
