@@ -15,6 +15,7 @@ namespace OLIUP\CG;
 
 use InvalidArgumentException;
 use OLIUP\CG\Enums\VisibilityEnum;
+use OLIUP\CG\Traits\AttributeAwareTrait;
 use OLIUP\CG\Traits\CommentAwareTrait;
 use OLIUP\CG\Traits\CommonTrait;
 use OLIUP\CG\Traits\NameAwareTrait;
@@ -29,6 +30,7 @@ use Override;
  */
 class PHPProperty
 {
+	use AttributeAwareTrait;
 	use CommentAwareTrait;
 	use CommonTrait;
 	use NameAwareTrait;

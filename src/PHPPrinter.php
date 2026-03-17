@@ -31,7 +31,8 @@ class PHPPrinter
 	{
 		$this->validate($v);
 
-		$out = '';
+		$attrs = $v->getAttributes();
+		$out   = !empty($attrs) ? \implode(' ', \array_map(fn ($a) => $this->printAttribute($a), $attrs)) . ' ' : '';
 
 		if ($allow_promoted && $v->isPromoted()) {
 			$visibility = $v->getVisibility() ?? VisibilityEnum::PRIVATE;
@@ -54,8 +55,14 @@ class PHPPrinter
 		$out = ($c = $v->getComment()) ? $this->printComment($c) . \PHP_EOL : '';
 
 		if ($v->isAnonymous()) {
-			$out .= 'new class';
+			$attrs    = $v->getAttributes();
+			$attr_str = !empty($attrs) ? \implode(' ', \array_map(fn ($a) => $this->printAttribute($a), $attrs)) . ' ' : '';
+			$out .= 'new ' . $attr_str . 'class';
 		} else {
+			foreach ($v->getAttributes() as $attr) {
+				$out .= $this->printAttribute($attr) . \PHP_EOL;
+			}
+
 			if ($v->isAbstract()) {
 				$out .= 'abstract ';
 			} else {
@@ -113,6 +120,9 @@ class PHPPrinter
 		$this->validate($v);
 
 		$out = ($c = $v->getComment()) ? $this->printComment($c) . \PHP_EOL : '';
+		foreach ($v->getAttributes() as $attr) {
+			$out .= $this->printAttribute($attr) . \PHP_EOL;
+		}
 		$out .= 'interface ' . $v->getName();
 
 		$extends   = $v->getExtends();
@@ -153,6 +163,9 @@ class PHPPrinter
 		$this->validate($v);
 
 		$out = ($c = $v->getComment()) ? $this->printComment($c) . \PHP_EOL : '';
+		foreach ($v->getAttributes() as $attr) {
+			$out .= $this->printAttribute($attr) . \PHP_EOL;
+		}
 		$out .= 'trait ' . $v->getName();
 
 		$use_traits = $v->getUsedTraits();
@@ -244,6 +257,9 @@ class PHPPrinter
 		}
 
 		$out = ($c = $v->getComment()) ? $this->printComment($c) . \PHP_EOL : '';
+		foreach ($v->getAttributes() as $attr) {
+			$out .= $this->printAttribute($attr) . \PHP_EOL;
+		}
 
 		if (!$declaration) {
 			if ($v->isAbstract()) {
@@ -293,6 +309,9 @@ class PHPPrinter
 		$this->validate($v);
 
 		$out = ($c = $v->getComment()) ? $this->printComment($c) . \PHP_EOL : '';
+		foreach ($v->getAttributes() as $attr) {
+			$out .= $this->printAttribute($attr) . \PHP_EOL;
+		}
 
 		$out .= $v->isStatic() && $v->isAnonymous() ? 'static function' : 'function';
 		$out .= ($v->isAnonymous() ? '' : ' ' . $v->getName()) . '(';
@@ -360,6 +379,9 @@ class PHPPrinter
 		$this->validate($v);
 
 		$out         = ($c         = $v->getComment()) ? $this->printComment($c) . \PHP_EOL : '';
+		foreach ($v->getAttributes() as $attr) {
+			$out .= $this->printAttribute($attr) . \PHP_EOL;
+		}
 		$out .= ($vb = $v->getVisibility()) ? $vb->value . ' const ' : 'const ';
 		$out .= $v->getName();
 		$out .= ' = ' . $this->printValue($v->getValue());
@@ -374,6 +396,9 @@ class PHPPrinter
 		$this->validate($v);
 
 		$out         = ($c         = $v->getComment()) ? $this->printComment($c) . \PHP_EOL : '';
+		foreach ($v->getAttributes() as $attr) {
+			$out .= $this->printAttribute($attr) . \PHP_EOL;
+		}
 		$out .= ($vb = $v->getVisibility()) ? $vb->value . ' ' : '';
 		$out .= $v->isStatic() ? 'static ' : '';
 		$out .= ($type = $v->getType()) ? $this->printType($type) . ' ' : '';
@@ -439,6 +464,18 @@ class PHPPrinter
 		return \var_export($value, true);
 	}
 
+	public function printAttribute(PHPAttribute $v): string
+	{
+		$out  = '#[' . $v->getName();
+		$args = $v->getArguments();
+		if (!empty($args)) {
+			$out .= '(' . \implode(', ', $args) . ')';
+		}
+		$out .= ']';
+
+		return $out;
+	}
+
 	public function printComment(PHPComment $v): string
 	{
 		$this->validate($v);
@@ -498,6 +535,7 @@ class PHPPrinter
 			$param instanceof PHPProperty  => $this->printProperty($param),
 			$param instanceof PHPConstant  => $this->printConstant($param),
 			$param instanceof PHPComment   => $this->printComment($param),
+			$param instanceof PHPAttribute => $this->printAttribute($param),
 			$param instanceof PHPNamespace => $this->printNamespace($param),
 			default                        => throw new InvalidArgumentException(\sprintf('object of type "%s" is not printable.', \get_debug_type($param)))
 		};

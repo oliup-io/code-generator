@@ -15,6 +15,7 @@ namespace OLIUP\CG;
 
 use InvalidArgumentException;
 use OLIUP\CG\Traits\ArgumentsAwareTrait;
+use OLIUP\CG\Traits\AttributeAwareTrait;
 use OLIUP\CG\Traits\ChildrenAwareTrait;
 use OLIUP\CG\Traits\CommentAwareTrait;
 use OLIUP\CG\Traits\CommonTrait;
@@ -29,6 +30,7 @@ use Override;
 class PHPFunction
 {
 	use ArgumentsAwareTrait;
+	use AttributeAwareTrait;
 	use ChildrenAwareTrait;
 	use CommentAwareTrait;
 	use CommonTrait;

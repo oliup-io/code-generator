@@ -15,6 +15,7 @@ namespace OLIUP\CG;
 
 use InvalidArgumentException;
 use OLIUP\CG\Enums\VisibilityEnum;
+use OLIUP\CG\Traits\AttributeAwareTrait;
 use OLIUP\CG\Traits\NameAwareTrait;
 use OLIUP\CG\Traits\ReferenceAwareTrait;
 use OLIUP\CG\Traits\TypeAwareTrait;
@@ -28,6 +29,7 @@ use RuntimeException;
  */
 class PHPArgument
 {
+	use AttributeAwareTrait;
 	use NameAwareTrait;
 	use ReferenceAwareTrait;
 	use TypeAwareTrait;

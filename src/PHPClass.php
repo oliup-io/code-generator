@@ -15,6 +15,7 @@ namespace OLIUP\CG;
 
 use InvalidArgumentException;
 use OLIUP\CG\Traits\AbstractAwareTrait;
+use OLIUP\CG\Traits\AttributeAwareTrait;
 use OLIUP\CG\Traits\ChildrenAwareTrait;
 use OLIUP\CG\Traits\CommentAwareTrait;
 use OLIUP\CG\Traits\CommonTrait;
@@ -35,6 +36,7 @@ use RuntimeException;
 class PHPClass
 {
 	use AbstractAwareTrait;
+	use AttributeAwareTrait;
 	use ChildrenAwareTrait {
 		ChildrenAwareTrait::addChild as private addChildReal;
 	}
