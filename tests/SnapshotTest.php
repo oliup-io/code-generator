@@ -210,4 +210,31 @@ final class SnapshotTest extends TestCase
 
 		$this->assertSnapshot($this->dir . '/class-with-comments.php', (string) $file);
 	}
+
+	public function testClassWithAttributes(): void
+	{
+		$file = new PHPFile();
+		$ns   = new PHPNamespace('App\Http');
+		$file->addChild($ns);
+
+		$class = $ns->newClass('UserController');
+		$class->addAttribute('Route\Controller')
+			->addAttribute('Authorize');
+
+		$prop = $class->newProperty('count');
+		$prop->public()->setType('int')->setValue(new PHPValue(0));
+		$prop->addAttribute('Inject');
+
+		$const = $class->newConstant('LIMIT', 100);
+		$const->addAttribute('Deprecated');
+
+		$show = $class->newMethod('show');
+		$show->public()->setReturnType('mixed');
+		$show->newAttribute('Get', "'/users/{id}'");
+		$show->newArgument('id')->setType('int')->addAttribute('MapEntity');
+		$show->newArgument('format')->setType('string')->setValue('json');
+		$show->addChild('return null;');
+
+		$this->assertSnapshot($this->dir . '/class-with-attributes.php', (string) $file);
+	}
 }
