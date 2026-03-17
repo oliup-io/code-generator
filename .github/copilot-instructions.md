@@ -71,6 +71,30 @@ echo $file;  // full PHP source
 - `VisibilityEnum` - `PUBLIC | PRIVATE | PROTECTED`
 - `CommentKindEnum` - `DOC (/**)` | `MULTILINE (/*)` | `HASH (#)` | `SLASH (//)`; static factories: `PHPComment::doc()`, `::inline()`, `::hash()`, `::multiline()`.
 
+## PHPPrinter API
+
+`PHPPrinter` is the sole rendering engine. Use `$printer->print($node)` for any node, or rely on `(string) $node` which calls it internally.
+
+Print methods that accept behavioural flags use `array $options = []` instead of positional booleans:
+
+| Method | Options key | Default | Effect |
+|--------|-------------|---------|--------|
+| `printArgument` | `allow_promoted` | `false` | emit visibility prefix for promoted ctor args |
+| `printArgument` | `allow_reference` | `true` | emit `&` prefix for by-reference args |
+| `printArgument` | `allow_attributes` | `true` | emit `#[...]` on the argument; set to `false` inside virtual `@method` docblocks to avoid invalid PHPDoc |
+| `printMethod` | `declaration` | `false` | emit `;` instead of a body (interface/abstract stubs) |
+| `printMethod` | `virtual` | `false` | emit a `@method` PHPDoc tag instead of real PHP |
+| `printVar` | `standalone` | `true` | emit ` = value;` trailer (set to `false` for `use (...)` captures) |
+| `printNamespace` | `scoped` | `false` | wrap body in `{ }` instead of using `;` |
+
+Example:
+
+```php
+$printer->printMethod($m, ['declaration' => true]);   // abstract stub
+$printer->printMethod($m, ['virtual' => true]);        // @method tag
+$printer->printArgument($arg, ['allow_promoted' => true]);
+```
+
 ## PHPNamespace Side-Effect
 
 `PHPNamespace::validateChild()` automatically calls `$child->setNamespace($this)` for any child that uses `NamespaceAwareTrait`. Adding a class to a namespace sets its namespace automatically.

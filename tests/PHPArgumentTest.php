@@ -70,7 +70,7 @@ final class PHPArgumentTest extends TestCase
 		$arg = new PHPArgument('id', 'int');
 		$arg->public();
 		$this->assertEq('promoted flag', true, $arg->isPromoted());
-		$out = $this->printer->printArgument($arg, allow_promoted: true);
+		$out = $this->printer->printArgument($arg, ['allow_promoted' => true]);
 		$this->assertHasStr('public keyword', 'public', $out);
 	}
 

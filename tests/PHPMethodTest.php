@@ -46,7 +46,7 @@ final class PHPMethodTest extends TestCase
 	{
 		$m = new PHPMethod('run');
 		$m->public()->setReturnType('void');
-		$out = $this->printer->printMethod($m, declaration: true);
+		$out = $this->printer->printMethod($m, ['declaration' => true]);
 		$this->assertHasStr('ends with semicolon', 'run(): void;', $out);
 		$this->assertNotHasStr('no body braces', '{', $out);
 	}
@@ -79,7 +79,7 @@ final class PHPMethodTest extends TestCase
 	{
 		$m = new PHPMethod('getId');
 		$m->public()->setReturnType('int');
-		$out = $this->printer->printMethod($m, virtual: true);
+		$out = $this->printer->printMethod($m, ['virtual' => true]);
 		$this->assertHasStr('@method tag', '@method', $out);
 		$this->assertNotHasStr('no body', '{', $out);
 	}

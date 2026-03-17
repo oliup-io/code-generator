@@ -27,11 +27,15 @@ class PHPPrinter
 {
 	public function __construct(protected string $indent = "\t") {}
 
-	public function printArgument(PHPArgument $v, bool $allow_promoted = false, bool $allow_reference = true): string
+	public function printArgument(PHPArgument $v, array $options = []): string
 	{
 		$this->validate($v);
 
-		$attrs = $v->getAttributes();
+		$allow_promoted   = $options['allow_promoted'] ?? false;
+		$allow_reference  = $options['allow_reference'] ?? true;
+		$allow_attributes = $options['allow_attributes'] ?? true;
+
+		$attrs = $allow_attributes ? $v->getAttributes() : [];
 		$out   = !empty($attrs) ? \implode(' ', \array_map(fn ($a) => $this->printAttribute($a), $attrs)) . ' ' : '';
 
 		if ($allow_promoted && $v->isPromoted()) {
@@ -142,7 +146,7 @@ class PHPPrinter
 		}
 
 		if (!empty($methods)) {
-			$body_parts[] = \implode(\PHP_EOL . \PHP_EOL, \array_map(fn ($c) => $this->printMethod($c, declaration: true), $methods));
+			$body_parts[] = \implode(\PHP_EOL . \PHP_EOL, \array_map(fn ($c) => $this->printMethod($c, ['declaration' => true]), $methods));
 		}
 		foreach ($v->getChildren() as $child) {
 			$body_parts[] = $this->print($child);
@@ -239,9 +243,12 @@ class PHPPrinter
 		return $out;
 	}
 
-	public function printMethod(PHPMethod $v, bool $declaration = false, bool $virtual = false): string
+	public function printMethod(PHPMethod $v, array $options = []): string
 	{
 		$this->validate($v);
+
+		$declaration = $options['declaration'] ?? false;
+		$virtual     = $options['virtual'] ?? false;
 
 		if ($virtual) {
 			$out           = '@method ';
@@ -249,7 +256,7 @@ class PHPPrinter
 			$out .= $v->getName() . '(';
 			$args = $v->getArguments();
 			if (!empty($args)) {
-				$out .= \implode(', ', \array_map(fn ($arg) => $this->printArgument($arg), $args));
+				$out .= \implode(', ', \array_map(fn ($arg) => $this->printArgument($arg, ['allow_attributes' => false]), $args));
 			}
 			$out .= ')';
 
@@ -279,7 +286,7 @@ class PHPPrinter
 		$arg_allow_promoted_arg = '__construct' === $method_name;
 
 		if (!empty($args)) {
-			$out .= \implode(', ', \array_map(fn ($arg) => $this->printArgument($arg, $arg_allow_promoted_arg), $args));
+			$out .= \implode(', ', \array_map(fn ($arg) => $this->printArgument($arg, ['allow_promoted' => $arg_allow_promoted_arg]), $args));
 		}
 
 		$out .= ')';
@@ -325,7 +332,7 @@ class PHPPrinter
 
 		$uses = $v->getUses();
 		if (!empty($uses)) {
-			$out .= ' use (' . \implode(', ', \array_map(fn ($var) => $this->printVar($var, false), $uses)) . ')';
+			$out .= ' use (' . \implode(', ', \array_map(fn ($var) => $this->printVar($var, ['standalone' => false]), $uses)) . ')';
 		}
 
 		$out .= ($type = $v->getReturnType()) ? ': ' . $this->printType($type) : '';
@@ -410,9 +417,11 @@ class PHPPrinter
 		return $out;
 	}
 
-	public function printVar(PHPVar $v, bool $standalone = true): string
+	public function printVar(PHPVar $v, array $options = []): string
 	{
 		$this->validate($v);
+
+		$standalone = $options['standalone'] ?? true;
 
 		$out = ($c = $v->getComment()) ? $this->printComment($c) . \PHP_EOL : '';
 		$out .= ($v->isByReference() ? '&$' : '$') . $v->getName();
@@ -425,9 +434,11 @@ class PHPPrinter
 		return $out;
 	}
 
-	public function printNamespace(PHPNamespace $v, bool $scoped = false): string
+	public function printNamespace(PHPNamespace $v, array $options = []): string
 	{
 		$this->validate($v);
+
+		$scoped = $options['scoped'] ?? false;
 
 		$out           = 'namespace ' . $v->getName();
 		[$start, $end] = $scoped ? ['{' . \PHP_EOL, '}' . \PHP_EOL] : [';' . \PHP_EOL . \PHP_EOL, ''];
