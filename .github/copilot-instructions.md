@@ -20,6 +20,7 @@ PHPMethod -> arguments[] + children[] (body as PHPRaw lines)
 - **`PHPRaw`**: passthrough for raw PHP source - `addChild('return $x;')` auto-wraps strings.
 - **`PHPValue`**: wraps any PHP value and renders via `var_export()`; anonymous `PHPClass` renders as `new class { ... }`.
 - **`PHPType`**: union types via constructor varargs; `PHPType::intersection(...)` for `A&B`; `->nullable()` adds `null`.
+- **`PHPAttribute`**: represents a single PHP 8 attribute `#[Name(arg1, arg2)]`; construct with `new PHPAttribute('Name', 'arg1')` or use `addArgument()` fluently.
 
 ## Trait Composition
 
@@ -28,6 +29,7 @@ Functionality is assembled from focused traits in `src/Traits/`. Key ones:
 - `QualifiedNameAwareTrait` - parses `Foo\Bar\Baz` into namespace + short name; used by class/interface/trait/function.
 - `ChildrenAwareTrait` - `addChild()` in `PHPClass`/`PHPInterface`/`PHPTrait` dispatches by type to the right collection.
 - `VisibilityAwareTrait` - adds `->public()`, `->protected()`, `->private()` fluent shortcuts.
+- `AttributeAwareTrait` - adds `->addAttribute()`, `->getAttributes()`, `->newAttribute()` to `PHPClass`, `PHPInterface`, `PHPTrait`, `PHPMethod`, `PHPProperty`, `PHPConstant`, `PHPFunction`, `PHPArgument`.
 - `CommonTrait` - provides `__toString()` and deep-clone `__clone()` for every class.
 
 ## Fluent API Pattern
@@ -51,6 +53,13 @@ $class->newMethod('getId')
       ->public()
       ->setReturnType('int')
       ->addChild('return $this->id;');
+
+// PHP 8 attributes
+$class->newAttribute('ORM\Entity');                        // #[ORM\Entity]
+$class->newAttribute('ORM\Table', "name: 'users'");        // #[ORM\Table(name: 'users')]
+$class->newMethod('save')->newAttribute('Override');        // on method
+$class->newProperty('slug')->newAttribute('ORM\Column');   // on property
+$ctor->newArgument('email')->addAttribute('Assert\Email'); // inline on argument
 
 echo $file;  // full PHP source
 ```
