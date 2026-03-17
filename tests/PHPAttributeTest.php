@@ -197,4 +197,13 @@ final class PHPAttributeTest extends TestCase
 		$out = $this->printer->printArgument($arg);
 		$this->assertHasStr('two attrs', '#[NotNull] #[Positive]', $out);
 	}
+
+	public function testArgumentAttributesOmittedInVirtualMethod(): void
+	{
+		$m = (new PHPMethod('handle'))->public()->setReturnType('void');
+		$m->newArgument('id')->setType('int')->addAttribute('MapEntity');
+		$out = $this->printer->printMethod($m, ['virtual' => true]);
+		$this->assertHasStr('@method tag', '@method void handle(int $id)', $out);
+		$this->assertNotHasStr('no attribute in docblock', '#[', $out);
+	}
 }
