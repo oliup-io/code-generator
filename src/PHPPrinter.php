@@ -252,7 +252,7 @@ class PHPPrinter
 
 		if ($virtual) {
 			$out           = '@method ';
-			$out .= ($type = $v->getReturnType()) ? $this->printType($type) . ' ' : '';
+			$out .= ($type = $v->getReturnType()) ? $this->printType($type, ['with_generics' => true]) . ' ' : '';
 			$out .= $v->getName() . '(';
 			$args = $v->getArguments();
 			if (!empty($args)) {
@@ -351,8 +351,10 @@ class PHPPrinter
 		return $out;
 	}
 
-	public function printType(PHPType $v): string
+	public function printType(PHPType $v, array $options = []): string
 	{
+		$with_generics = $options['with_generics'] ?? false;
+
 		$this->validate($v);
 		$types = $v->getTypes();
 		unset($types['null']);
@@ -371,14 +373,33 @@ class PHPPrinter
 			++$count;
 		}
 
+		$result = \implode('|', $temp);
+
+		// strip generic annotations (e.g. array<string,mixed>|Map<K,V> -> array|Map) unless caller opts in
+		if (!$with_generics && \str_contains($result, '<')) {
+			$stripped = '';
+			$depth    = 0;
+			for ($i = 0, $len = \strlen($result); $i < $len; ++$i) {
+				if ('<' === $result[$i]) {
+					++$depth;
+				} elseif ('>' === $result[$i]) {
+					--$depth;
+				} elseif (0 === $depth) {
+					$stripped .= $result[$i];
+				}
+			}
+			$result = $stripped;
+			$temp   = \explode('|', $result);
+		}
+
 		if ($v->isNullable()) {
 			// 'mixed' already includes null - never prefix with ? or null|
 			if (!\in_array('mixed', $temp, true)) {
-				return 1 === $count ? '?' . $temp[0] : 'null|' . \implode('|', $temp);
+				return 1 === $count ? '?' . $temp[0] : 'null|' . $result;
 			}
 		}
 
-		return \implode('|', $temp);
+		return $result;
 	}
 
 	public function printConstant(PHPConstant $v): string

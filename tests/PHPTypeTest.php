@@ -96,4 +96,73 @@ final class PHPTypeTest extends TestCase
 		$type = new PHPType('string', 'string');
 		$this->assertEq('deduped to one', 1, \count($type->getTypes()));
 	}
+
+	// --- generic annotation stripping ---
+
+	public function testUnionOfGenericsStripped(): void
+	{
+		$type = new PHPType('array<string,mixed>|Map<string,mixed>');
+		$this->assertEq('union of generics stripped', 'array|Map', $this->printer->printType($type));
+	}
+
+	public function testUnionOfGenericsKeptWhenOptedIn(): void
+	{
+		$type = new PHPType('array<string,mixed>|Map<string,mixed>');
+		$this->assertEq('union of generics retained', 'array<string,mixed>|Map<string,mixed>', $this->printer->printType($type, ['with_generics' => true]));
+	}
+
+	public function testGenericsStrippedByDefault(): void
+	{
+		$type = new PHPType('array<string,mixed>');
+		$this->assertEq('bare type without generics', 'array', $this->printer->printType($type));
+	}
+
+	public function testGenericsKeptWhenOptedIn(): void
+	{
+		$type = new PHPType('array<string,mixed>');
+		$this->assertEq('generic retained', 'array<string,mixed>', $this->printer->printType($type, ['with_generics' => true]));
+	}
+
+	public function testNestedGenericsStripped(): void
+	{
+		$type = new PHPType('array<string,array<int,mixed>>');
+		$this->assertEq('nested generics stripped', 'array', $this->printer->printType($type));
+	}
+
+	public function testNonGenericTypeUnchanged(): void
+	{
+		$type = new PHPType('string');
+		$this->assertEq('plain type unchanged', 'string', $this->printer->printType($type));
+	}
+
+	public function testNullableGenericStripped(): void
+	{
+		$type = (new PHPType('array<string,int>'))->nullable();
+		$this->assertEq('nullable generic stripped', '?array', $this->printer->printType($type));
+	}
+
+	public function testNullableGenericKeptWhenOptedIn(): void
+	{
+		$type = (new PHPType('array<string,int>'))->nullable();
+		$this->assertEq('nullable generic retained', '?array<string,int>', $this->printer->printType($type, ['with_generics' => true]));
+	}
+
+	public function testInlineUnionWithGenericsStripped(): void
+	{
+		// string form: 'array<string,mixed>|Map<string,mixed>' stored as one entry in PHPType
+		$type = new PHPType('array<string,mixed>|Map<string,mixed>');
+		$this->assertEq('union generics stripped', 'array|Map', $this->printer->printType($type));
+	}
+
+	public function testInlineUnionWithGenericsKeptWhenOptedIn(): void
+	{
+		$type = new PHPType('array<string,mixed>|Map<string,mixed>');
+		$this->assertEq('union generics retained', 'array<string,mixed>|Map<string,mixed>', $this->printer->printType($type, ['with_generics' => true]));
+	}
+
+	public function testNestedGenericInUnionStripped(): void
+	{
+		$type = new PHPType('array<string,array<int,mixed>>|Collection<string>');
+		$this->assertEq('nested union generics stripped', 'array|Collection', $this->printer->printType($type));
+	}
 }

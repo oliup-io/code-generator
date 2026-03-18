@@ -77,15 +77,16 @@ echo $file;  // full PHP source
 
 Print methods that accept behavioural flags use `array $options = []` instead of positional booleans:
 
-| Method           | Options key        | Default | Effect                                                                                                   |
-| ---------------- | ------------------ | ------- | -------------------------------------------------------------------------------------------------------- |
-| `printArgument`  | `allow_promoted`   | `false` | emit visibility prefix for promoted ctor args                                                            |
-| `printArgument`  | `allow_reference`  | `true`  | emit `&` prefix for by-reference args                                                                    |
-| `printArgument`  | `allow_attributes` | `true`  | emit `#[...]` on the argument; set to `false` inside virtual `@method` docblocks to avoid invalid PHPDoc |
-| `printMethod`    | `declaration`      | `false` | emit `;` instead of a body (interface/abstract stubs)                                                    |
-| `printMethod`    | `virtual`          | `false` | emit a `@method` PHPDoc tag instead of real PHP                                                          |
-| `printVar`       | `standalone`       | `true`  | emit ` = value;` trailer (set to `false` for `use (...)` captures)                                       |
-| `printNamespace` | `scoped`           | `false` | wrap body in `{ }` instead of using `;`                                                                  |
+| Method           | Options key        | Default | Effect                                                                                                                                                                            |
+| ---------------- | ------------------ | ------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `printArgument`  | `allow_promoted`   | `false` | emit visibility prefix for promoted ctor args                                                                                                                                     |
+| `printArgument`  | `allow_reference`  | `true`  | emit `&` prefix for by-reference args                                                                                                                                             |
+| `printArgument`  | `allow_attributes` | `true`  | emit `#[...]` on the argument; set to `false` inside virtual `@method` docblocks to avoid invalid PHPDoc                                                                          |
+| `printMethod`    | `declaration`      | `false` | emit `;` instead of a body (interface/abstract stubs)                                                                                                                             |
+| `printMethod`    | `virtual`          | `false` | emit a `@method` PHPDoc tag instead of real PHP                                                                                                                                   |
+| `printType`      | `with_generics`    | `false` | keep generic annotations (e.g. `array<string,int>`); strip them by default because PHP does not support generics in type declarations; pass `true` when rendering PHPDoc contexts |
+| `printVar`       | `standalone`       | `true`  | emit ` = value;` trailer (set to `false` for `use (...)` captures)                                                                                                                |
+| `printNamespace` | `scoped`           | `false` | wrap body in `{ }` instead of using `;`                                                                                                                                           |
 
 Example:
 
