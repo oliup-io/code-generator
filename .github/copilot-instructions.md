@@ -107,11 +107,11 @@ $printer->printArgument($arg, ['allow_promoted' => true]);
 ## Developer Workflow
 
 ```sh
-./csfix           # runs psalm --no-cache then oliup-cs fix (linting + formatting)
-./vendor/bin/psalm --no-cache   # static analysis only (error level 4)
-./vendor/bin/oliup-cs fix       # code style fix only
-./vendor/bin/phpunit --testdox  # run all tests
-UPDATE_SNAPSHOTS=1 ./vendor/bin/phpunit  # regenerate snapshot files
+make test   # run full test suite (phpunit --testdox)
+make lint   # static analysis only - psalm --no-cache (error level 4)
+make cs     # check code style (phpcs)
+make fix    # lint then auto-fix code style (oliup-cs fix)
+UPDATE_SNAPSHOTS=1 make test  # regenerate snapshot files
 ```
 
 ## Test Structure
