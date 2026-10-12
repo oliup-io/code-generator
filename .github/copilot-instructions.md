@@ -107,12 +107,26 @@ $printer->printArgument($arg, ['allow_promoted' => true]);
 ## Developer Workflow
 
 ```sh
-make test   # run full test suite (phpunit --testdox)
-make lint   # static analysis only - psalm --no-cache (error level 4)
-make cs     # check code style (phpcs)
-make fix    # lint then auto-fix code style (oliup-cs fix)
+make check       # cs + lint: the gate for every change
+make check-full  # the same two with their caches ignored
+make test        # run full test suite (phpunit --testdox); FILE=, FILTER= narrow it
+make lint        # static analysis only - psalm (error level 4)
+make cs          # check code style (phpcs)
+make fix         # lint then auto-fix code style (oliup-cs fix)
 UPDATE_SNAPSHOTS=1 make test  # regenerate snapshot files
 ```
+
+**Three tiers of re-running**, the cadence of every repository of the suite, with the same words
+everywhere (the `Makefile`'s own comments say what each one skips):
+
+- `make check` -- **every change**: code style and static analysis, both cached (phpcs also forks
+  over this machine's cores). `make check-full` is the same two with the caches ignored.
+- `make test FILE=... FILTER=...` -- **a feature is done**: one file or one case. The whole suite
+  runs in about a second here, so this buys focus rather than time.
+- `make test` -- **end of a cycle, and before anything is handed over**.
+
+The tiers are about re-running, never about writing: a feature's test is written with the feature.
+A failure in a narrowed run is repeated with the full target before it is believed or reported.
 
 ## Test Structure
 

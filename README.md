@@ -176,10 +176,12 @@ Every node implements `__toString()` — cast to `(string)` or `echo` to get PHP
 ## Development
 
 ```sh
-make test   # run full test suite
-make lint   # static analysis (psalm, error level 4)
-make cs     # check code style (phpcs)
-make fix    # lint + auto-fix code style
+make check       # cs + lint: the gate for every change
+make check-full  # the same two with their caches ignored
+make test        # run full test suite (FILE=tests/FooTest.php, FILTER=testBar run one of them)
+make lint        # static analysis (psalm, error level 4)
+make cs          # check code style (phpcs)
+make fix         # lint + auto-fix code style
 
 UPDATE_SNAPSHOTS=1 make test  # regenerate snapshot files
 ```
