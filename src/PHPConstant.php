@@ -19,6 +19,7 @@ use OLIUP\CG\Traits\AttributeAwareTrait;
 use OLIUP\CG\Traits\CommentAwareTrait;
 use OLIUP\CG\Traits\CommonTrait;
 use OLIUP\CG\Traits\QualifiedNameAwareTrait;
+use OLIUP\CG\Traits\TypeAwareTrait;
 use OLIUP\CG\Traits\ValidateAwareTrait;
 use OLIUP\CG\Traits\ValueAwareTrait;
 use OLIUP\CG\Traits\VisibilityAwareTrait;
@@ -34,11 +35,12 @@ class PHPConstant
 	use CommentAwareTrait;
 	use CommonTrait;
 	use QualifiedNameAwareTrait;
+	use TypeAwareTrait;
 	use ValidateAwareTrait;
 	use ValueAwareTrait;
 	use VisibilityAwareTrait;
 
-	public const CONSTANT_NAME_PATTERN = '#^[a-zA-Z_][a-zA-Z0-9_]*$#';
+	public const string CONSTANT_NAME_PATTERN = '#^[a-zA-Z_][a-zA-Z0-9_]*$#';
 
 	public function __construct(string $name, mixed $value = null)
 	{
@@ -86,6 +88,19 @@ class PHPConstant
 	protected function validateValue(?PHPValue $value): ?PHPValue
 	{
 		return $value;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * A class constant's type is whatever the caller says: PHP 8.3 accepts every type but `void`,
+	 * `never`, `callable` and a class-level `static`, which a caller writing a type for a constant
+	 * it is also giving a value to does not reach for.
+	 */
+	#[Override]
+	protected function validateType(?PHPType $type): ?PHPType
+	{
+		return $type;
 	}
 
 	/**

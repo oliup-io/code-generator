@@ -30,7 +30,7 @@ class PHPNamespace
 	use CommonTrait;
 	use NameAwareTrait;
 
-	public const NAMESPACE_PATTERN     = '#^[a-zA-Z_][a-zA-Z0-9_]*(\\\[a-zA-Z_][a-zA-Z0-9_]*)*$#';
+	public const string NAMESPACE_PATTERN     = '#^[a-zA-Z_][a-zA-Z0-9_]*(\\\[a-zA-Z_][a-zA-Z0-9_]*)*$#';
 
 	protected array $uses = [];
 

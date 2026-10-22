@@ -32,7 +32,7 @@ class PHPVar
 	use ReferenceAwareTrait;
 	use ValueAwareTrait;
 
-	public const VAR_NAME_PATTERN = '#^[a-zA-Z_][a-zA-Z0-9_]*$#';
+	public const string VAR_NAME_PATTERN = '#^[a-zA-Z_][a-zA-Z0-9_]*$#';
 
 	public function __construct(string $name = '')
 	{

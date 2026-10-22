@@ -148,7 +148,7 @@ PHPMethod -> arguments[] + children[] (body as PHPRaw lines)
 | `PHPMethod` | Class/interface/trait method |
 | `PHPArgument` | Function/method argument (supports promotion, variadic, by-ref) |
 | `PHPProperty` | Class property |
-| `PHPConstant` | Class or interface constant |
+| `PHPConstant` | Class or interface constant, with an optional type (`->setType('string')`, PHP 8.3) |
 | `PHPType` | Union type; `PHPType::intersection()` for `A&B` |
 | `PHPAttribute` | PHP 8 attribute `#[Name(args)]` |
 | `PHPComment` | DOC / multiline / hash / slash comment |

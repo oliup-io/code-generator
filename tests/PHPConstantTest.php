@@ -53,6 +53,23 @@ final class PHPConstantTest extends TestCase
 		$this->assertHasStr('private const', 'private const', $this->printer->printConstant($c));
 	}
 
+	public function testWithAType(): void
+	{
+		$c = new PHPConstant('TABLE_NAME', 'users');
+		$c->public()
+			->setType('string');
+
+		self::assertSame("public const string TABLE_NAME = 'users';", $this->printer->printConstant($c));
+	}
+
+	public function testWithoutATypeNothingIsWritten(): void
+	{
+		$c = new PHPConstant('TABLE_NAME', 'users');
+		$c->public();
+
+		self::assertSame("public const TABLE_NAME = 'users';", $this->printer->printConstant($c));
+	}
+
 	public function testIntValue(): void
 	{
 		$out = $this->printer->printConstant(new PHPConstant('LIMIT', 50));

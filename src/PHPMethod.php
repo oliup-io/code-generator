@@ -46,8 +46,8 @@ class PHPMethod
 	use ValidateAwareTrait;
 	use VisibilityAwareTrait;
 
-	public const METHOD_NAME_PATTERN   = '#^[a-zA-Z_][a-zA-Z0-9_]*$#';
-	protected ?PHPType $return_type    = null;
+	public const string METHOD_NAME_PATTERN   = '#^[a-zA-Z_][a-zA-Z0-9_]*$#';
+	protected ?PHPType $return_type           = null;
 
 	public function __construct(string $name = '')
 	{

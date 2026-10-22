@@ -30,6 +30,7 @@ Functionality is assembled from focused traits in `src/Traits/`. Key ones:
 - `ChildrenAwareTrait` - `addChild()` in `PHPClass`/`PHPInterface`/`PHPTrait` dispatches by type to the right collection.
 - `VisibilityAwareTrait` - adds `->public()`, `->protected()`, `->private()` fluent shortcuts.
 - `AttributeAwareTrait` - adds `->addAttribute()`, `->getAttributes()`, `->newAttribute()` to `PHPClass`, `PHPInterface`, `PHPTrait`, `PHPMethod`, `PHPProperty`, `PHPConstant`, `PHPFunction`, `PHPArgument`.
+- `TypeAwareTrait` - adds `->setType()` / `->getType()` to `PHPMethod` (return type), `PHPProperty`, `PHPArgument` and `PHPConstant` (a typed class constant, PHP 8.3); nothing is written when no type is set.
 - `CommonTrait` - provides `__toString()` and deep-clone `__clone()` for every class.
 
 ## Fluent API Pattern

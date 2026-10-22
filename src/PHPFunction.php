@@ -38,7 +38,7 @@ class PHPFunction
 	use StaticAwareTrait;
 	use ValidateAwareTrait;
 
-	public const FUNCTION_NAME_PATTERN = '#^[a-zA-Z_][a-zA-Z0-9_]*$#';
+	public const string FUNCTION_NAME_PATTERN = '#^[a-zA-Z_][a-zA-Z0-9_]*$#';
 
 	/** @var PHPVar[] */
 	protected array $uses           = [];

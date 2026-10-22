@@ -411,6 +411,7 @@ class PHPPrinter
 			$out .= $this->printAttribute($attr) . \PHP_EOL;
 		}
 		$out .= ($vb = $v->getVisibility()) ? $vb->value . ' const ' : 'const ';
+		$out .= ($type = $v->getType()) ? $this->printType($type) . ' ' : '';
 		$out .= $v->getName();
 		$out .= ' = ' . $this->printValue($v->getValue());
 
