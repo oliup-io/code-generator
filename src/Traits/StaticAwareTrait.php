@@ -33,7 +33,7 @@ trait StaticAwareTrait
 	 *
 	 * @return $this
 	 */
-	public function static(bool $static =  true): static
+	public function static(bool $static = true): static
 	{
 		$this->static = $static;
 

@@ -18,9 +18,9 @@ namespace OLIUP\CG\Enums;
  */
 enum VisibilityEnum: string
 {
-	case PUBLIC =  'public';
+	case PUBLIC = 'public';
 
-	case PRIVATE =  'private';
+	case PRIVATE = 'private';
 
-	case PROTECTED =  'protected';
+	case PROTECTED = 'protected';
 }

@@ -49,7 +49,7 @@ trait CommentAwareTrait
 	 */
 	public function comment(string $comment): PHPComment
 	{
-		$this->setComment($c =  new PHPComment($comment));
+		$this->setComment($c = new PHPComment($comment));
 
 		return $c;
 	}

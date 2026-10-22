@@ -33,7 +33,7 @@ trait FinalAwareTrait
 	 *
 	 * @return $this
 	 */
-	public function final(bool $final =  true): static
+	public function final(bool $final = true): static
 	{
 		$this->final = $final;
 

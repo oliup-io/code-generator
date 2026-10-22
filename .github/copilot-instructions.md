@@ -6,7 +6,7 @@
 
 ## Project Overview
 
-A fluent PHP 8.1+ code-generation library. Namespace root: `OLIUP\CG\`. Every node implements `__toString()` via `CommonTrait`, which internally calls `(new PHPPrinter())->print($this)`.
+A fluent PHP 8.3+ code-generation library. Namespace root: `OLIUP\CG\`. Every node implements `__toString()` via `CommonTrait`, which internally calls `(new PHPPrinter())->print($this)`.
 
 ## Architecture
 
@@ -140,7 +140,7 @@ Tests live in `tests/` and use PHPUnit 9 with a custom `TestCase` base class.
 
 ## Code Style Rules
 
-- PHP 8.1+ syntax; strict types always on.
+- PHP 8.3+ syntax; strict types always on.
 - Every `.php` file gets the OLIUP copyright PHPDoc header (enforced by `php-cs-fixer`).
 - **No Unicode shortcut characters in comments or docblocks.** Always use plain ASCII equivalents:
 

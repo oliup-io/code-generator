@@ -1,10 +1,10 @@
 # oliup/code-generator
 
-A fluent PHP 8.1+ code-generation library. Build PHP source files programmatically using a clean, chainable API — `PHPPrinter` renders every node to a string.
+A fluent PHP 8.3+ code-generation library. Build PHP source files programmatically using a clean, chainable API — `PHPPrinter` renders every node to a string.
 
 ## Requirements
 
-- PHP >= 8.1
+- PHP >= 8.3
 
 ## Installation
 

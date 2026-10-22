@@ -33,7 +33,7 @@ trait AbstractAwareTrait
 	 *
 	 * @return $this
 	 */
-	public function abstract(bool $abstract =  true): static
+	public function abstract(bool $abstract = true): static
 	{
 		$this->abstract = $abstract;
 
