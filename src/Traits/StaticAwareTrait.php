@@ -20,17 +20,12 @@ trait StaticAwareTrait
 {
 	protected bool $static = false;
 
-	/**
-	 * @return bool
-	 */
 	public function isStatic(): bool
 	{
 		return $this->static;
 	}
 
 	/**
-	 * @param bool $static
-	 *
 	 * @return $this
 	 */
 	public function static(bool $static = true): static

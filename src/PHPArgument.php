@@ -45,9 +45,6 @@ class PHPArgument
 			->setType($type);
 	}
 
-	/**
-	 * @param bool $promoted
-	 */
 	public function setPromoted(bool $promoted): static
 	{
 		if ($promoted && $this->isVariadic()) {
@@ -59,9 +56,6 @@ class PHPArgument
 		return $this;
 	}
 
-	/**
-	 * @param bool $variadic
-	 */
 	public function setVariadic(bool $variadic): static
 	{
 		if ($variadic && $this->isPromoted()) {
@@ -72,25 +66,16 @@ class PHPArgument
 		return $this;
 	}
 
-	/**
-	 * @return bool
-	 */
 	public function isVariadic(): bool
 	{
 		return $this->variadic;
 	}
 
-	/**
-	 * @return bool
-	 */
 	public function isPromoted(): bool
 	{
 		return $this->promoted;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	#[Override]
 	protected function validateName(string $name): string
 	{
@@ -101,18 +86,12 @@ class PHPArgument
 		return $name;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	#[Override]
 	protected function validateType(?PHPType $type): ?PHPType
 	{
 		return $type;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	#[Override]
 	protected function validateVisibility(?VisibilityEnum $visibility): ?VisibilityEnum
 	{
@@ -121,9 +100,6 @@ class PHPArgument
 		return $visibility;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	#[Override]
 	protected function validateValue(?PHPValue $value): ?PHPValue
 	{

@@ -48,9 +48,6 @@ class PHPConstant
 		$this->setValue($value);
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	#[Override]
 	public function validate(): void
 	{
@@ -59,9 +56,6 @@ class PHPConstant
 		}
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	#[Override]
 	protected function validateName(string $name): string
 	{
@@ -72,18 +66,12 @@ class PHPConstant
 		return $name;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	#[Override]
 	protected function validateVisibility(?VisibilityEnum $visibility): ?VisibilityEnum
 	{
 		return $visibility;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	#[Override]
 	protected function validateValue(?PHPValue $value): ?PHPValue
 	{
@@ -103,9 +91,6 @@ class PHPConstant
 		return $type;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	#[Override]
 	protected function validateNamespace(?PHPNamespace $namespace): ?PHPNamespace
 	{

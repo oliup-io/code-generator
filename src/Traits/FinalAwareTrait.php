@@ -20,17 +20,12 @@ trait FinalAwareTrait
 {
 	protected bool $final = false;
 
-	/**
-	 * @return bool
-	 */
 	public function isFinal(): bool
 	{
 		return $this->final;
 	}
 
 	/**
-	 * @param bool $final
-	 *
 	 * @return $this
 	 */
 	public function final(bool $final = true): static

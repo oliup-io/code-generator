@@ -39,9 +39,6 @@ class PHPVar
 		$this->setName($name);
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	#[Override]
 	protected function validateName(string $name): string
 	{
@@ -52,9 +49,6 @@ class PHPVar
 		return $name;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	#[Override]
 	protected function validateValue(?PHPValue $value): ?PHPValue
 	{

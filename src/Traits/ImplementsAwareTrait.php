@@ -31,29 +31,17 @@ trait ImplementsAwareTrait
 		return $this->implements;
 	}
 
-	/**
-	 * @param PHPInterface|string $interface
-	 *
-	 * @return bool
-	 */
 	public function hasInterface(PHPInterface|string $interface): bool
 	{
 		return isset($this->implements[\is_string($interface) ? $interface : $interface->getFullyQualifiedName()]);
 	}
 
-	/**
-	 * @param string $name
-	 *
-	 * @return ?PHPInterface
-	 */
 	public function getInterface(string $name): ?PHPInterface
 	{
 		return $this->implements[$name] ?? null;
 	}
 
 	/**
-	 * @param PHPInterface|string $interface
-	 *
 	 * @return $this
 	 */
 	public function implements(PHPInterface|string $interface): static
@@ -67,10 +55,5 @@ trait ImplementsAwareTrait
 		return $this;
 	}
 
-	/**
-	 * @param PHPInterface $interface
-	 *
-	 * @return PHPInterface
-	 */
 	abstract protected function validateImplements(PHPInterface $interface): PHPInterface;
 }

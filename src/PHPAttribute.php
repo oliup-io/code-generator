@@ -32,19 +32,11 @@ class PHPAttribute
 		\array_push($this->arguments, ...$arguments);
 	}
 
-	/**
-	 * @return string
-	 */
 	public function getName(): string
 	{
 		return $this->name;
 	}
 
-	/**
-	 * @param string $name
-	 *
-	 * @return static
-	 */
 	public function setName(string $name): static
 	{
 		$this->name = $name;
@@ -60,11 +52,6 @@ class PHPAttribute
 		return $this->arguments;
 	}
 
-	/**
-	 * @param string $argument
-	 *
-	 * @return static
-	 */
 	public function addArgument(string $argument): static
 	{
 		$this->arguments[] = $argument;

@@ -21,8 +21,6 @@ trait NameAwareTrait
 	protected string $name = '';
 
 	/**
-	 * @param string $name
-	 *
 	 * @return $this
 	 */
 	public function setName(string $name): static
@@ -32,18 +30,10 @@ trait NameAwareTrait
 		return $this;
 	}
 
-	/**
-	 * @return string
-	 */
 	public function getName(): string
 	{
 		return $this->name;
 	}
 
-	/**
-	 * @param string $name
-	 *
-	 * @return string
-	 */
 	abstract protected function validateName(string $name): string;
 }

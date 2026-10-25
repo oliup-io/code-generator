@@ -22,17 +22,12 @@ trait NamespaceAwareTrait
 {
 	protected ?PHPNamespace $namespace = null;
 
-	/**
-	 * @return null|PHPNamespace
-	 */
 	public function getNamespace(): ?PHPNamespace
 	{
 		return $this->namespace;
 	}
 
 	/**
-	 * @param null|PHPNamespace|string $namespace
-	 *
 	 * @return $this
 	 */
 	public function setNamespace(PHPNamespace|string|null $namespace): static
@@ -46,10 +41,5 @@ trait NamespaceAwareTrait
 		return $this;
 	}
 
-	/**
-	 * @param null|PHPNamespace $namespace
-	 *
-	 * @return null|PHPNamespace
-	 */
 	abstract protected function validateNamespace(?PHPNamespace $namespace): ?PHPNamespace;
 }

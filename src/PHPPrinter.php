@@ -544,11 +544,6 @@ class PHPPrinter
 		return $v->getSource();
 	}
 
-	/**
-	 * @param object $param
-	 *
-	 * @return string
-	 */
 	public function print(object $param): string
 	{
 		return match (true) {

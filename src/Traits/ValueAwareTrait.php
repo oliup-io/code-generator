@@ -23,8 +23,6 @@ trait ValueAwareTrait
 	protected ?PHPValue $value = null;
 
 	/**
-	 * @param mixed $value
-	 *
 	 * @return $this
 	 */
 	public function setValue(mixed $value): static
@@ -38,18 +36,10 @@ trait ValueAwareTrait
 		return $this;
 	}
 
-	/**
-	 * @return null|PHPValue
-	 */
 	public function getValue(): ?PHPValue
 	{
 		return $this->value;
 	}
 
-	/**
-	 * @param null|PHPValue $value
-	 *
-	 * @return null|PHPValue
-	 */
 	abstract protected function validateValue(?PHPValue $value): ?PHPValue;
 }

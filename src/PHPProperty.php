@@ -49,9 +49,6 @@ class PHPProperty
 		}
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	#[Override]
 	protected function validateName(string $name): string
 	{
@@ -62,27 +59,18 @@ class PHPProperty
 		return $name;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	#[Override]
 	protected function validateVisibility(?VisibilityEnum $visibility): ?VisibilityEnum
 	{
 		return $visibility;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	#[Override]
 	protected function validateValue(?PHPValue $value): ?PHPValue
 	{
 		return $value;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	#[Override]
 	protected function validateType(?PHPType $type): ?PHPType
 	{

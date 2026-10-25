@@ -22,11 +22,6 @@ trait VisibilityAwareTrait
 {
 	protected ?VisibilityEnum $visibility = null;
 
-	/**
-	 * @param null|VisibilityEnum $visibility
-	 *
-	 * @return static
-	 */
 	public function setVisibility(?VisibilityEnum $visibility): static
 	{
 		$this->visibility = $this->validateVisibility($visibility);
@@ -34,66 +29,40 @@ trait VisibilityAwareTrait
 		return $this;
 	}
 
-	/**
-	 * @return null|VisibilityEnum
-	 */
 	public function getVisibility(): ?VisibilityEnum
 	{
 		return $this->visibility;
 	}
 
-	/**
-	 * @return static
-	 */
 	public function private(): static
 	{
 		return $this->setVisibility(VisibilityEnum::PRIVATE);
 	}
 
-	/**
-	 * @return static
-	 */
 	public function protected(): static
 	{
 		return $this->setVisibility(VisibilityEnum::PROTECTED);
 	}
 
-	/**
-	 * @return static
-	 */
 	public function public(): static
 	{
 		return $this->setVisibility(VisibilityEnum::PUBLIC);
 	}
 
-	/**
-	 * @return bool
-	 */
 	public function isPrivate(): bool
 	{
 		return VisibilityEnum::PRIVATE === $this->visibility;
 	}
 
-	/**
-	 * @return bool
-	 */
 	public function isProtected(): bool
 	{
 		return VisibilityEnum::PROTECTED === $this->visibility;
 	}
 
-	/**
-	 * @return bool
-	 */
 	public function isPublic(): bool
 	{
 		return VisibilityEnum::PUBLIC === $this->visibility;
 	}
 
-	/**
-	 * @param null|VisibilityEnum $visibility
-	 *
-	 * @return null|VisibilityEnum
-	 */
 	abstract protected function validateVisibility(?VisibilityEnum $visibility): ?VisibilityEnum;
 }

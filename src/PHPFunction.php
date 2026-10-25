@@ -49,17 +49,12 @@ class PHPFunction
 		$this->setName($name);
 	}
 
-	/**
-	 * @return bool
-	 */
 	public function isAnonymous(): bool
 	{
 		return empty($this->name);
 	}
 
 	/**
-	 * @param null|PHPClass|PHPEnum|PHPInterface|PHPType|string $return_type
-	 *
 	 * @return $this
 	 */
 	public function setReturnType(PHPClass|PHPEnum|PHPInterface|PHPType|string|null $return_type): static
@@ -69,9 +64,6 @@ class PHPFunction
 		return $this;
 	}
 
-	/**
-	 * @return null|PHPType
-	 */
 	public function getReturnType(): ?PHPType
 	{
 		return $this->return_type;
@@ -85,19 +77,12 @@ class PHPFunction
 		return $this->uses;
 	}
 
-	/**
-	 * @param PHPVar|string $var
-	 *
-	 * @return bool
-	 */
 	public function isUsing(PHPVar|string $var): bool
 	{
 		return isset($this->uses[\is_string($var) ? $var : $var->getName()]);
 	}
 
 	/**
-	 * @param PHPVar $var
-	 *
 	 * @return $this
 	 */
 	public function use(PHPVar $var): static
@@ -107,15 +92,9 @@ class PHPFunction
 		return $this;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	#[Override]
 	public function validate(): void {}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	#[Override]
 	protected function validateName(string $name): string
 	{
@@ -130,27 +109,18 @@ class PHPFunction
 		return $name;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	#[Override]
 	protected function validateNamespace(?PHPNamespace $namespace): ?PHPNamespace
 	{
 		return $namespace;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	#[Override]
 	protected function validateArgument(PHPArgument $argument): PHPArgument
 	{
 		return $argument;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	#[Override]
 	protected function validateChild(object $child): object
 	{

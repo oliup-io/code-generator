@@ -20,10 +20,6 @@ class Utils
 {
 	/**
 	 * Parse a qualified name into namespace and short name.
-	 *
-	 * @param string      $fqn_name
-	 * @param null|string $namespace
-	 * @param null|string $short_name
 	 */
 	public static function parseQualifiedName(string $fqn_name, ?string &$namespace = null, ?string &$short_name = null): void
 	{

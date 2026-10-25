@@ -26,9 +26,6 @@ trait CommonTrait
 		return (new PHPPrinter())->print($this);
 	}
 
-	/**
-	 * @psalm-suppress RedundantCondition, TypeDoesNotContainType, InvalidIterator, InvalidClone
-	 */
 	public function __clone()
 	{
 		// Enum are not cloneable

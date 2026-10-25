@@ -33,29 +33,17 @@ trait MethodsAwareTrait
 		return $this->methods;
 	}
 
-	/**
-	 * @param PHPMethod|string $method
-	 *
-	 * @return bool
-	 */
 	public function hasMethod(PHPMethod|string $method): bool
 	{
 		return isset($this->methods[\is_string($method) ? $method : $method->getName()]);
 	}
 
-	/**
-	 * @param string $name
-	 *
-	 * @return ?PHPMethod
-	 */
 	public function getMethod(string $name): ?PHPMethod
 	{
 		return $this->methods[$name] ?? null;
 	}
 
 	/**
-	 * @param PHPMethod $method
-	 *
 	 * @return $this
 	 */
 	public function addMethod(PHPMethod $method): static
@@ -65,11 +53,6 @@ trait MethodsAwareTrait
 		return $this;
 	}
 
-	/**
-	 * @param string $name
-	 *
-	 * @return PHPMethod
-	 */
 	public function newMethod(string $name): PHPMethod
 	{
 		$this->addMethod($c = new PHPMethod($name));
@@ -77,10 +60,5 @@ trait MethodsAwareTrait
 		return $c;
 	}
 
-	/**
-	 * @param PHPMethod $method
-	 *
-	 * @return PHPMethod
-	 */
 	abstract protected function validateMethod(PHPMethod $method): PHPMethod;
 }

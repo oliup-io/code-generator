@@ -29,25 +29,16 @@ class PHPFile
 
 	public function __construct(protected bool $strict = true) {}
 
-	/**
-	 * @return bool
-	 */
 	public function isStrict(): bool
 	{
 		return $this->strict;
 	}
 
-	/**
-	 * @param bool $strict
-	 */
 	public function strict(bool $strict = true): void
 	{
 		$this->strict = $strict;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	#[Override]
 	protected function validateChild(object $child): object
 	{

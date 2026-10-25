@@ -48,9 +48,6 @@ final class PHPTypeIntersection
 		$this->name = \implode('&', $names);
 	}
 
-	/**
-	 * @return string
-	 */
 	public function getName(): string
 	{
 		return $this->name;

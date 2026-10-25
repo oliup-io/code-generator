@@ -26,8 +26,6 @@ trait TypeAwareTrait
 	protected ?PHPType $type = null;
 
 	/**
-	 * @param null|PHPClass|PHPEnum|PHPInterface|PHPType|string $type
-	 *
 	 * @return $this
 	 */
 	public function setType(PHPClass|PHPEnum|PHPInterface|PHPType|string|null $type): static
@@ -37,18 +35,10 @@ trait TypeAwareTrait
 		return $this;
 	}
 
-	/**
-	 * @return null|PHPType
-	 */
 	public function getType(): ?PHPType
 	{
 		return $this->type;
 	}
 
-	/**
-	 * @param null|PHPType $type
-	 *
-	 * @return null|PHPType
-	 */
 	abstract protected function validateType(?PHPType $type): ?PHPType;
 }

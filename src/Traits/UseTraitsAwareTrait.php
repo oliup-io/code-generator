@@ -34,29 +34,17 @@ trait UseTraitsAwareTrait
 		return $this->used_traits;
 	}
 
-	/**
-	 * @param string $name
-	 *
-	 * @return bool
-	 */
 	public function isUsingTrait(string $name): bool
 	{
 		return isset($this->used_traits[$name]);
 	}
 
-	/**
-	 * @param string $name
-	 *
-	 * @return ?PHPUseTrait
-	 */
 	public function getUsedTrait(string $name): ?PHPUseTrait
 	{
 		return $this->used_traits[$name] ?? null;
 	}
 
 	/**
-	 * @param PHPTrait|PHPUseTrait|string $trait
-	 *
 	 * @return $this
 	 */
 	public function useTrait(PHPTrait|PHPUseTrait|string $trait): static
@@ -72,10 +60,5 @@ trait UseTraitsAwareTrait
 		return $this;
 	}
 
-	/**
-	 * @param PHPUseTrait $use_trait
-	 *
-	 * @return PHPUseTrait
-	 */
 	abstract protected function validateUseTrait(PHPUseTrait $use_trait): PHPUseTrait;
 }

@@ -24,9 +24,6 @@ class PHPRaw
 
 	public function __construct(protected string $source) {}
 
-	/**
-	 * @return string
-	 */
 	public function getSource(): string
 	{
 		return $this->source;

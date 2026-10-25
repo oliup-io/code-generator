@@ -32,8 +32,6 @@ trait ChildrenAwareTrait
 	}
 
 	/**
-	 * @param object|string $child
-	 *
 	 * @return $this
 	 */
 	public function addChild(object|string $child): static
@@ -47,11 +45,6 @@ trait ChildrenAwareTrait
 		return $this;
 	}
 
-	/**
-	 * @param object|string $child
-	 *
-	 * @return static
-	 */
 	public function setContent(object|string $child): static
 	{
 		if (\is_string($child)) {
@@ -63,10 +56,5 @@ trait ChildrenAwareTrait
 		return $this;
 	}
 
-	/**
-	 * @param object $child
-	 *
-	 * @return object
-	 */
 	abstract protected function validateChild(object $child): object;
 }

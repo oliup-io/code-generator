@@ -64,9 +64,6 @@ class PHPClass
 		$this->setName($name);
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	public function addChild(object|string $child): static
 	{
 		if ($child instanceof PHPConstant) {
@@ -82,11 +79,6 @@ class PHPClass
 		return $this->addChildReal($child);
 	}
 
-	/**
-	 * @param null|PHPClass|string $class
-	 *
-	 * @return static
-	 */
 	public function extends(self|string|null $class): static
 	{
 		$this->parent_class = \is_string($class) ? new self($class) : $class;
@@ -94,25 +86,16 @@ class PHPClass
 		return $this;
 	}
 
-	/**
-	 * @return null|PHPClass
-	 */
 	public function getExtends(): ?self
 	{
 		return $this->parent_class;
 	}
 
-	/**
-	 * @return bool
-	 */
 	public function isAnonymous(): bool
 	{
 		return empty($this->name);
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	#[Override]
 	public function validate(): void
 	{
@@ -121,9 +104,6 @@ class PHPClass
 		}
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	#[Override]
 	protected function validateName(string $name): string
 	{
@@ -137,63 +117,42 @@ class PHPClass
 		return $name;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	#[Override]
 	protected function validateNamespace(?PHPNamespace $namespace): ?PHPNamespace
 	{
 		return $namespace;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	#[Override]
 	protected function validateConstant(PHPConstant $constant): PHPConstant
 	{
 		return $constant;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	#[Override]
 	protected function validateMethod(PHPMethod $method): PHPMethod
 	{
 		return $method;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	#[Override]
 	protected function validateProperty(PHPProperty $property): PHPProperty
 	{
 		return $property;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	#[Override]
 	protected function validateUseTrait(PHPUseTrait $use_trait): PHPUseTrait
 	{
 		return $use_trait;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	#[Override]
 	protected function validateImplements(PHPInterface $interface): PHPInterface
 	{
 		return $interface;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	#[Override]
 	protected function validateChild(object $child): object
 	{

@@ -23,8 +23,6 @@ trait CommentAwareTrait
 	protected ?PHPComment $comment = null;
 
 	/**
-	 * @param null|PHPComment|string $comment
-	 *
 	 * @return $this
 	 */
 	public function setComment(PHPComment|string|null $comment): static
@@ -34,19 +32,11 @@ trait CommentAwareTrait
 		return $this;
 	}
 
-	/**
-	 * @return null|PHPComment
-	 */
 	public function getComment(): ?PHPComment
 	{
 		return $this->comment;
 	}
 
-	/**
-	 * @param string $comment
-	 *
-	 * @return PHPComment
-	 */
 	public function comment(string $comment): PHPComment
 	{
 		$this->setComment($c = new PHPComment($comment));

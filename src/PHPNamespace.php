@@ -50,9 +50,6 @@ class PHPNamespace
 		return $this;
 	}
 
-	/**
-	 * @return array
-	 */
 	public function getUses(): array
 	{
 		return $this->uses;
@@ -74,27 +71,16 @@ class PHPNamespace
 		return $interface;
 	}
 
-	/**
-	 * @return bool
-	 */
 	public function isGlobal(): bool
 	{
 		return '' === $this->name;
 	}
 
-	/**
-	 * @param PHPNamespace $namespace
-	 *
-	 * @return bool
-	 */
 	public function isChildOf(self $namespace): bool
 	{
 		return $this->name !== $namespace->name && \str_starts_with($this->name, $namespace->name);
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	#[Override]
 	protected function validateName(string $name): string
 	{
@@ -109,9 +95,6 @@ class PHPNamespace
 		return \trim($name, '\\');
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	#[Override]
 	protected function validateChild(object $child): object
 	{

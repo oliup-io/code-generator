@@ -31,19 +31,12 @@ trait ArgumentsAwareTrait
 		return $this->arguments;
 	}
 
-	/**
-	 * @param string $name
-	 *
-	 * @return null|PHPArgument
-	 */
 	public function getArgument(string $name): ?PHPArgument
 	{
 		return $this->arguments[$name] ?? null;
 	}
 
 	/**
-	 * @param PHPArgument $argument
-	 *
 	 * @return $this
 	 */
 	public function addArgument(PHPArgument $argument): static
@@ -53,11 +46,6 @@ trait ArgumentsAwareTrait
 		return $this;
 	}
 
-	/**
-	 * @param string $name
-	 *
-	 * @return PHPArgument
-	 */
 	public function newArgument(string $name): PHPArgument
 	{
 		$this->addArgument($arg = new PHPArgument($name));
@@ -65,10 +53,5 @@ trait ArgumentsAwareTrait
 		return $arg;
 	}
 
-	/**
-	 * @param PHPArgument $argument
-	 *
-	 * @return PHPArgument
-	 */
 	abstract protected function validateArgument(PHPArgument $argument): PHPArgument;
 }

@@ -39,25 +39,17 @@ class PHPUseTraitMethodRule
 		$this->method = \is_string($method) ? new PHPMethod($method) : $method;
 	}
 
-	/**
-	 * @return PHPMethod
-	 */
 	public function getMethod(): PHPMethod
 	{
 		return $this->method;
 	}
 
-	/**
-	 * @return null|PHPTrait
-	 */
 	public function getHiddenFromTrait(): ?PHPTrait
 	{
 		return $this->hidden_from_trait;
 	}
 
 	/**
-	 * @param null|PHPTrait|string $trait
-	 *
 	 * @return $this
 	 */
 	public function hideFrom(PHPTrait|string|null $trait): static
@@ -71,9 +63,6 @@ class PHPUseTraitMethodRule
 		return $this;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	#[Override]
 	protected function validateName(string $name): string
 	{
@@ -84,9 +73,6 @@ class PHPUseTraitMethodRule
 		return $name;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	#[Override]
 	protected function validateVisibility(?VisibilityEnum $visibility): ?VisibilityEnum
 	{

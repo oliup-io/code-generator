@@ -34,12 +34,6 @@ trait QualifiedNameAwareTrait
 		return $this;
 	}
 
-	/**
-	 * @param bool $use
-	 * @param bool $trait
-	 *
-	 * @return string
-	 */
 	public function getFullyQualifiedName(bool $use = false, bool $trait = false): string
 	{
 		$ns   = $this->getNamespace();

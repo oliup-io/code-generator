@@ -38,23 +38,14 @@ class PHPEnum
 		$this->setName($name);
 	}
 
-	/**
-	 * @return bool
-	 */
 	public function isBacked(): bool
 	{
 		return null !== $this->type;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	#[Override]
 	public function validate(): void {}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	#[Override]
 	protected function validateName(string $name): string
 	{
@@ -65,9 +56,6 @@ class PHPEnum
 		return $name;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	#[Override]
 	protected function validateType(?PHPType $type): ?PHPType
 	{
@@ -80,9 +68,6 @@ class PHPEnum
 		throw new RuntimeException('backed enum type should be: string or int.');
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	#[Override]
 	protected function validateNamespace(?PHPNamespace $namespace): ?PHPNamespace
 	{

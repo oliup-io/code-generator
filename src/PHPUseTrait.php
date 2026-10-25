@@ -31,25 +31,17 @@ class PHPUseTrait
 
 	public function __construct(protected PHPTrait $trait) {}
 
-	/**
-	 * @return string
-	 */
 	public function getName(): string
 	{
 		return $this->trait->getName();
 	}
 
-	/**
-	 * @return PHPTrait
-	 */
 	public function getTrait(): PHPTrait
 	{
 		return $this->trait;
 	}
 
 	/**
-	 * @param PHPUseTraitMethodRule $rule
-	 *
 	 * @return $this
 	 */
 	public function addRule(PHPUseTraitMethodRule $rule): static

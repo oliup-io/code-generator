@@ -23,11 +23,6 @@ trait AttributeAwareTrait
 	/** @var PHPAttribute[] */
 	protected array $attributes = [];
 
-	/**
-	 * @param PHPAttribute|string $attribute
-	 *
-	 * @return static
-	 */
 	public function addAttribute(PHPAttribute|string $attribute): static
 	{
 		if (\is_string($attribute)) {
@@ -49,11 +44,6 @@ trait AttributeAwareTrait
 
 	/**
 	 * Create, register and return a new attribute.
-	 *
-	 * @param string $name
-	 * @param string ...$arguments
-	 *
-	 * @return PHPAttribute
 	 */
 	public function newAttribute(string $name, string ...$arguments): PHPAttribute
 	{

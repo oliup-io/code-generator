@@ -28,11 +28,6 @@ class PHPComment
 		protected CommentKindEnum $kind = CommentKindEnum::DOC
 	) {}
 
-	/**
-	 * @param CommentKindEnum $kind
-	 *
-	 * @return static
-	 */
 	public function setKind(CommentKindEnum $kind): static
 	{
 		$this->kind = $kind;
@@ -40,27 +35,16 @@ class PHPComment
 		return $this;
 	}
 
-	/**
-	 * @return CommentKindEnum
-	 */
 	public function getKind(): CommentKindEnum
 	{
 		return $this->kind;
 	}
 
-	/**
-	 * @return string
-	 */
 	public function getContent(): string
 	{
 		return $this->content;
 	}
 
-	/**
-	 * @param string $content
-	 *
-	 * @return static
-	 */
 	public function setContent(string $content): static
 	{
 		$this->content = $content;
@@ -68,11 +52,6 @@ class PHPComment
 		return $this;
 	}
 
-	/**
-	 * @param string $lines
-	 *
-	 * @return static
-	 */
 	public function addLines(string $lines): static
 	{
 		$this->content .= \PHP_EOL . $lines;
@@ -82,10 +61,6 @@ class PHPComment
 
 	/**
 	 * Create an inline comment with slashes '//'.
-	 *
-	 * @param string $content
-	 *
-	 * @return self
 	 */
 	public static function inline(string $content): self
 	{
@@ -94,10 +69,6 @@ class PHPComment
 
 	/**
 	 * Create a inline comment with a hash '#'.
-	 *
-	 * @param string $content
-	 *
-	 * @return self
 	 */
 	public static function hash(string $content): self
 	{
@@ -106,10 +77,6 @@ class PHPComment
 
 	/**
 	 * Create a multiline comment.
-	 *
-	 * @param string $content
-	 *
-	 * @return self
 	 */
 	public static function multiline(string $content): self
 	{
@@ -118,10 +85,6 @@ class PHPComment
 
 	/**
 	 * Create a doc comment.
-	 *
-	 * @param string $content
-	 *
-	 * @return self
 	 */
 	public static function doc(string $content): self
 	{

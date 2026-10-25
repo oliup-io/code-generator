@@ -20,17 +20,12 @@ trait AbstractAwareTrait
 {
 	protected bool $abstract = false;
 
-	/**
-	 * @return bool
-	 */
 	public function isAbstract(): bool
 	{
 		return $this->abstract;
 	}
 
 	/**
-	 * @param bool $abstract
-	 *
 	 * @return $this
 	 */
 	public function abstract(bool $abstract = true): static

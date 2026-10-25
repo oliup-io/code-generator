@@ -31,29 +31,17 @@ trait ExtendsInterfacesAwareTrait
 		return $this->extends;
 	}
 
-	/**
-	 * @param PHPInterface|string $interface
-	 *
-	 * @return bool
-	 */
 	public function hasInterface(PHPInterface|string $interface): bool
 	{
 		return isset($this->extends[\is_string($interface) ? $interface : $interface->getFullyQualifiedName()]);
 	}
 
-	/**
-	 * @param string $name
-	 *
-	 * @return ?PHPInterface
-	 */
 	public function getInterface(string $name): ?PHPInterface
 	{
 		return $this->extends[$name] ?? null;
 	}
 
 	/**
-	 * @param PHPInterface|string $interface
-	 *
 	 * @return $this
 	 */
 	public function extends(PHPInterface|string $interface): static
@@ -67,10 +55,5 @@ trait ExtendsInterfacesAwareTrait
 		return $this;
 	}
 
-	/**
-	 * @param PHPInterface $interface
-	 *
-	 * @return PHPInterface
-	 */
 	abstract protected function validateExtendsInterface(PHPInterface $interface): PHPInterface;
 }

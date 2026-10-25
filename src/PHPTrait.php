@@ -47,9 +47,6 @@ class PHPTrait
 		$this->setName($name);
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	public function addChild(object|string $child): static
 	{
 		if ($child instanceof PHPProperty) {
@@ -62,15 +59,9 @@ class PHPTrait
 		return $this->addChildReal($child);
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	#[Override]
 	public function validate(): void {}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	#[Override]
 	protected function validateName(string $name): string
 	{
@@ -81,45 +72,30 @@ class PHPTrait
 		return $name;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	#[Override]
 	protected function validateMethod(PHPMethod $method): PHPMethod
 	{
 		return $method;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	#[Override]
 	protected function validateProperty(PHPProperty $property): PHPProperty
 	{
 		return $property;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	#[Override]
 	protected function validateNamespace(?PHPNamespace $namespace): ?PHPNamespace
 	{
 		return $namespace;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	#[Override]
 	protected function validateUseTrait(PHPUseTrait $use_trait): PHPUseTrait
 	{
 		return $use_trait;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	#[Override]
 	protected function validateChild(object $child): object
 	{

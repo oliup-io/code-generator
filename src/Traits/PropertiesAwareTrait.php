@@ -33,29 +33,17 @@ trait PropertiesAwareTrait
 		return $this->properties;
 	}
 
-	/**
-	 * @param PHPProperty|string $property
-	 *
-	 * @return bool
-	 */
 	public function hasProperty(PHPProperty|string $property): bool
 	{
 		return isset($this->properties[\is_string($property) ? $property : $property->getName()]);
 	}
 
-	/**
-	 * @param string $name
-	 *
-	 * @return ?PHPProperty
-	 */
 	public function getProperty(string $name): ?PHPProperty
 	{
 		return $this->properties[$name] ?? null;
 	}
 
 	/**
-	 * @param PHPProperty $property
-	 *
 	 * @return $this
 	 */
 	public function addProperty(PHPProperty $property): static
@@ -65,11 +53,6 @@ trait PropertiesAwareTrait
 		return $this;
 	}
 
-	/**
-	 * @param string $name
-	 *
-	 * @return PHPProperty
-	 */
 	public function newProperty(string $name): PHPProperty
 	{
 		$this->addProperty($c = new PHPProperty($name));
@@ -77,10 +60,5 @@ trait PropertiesAwareTrait
 		return $c;
 	}
 
-	/**
-	 * @param PHPProperty $property
-	 *
-	 * @return PHPProperty
-	 */
 	abstract protected function validateProperty(PHPProperty $property): PHPProperty;
 }

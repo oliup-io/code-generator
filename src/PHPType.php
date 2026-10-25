@@ -31,11 +31,6 @@ class PHPType
 		$this->add(...$types);
 	}
 
-	/**
-	 * @param PHPClass|PHPEnum|PHPInterface ...$types
-	 *
-	 * @return PHPTypeIntersection
-	 */
 	public static function intersection(PHPClass|PHPEnum|PHPInterface ...$types): PHPTypeIntersection
 	{
 		return new PHPTypeIntersection(...$types);
@@ -50,8 +45,6 @@ class PHPType
 	}
 
 	/**
-	 * @param bool $nullable
-	 *
 	 * @return $this
 	 */
 	public function nullable(bool $nullable = true): static
@@ -65,17 +58,12 @@ class PHPType
 		return $this;
 	}
 
-	/**
-	 * @return bool
-	 */
 	public function isNullable(): bool
 	{
 		return isset($this->types['null']);
 	}
 
 	/**
-	 * @param PHPClass|PHPEnum|PHPInterface|PHPTypeIntersection|string ...$types
-	 *
 	 * @return $this
 	 */
 	public function add(PHPClass|PHPEnum|PHPInterface|PHPTypeIntersection|string ...$types): static
@@ -103,11 +91,6 @@ class PHPType
 		return $this;
 	}
 
-	/**
-	 * @param PHPClass|PHPEnum|PHPInterface|PHPTypeIntersection|string $type
-	 *
-	 * @return bool
-	 */
 	public function isAllowed(PHPClass|PHPEnum|PHPInterface|PHPTypeIntersection|string $type): bool
 	{
 		if (\is_string($type)) {

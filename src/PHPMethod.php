@@ -55,8 +55,6 @@ class PHPMethod
 	}
 
 	/**
-	 * @param null|PHPClass|PHPEnum|PHPInterface|PHPType|string $return_type
-	 *
 	 * @return $this
 	 */
 	public function setReturnType(PHPClass|PHPEnum|PHPInterface|PHPType|string|null $return_type): static
@@ -66,17 +64,11 @@ class PHPMethod
 		return $this;
 	}
 
-	/**
-	 * @return null|PHPType
-	 */
 	public function getReturnType(): ?PHPType
 	{
 		return $this->return_type;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	#[Override]
 	public function validate(): void
 	{
@@ -85,9 +77,6 @@ class PHPMethod
 		}
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	#[Override]
 	protected function validateName(string $name): string
 	{
@@ -98,27 +87,18 @@ class PHPMethod
 		return $name;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	#[Override]
 	protected function validateArgument(PHPArgument $argument): PHPArgument
 	{
 		return $argument;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	#[Override]
 	protected function validateChild(object $child): object
 	{
 		return $child;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	#[Override]
 	protected function validateVisibility(?VisibilityEnum $visibility): ?VisibilityEnum
 	{

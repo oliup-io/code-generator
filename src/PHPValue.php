@@ -24,17 +24,11 @@ class PHPValue
 
 	public function __construct(protected mixed $value) {}
 
-	/**
-	 * @return mixed
-	 */
 	public function getValue(): mixed
 	{
 		return $this->value;
 	}
 
-	/**
-	 * @param mixed $value
-	 */
 	public function setValue(mixed $value): void
 	{
 		$this->value = $value;

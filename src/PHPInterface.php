@@ -47,9 +47,6 @@ class PHPInterface
 		$this->setName($name);
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	public function addChild(object|string $child): static
 	{
 		if ($child instanceof PHPConstant) {
@@ -62,15 +59,9 @@ class PHPInterface
 		return $this->addChildReal($child);
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	#[Override]
 	public function validate(): void {}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	#[Override]
 	protected function validateName(string $name): string
 	{
@@ -81,45 +72,30 @@ class PHPInterface
 		return $name;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	#[Override]
 	protected function validateNamespace(?PHPNamespace $namespace): ?PHPNamespace
 	{
 		return $namespace;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	#[Override]
 	protected function validateChild(object $child): object
 	{
 		return $child;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	#[Override]
 	protected function validateExtendsInterface(self $interface): self
 	{
 		return $interface;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	#[Override]
 	protected function validateConstant(PHPConstant $constant): PHPConstant
 	{
 		return $constant;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	#[Override]
 	protected function validateMethod(PHPMethod $method): PHPMethod
 	{

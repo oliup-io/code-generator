@@ -20,17 +20,12 @@ trait ReferenceAwareTrait
 {
 	protected bool $by_reference = false;
 
-	/**
-	 * @return bool
-	 */
 	public function isByReference(): bool
 	{
 		return $this->by_reference;
 	}
 
 	/**
-	 * @param bool $by_reference
-	 *
 	 * @return $this
 	 */
 	public function reference(bool $by_reference = true): static
