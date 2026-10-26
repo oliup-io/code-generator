@@ -434,9 +434,43 @@ class PHPPrinter
 		$out .= '$' . $v->getName();
 		$out .= ($value = $v->getValue()) ? ' = ' . $this->printValue($value) : '';
 
-		$out .= ';';
+		$hooks = $v->getHooks();
 
-		return $out;
+		if (empty($hooks)) {
+			return $out . ';';
+		}
+
+		$body = '';
+		foreach ($hooks as $hook) {
+			$body .= $this->printPropertyHook($hook) . \PHP_EOL;
+		}
+
+		return $out . ' {' . \PHP_EOL . Str::indent($body, $this->indent) . '}';
+	}
+
+	public function printPropertyHook(PHPPropertyHook $v): string
+	{
+		$this->validate($v);
+
+		$out = $v->isFinal() ? 'final ' : '';
+		$out .= $v->getKind()->value;
+
+		$args = $v->getArguments();
+
+		if (!empty($args)) {
+			$out .= '(' . \implode(', ', \array_map(fn ($arg) => $this->printArgument($arg), $args)) . ')';
+		}
+
+		if (null !== ($expression = $v->getExpression())) {
+			return $out . ' => ' . $expression . ';';
+		}
+
+		$body = '';
+		foreach ($v->getChildren() as $child) {
+			$body .= $this->print($child);
+		}
+
+		return $out . ' {' . \PHP_EOL . Str::indent($body, $this->indent) . \PHP_EOL . '}';
 	}
 
 	public function printVar(PHPVar $v, array $options = []): string
@@ -547,25 +581,26 @@ class PHPPrinter
 	public function print(object $param): string
 	{
 		return match (true) {
-			$param instanceof PHPFile      => $this->printFile($param),
-			$param instanceof PHPRaw       => $this->printRaw($param),
-			$param instanceof PHPClass     => $this->printClass($param),
-			$param instanceof PHPInterface => $this->printInterface($param),
-			$param instanceof PHPTrait     => $this->printTrait($param),
-			$param instanceof PHPEnum      => $this->printEnum($param),
-			$param instanceof PHPMethod    => $this->printMethod($param),
-			$param instanceof PHPFunction  => $this->printFunction($param),
-			$param instanceof PHPUseTrait  => $this->printUseTrait($param),
-			$param instanceof PHPArgument  => $this->printArgument($param),
-			$param instanceof PHPType      => $this->printType($param),
-			$param instanceof PHPValue     => $this->printValue($param),
-			$param instanceof PHPVar       => $this->printVar($param),
-			$param instanceof PHPProperty  => $this->printProperty($param),
-			$param instanceof PHPConstant  => $this->printConstant($param),
-			$param instanceof PHPComment   => $this->printComment($param),
-			$param instanceof PHPAttribute => $this->printAttribute($param),
-			$param instanceof PHPNamespace => $this->printNamespace($param),
-			default                        => throw new InvalidArgumentException(\sprintf('object of type "%s" is not printable.', \get_debug_type($param)))
+			$param instanceof PHPFile         => $this->printFile($param),
+			$param instanceof PHPRaw          => $this->printRaw($param),
+			$param instanceof PHPClass        => $this->printClass($param),
+			$param instanceof PHPInterface    => $this->printInterface($param),
+			$param instanceof PHPTrait        => $this->printTrait($param),
+			$param instanceof PHPEnum         => $this->printEnum($param),
+			$param instanceof PHPMethod       => $this->printMethod($param),
+			$param instanceof PHPFunction     => $this->printFunction($param),
+			$param instanceof PHPUseTrait     => $this->printUseTrait($param),
+			$param instanceof PHPArgument     => $this->printArgument($param),
+			$param instanceof PHPType         => $this->printType($param),
+			$param instanceof PHPValue        => $this->printValue($param),
+			$param instanceof PHPVar          => $this->printVar($param),
+			$param instanceof PHPProperty     => $this->printProperty($param),
+			$param instanceof PHPPropertyHook => $this->printPropertyHook($param),
+			$param instanceof PHPConstant     => $this->printConstant($param),
+			$param instanceof PHPComment      => $this->printComment($param),
+			$param instanceof PHPAttribute    => $this->printAttribute($param),
+			$param instanceof PHPNamespace    => $this->printNamespace($param),
+			default                           => throw new InvalidArgumentException(\sprintf('object of type "%s" is not printable.', \get_debug_type($param)))
 		};
 	}
 

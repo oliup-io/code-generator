@@ -32,6 +32,11 @@ Functionality is assembled from focused traits in `src/Traits/`. Key ones:
 - `AttributeAwareTrait` - adds `->addAttribute()`, `->getAttributes()`, `->newAttribute()` to `PHPClass`, `PHPInterface`, `PHPTrait`, `PHPMethod`, `PHPProperty`, `PHPConstant`, `PHPFunction`, `PHPArgument`.
 - `TypeAwareTrait` - adds `->setType()` / `->getType()` to `PHPMethod` (return type), `PHPProperty`, `PHPArgument` and `PHPConstant` (a typed class constant, PHP 8.3); nothing is written when no type is set.
 - `CommonTrait` - provides `__toString()` and deep-clone `__clone()` for every class.
+- `PHPProperty` also carries **property hooks** (PHP 8.4): `->newGetHook()` and `->newSetHook()` return a
+  `PHPPropertyHook`, keyed by kind so asking twice for the same kind replaces it. A hook takes exactly one
+  body, `->setExpression('expr')` for the `=> expr;` form or `->setContent('...')` for a block, and a `set`
+  hook may name its parameter with `->newArgument('value')->setType(...)`; with none it receives `$value`.
+  PHP requires that parameter type to be a **supertype** of the property type, not a subtype.
 
 ## Fluent API Pattern
 
@@ -45,6 +50,12 @@ $class->extends('App\Base\Model')->final();
 
 $prop = $class->newProperty('id');
 $prop->setType('int')->public();
+
+// property hooks (PHP 8.4): a virtual property over a store
+$data = $class->newProperty('data')->setType('\\PHPUtils\\Store\\Map')->public();
+$data->newGetHook()->setExpression('$this->read(self::COL_DATA)');
+$data->newSetHook()->setExpression('$this->write(self::COL_DATA, $value)')
+     ->newArgument('value')->setType('array|\\PHPUtils\\Store\\Map');
 
 $ctor = $class->newMethod('__construct');
 $arg  = $ctor->newArgument('id');
@@ -71,6 +82,7 @@ echo $file;  // full PHP source
 
 - `VisibilityEnum` - `PUBLIC | PRIVATE | PROTECTED`
 - `CommentKindEnum` - `DOC (/**)` | `MULTILINE (/*)` | `HASH (#)` | `SLASH (//)`; static factories: `PHPComment::doc()`, `::inline()`, `::hash()`, `::multiline()`.
+- `PropertyHookKindEnum` - `GET | SET`; the kind of a `PHPPropertyHook`.
 
 ## PHPPrinter API
 

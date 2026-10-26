@@ -134,6 +134,7 @@ $useTrait->addRule(
 ```
 PHPFile -> PHPNamespace -> PHPClass | PHPInterface | PHPTrait | PHPEnum | PHPFunction
 PHPClass  -> constants[] + properties[] + methods[] + used_traits[] + implements[]
+PHPProperty -> hooks[] (get / set, PHP 8.4)
 PHPMethod -> arguments[] + children[] (body as PHPRaw lines)
 ```
 
@@ -147,7 +148,8 @@ PHPMethod -> arguments[] + children[] (body as PHPRaw lines)
 | `PHPFunction` | Named or anonymous function / closure |
 | `PHPMethod` | Class/interface/trait method |
 | `PHPArgument` | Function/method argument (supports promotion, variadic, by-ref) |
-| `PHPProperty` | Class property |
+| `PHPProperty` | Class property; `->newGetHook()` / `->newSetHook()` give it property hooks (PHP 8.4) |
+| `PHPPropertyHook` | A `get` or `set` hook: `->setExpression()` for `=> expr;`, `->setContent()` for a block |
 | `PHPConstant` | Class or interface constant, with an optional type (`->setType('string')`, PHP 8.3) |
 | `PHPType` | Union type; `PHPType::intersection()` for `A&B` |
 | `PHPAttribute` | PHP 8 attribute `#[Name(args)]` |
