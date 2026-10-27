@@ -16,12 +16,12 @@ namespace OLIUP\CG\Tests;
 use OLIUP\CG\PHPInterface;
 use OLIUP\CG\PHPMethod;
 use OLIUP\CG\PHPPrinter;
+use PHPUnit\Framework\Attributes\CoversNothing;
 
 /**
  * @internal
- *
- * @coversNothing
  */
+#[CoversNothing]
 final class PHPInterfaceTest extends TestCase
 {
 	private PHPPrinter $printer;

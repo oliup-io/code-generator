@@ -16,13 +16,13 @@ namespace OLIUP\CG\Tests;
 use OLIUP\CG\PHPClass;
 use OLIUP\CG\PHPPrinter;
 use OLIUP\CG\PHPType;
+use PHPUnit\Framework\Attributes\CoversNothing;
 use RuntimeException;
 
 /**
  * @internal
- *
- * @coversNothing
  */
+#[CoversNothing]
 final class PHPTypeTest extends TestCase
 {
 	private PHPPrinter $printer;
@@ -40,7 +40,7 @@ final class PHPTypeTest extends TestCase
 
 	public function testNullableSingleType(): void
 	{
-		$type = (new PHPType('string'))->nullable();
+		$type = new PHPType('string')->nullable();
 		$this->assertEq('leading ?', '?string', $this->printer->printType($type));
 	}
 
@@ -52,7 +52,7 @@ final class PHPTypeTest extends TestCase
 
 	public function testNullableUnionType(): void
 	{
-		$type = (new PHPType('string', 'int'))->nullable();
+		$type = new PHPType('string', 'int')->nullable();
 		$this->assertEq('null prefix on union', 'null|string|int', $this->printer->printType($type));
 	}
 
@@ -64,7 +64,7 @@ final class PHPTypeTest extends TestCase
 
 	public function testNullableToggleOff(): void
 	{
-		$type = (new PHPType('int'))->nullable()->nullable(false);
+		$type = new PHPType('int')->nullable()->nullable(false);
 		$this->assertEq('null removed', 'int', $this->printer->printType($type));
 	}
 
@@ -137,13 +137,13 @@ final class PHPTypeTest extends TestCase
 
 	public function testNullableGenericStripped(): void
 	{
-		$type = (new PHPType('array<string,int>'))->nullable();
+		$type = new PHPType('array<string,int>')->nullable();
 		$this->assertEq('nullable generic stripped', '?array', $this->printer->printType($type));
 	}
 
 	public function testNullableGenericKeptWhenOptedIn(): void
 	{
-		$type = (new PHPType('array<string,int>'))->nullable();
+		$type = new PHPType('array<string,int>')->nullable();
 		$this->assertEq('nullable generic retained', '?array<string,int>', $this->printer->printType($type, ['with_generics' => true]));
 	}
 

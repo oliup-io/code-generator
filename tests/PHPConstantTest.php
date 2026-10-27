@@ -15,12 +15,12 @@ namespace OLIUP\CG\Tests;
 
 use OLIUP\CG\PHPConstant;
 use OLIUP\CG\PHPPrinter;
+use PHPUnit\Framework\Attributes\CoversNothing;
 
 /**
  * @internal
- *
- * @coversNothing
  */
+#[CoversNothing]
 final class PHPConstantTest extends TestCase
 {
 	private PHPPrinter $printer;

@@ -16,12 +16,12 @@ namespace OLIUP\CG\Tests;
 use OLIUP\CG\PHPFunction;
 use OLIUP\CG\PHPPrinter;
 use OLIUP\CG\PHPVar;
+use PHPUnit\Framework\Attributes\CoversNothing;
 
 /**
  * @internal
- *
- * @coversNothing
  */
+#[CoversNothing]
 final class PHPFunctionTest extends TestCase
 {
 	private PHPPrinter $printer;
@@ -75,8 +75,8 @@ final class PHPFunctionTest extends TestCase
 
 	public function testFunctionIsAnonymous(): void
 	{
-		$this->assertEq('anonymous', true, (new PHPFunction())->isAnonymous());
-		$this->assertEq('named', false, (new PHPFunction('foo'))->isAnonymous());
+		$this->assertEq('anonymous', true, new PHPFunction()->isAnonymous());
+		$this->assertEq('named', false, new PHPFunction('foo')->isAnonymous());
 	}
 
 	public function testIsUsingVar(): void

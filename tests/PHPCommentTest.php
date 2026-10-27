@@ -16,12 +16,12 @@ namespace OLIUP\CG\Tests;
 use OLIUP\CG\Enums\CommentKindEnum;
 use OLIUP\CG\PHPComment;
 use OLIUP\CG\PHPPrinter;
+use PHPUnit\Framework\Attributes\CoversNothing;
 
 /**
  * @internal
- *
- * @coversNothing
  */
+#[CoversNothing]
 final class PHPCommentTest extends TestCase
 {
 	private PHPPrinter $printer;

@@ -17,14 +17,14 @@ use OLIUP\CG\Enums\PropertyHookKindEnum;
 use OLIUP\CG\PHPPrinter;
 use OLIUP\CG\PHPProperty;
 use OLIUP\CG\PHPPropertyHook;
+use PHPUnit\Framework\Attributes\CoversNothing;
 use Probe;
 use RuntimeException;
 
 /**
  * @internal
- *
- * @coversNothing
  */
+#[CoversNothing]
 final class PHPPropertyHookTest extends TestCase
 {
 	private PHPPrinter $printer;
@@ -36,7 +36,7 @@ final class PHPPropertyHookTest extends TestCase
 
 	public function testGetHookAsExpression(): void
 	{
-		$p = (new PHPProperty('id'))->public()
+		$p = new PHPProperty('id')->public()
 			->setType('?int');
 		$p->newGetHook()
 			->setExpression('$this->read(self::COL_ID)');
@@ -50,7 +50,7 @@ final class PHPPropertyHookTest extends TestCase
 
 	public function testGetHookAsBlock(): void
 	{
-		$p = (new PHPProperty('id'))->public()
+		$p = new PHPProperty('id')->public()
 			->setType('?int');
 		$p->newGetHook()
 			->setContent('return $this->read(self::COL_ID);');
@@ -62,7 +62,7 @@ final class PHPPropertyHookTest extends TestCase
 
 	public function testSetHookDeclaresItsParameterType(): void
 	{
-		$p = (new PHPProperty('data'))->public()
+		$p = new PHPProperty('data')->public()
 			->setType('\PHPUtils\Store\Map');
 		$p->newSetHook()
 			->setExpression('$this->write(self::COL_DATA, $value)')
@@ -78,7 +78,7 @@ final class PHPPropertyHookTest extends TestCase
 
 	public function testSetHookWithoutParameterTakesValueImplicitly(): void
 	{
-		$p = (new PHPProperty('name'))->public()
+		$p = new PHPProperty('name')->public()
 			->setType('string');
 		$p->newSetHook()
 			->setContent('$this->write(self::COL_NAME, $value);');
@@ -90,7 +90,7 @@ final class PHPPropertyHookTest extends TestCase
 
 	public function testFinalHook(): void
 	{
-		$p = (new PHPProperty('id'))->public()
+		$p = new PHPProperty('id')->public()
 			->setType('int');
 		$p->newGetHook()
 			->setExpression('1')
@@ -101,7 +101,7 @@ final class PHPPropertyHookTest extends TestCase
 
 	public function testBothHooksOnOneProperty(): void
 	{
-		$p = (new PHPProperty('name'))->public()
+		$p = new PHPProperty('name')->public()
 			->setType('string');
 		$p->newGetHook()
 			->setExpression('$this->n');
@@ -115,7 +115,7 @@ final class PHPPropertyHookTest extends TestCase
 
 	public function testSettingOneKindTwiceReplacesIt(): void
 	{
-		$p = (new PHPProperty('name'))->public()
+		$p = new PHPProperty('name')->public()
 			->setType('string');
 		$p->newGetHook()
 			->setExpression('"first"');
@@ -130,7 +130,7 @@ final class PHPPropertyHookTest extends TestCase
 
 	public function testPropertyWithoutHooksIsUnchanged(): void
 	{
-		$p = (new PHPProperty('name'))->public()
+		$p = new PHPProperty('name')->public()
 			->setType('string');
 
 		$this->assertEq(
@@ -143,7 +143,7 @@ final class PHPPropertyHookTest extends TestCase
 
 	public function testGetHookRefusesAParameter(): void
 	{
-		$p = (new PHPProperty('id'))->public()
+		$p = new PHPProperty('id')->public()
 			->setType('int');
 		$hook = $p->newGetHook();
 		$hook->setExpression('1')
@@ -181,7 +181,7 @@ final class PHPPropertyHookTest extends TestCase
 
 	public function testStaticPropertyRefusesHooks(): void
 	{
-		$p = (new PHPProperty('id'))->public()
+		$p = new PHPProperty('id')->public()
 			->setType('int')
 			->static();
 		$p->newGetHook()
@@ -196,7 +196,7 @@ final class PHPPropertyHookTest extends TestCase
 
 	public function testGeneratedHooksAreValidPhp(): void
 	{
-		$p = (new PHPProperty('data'))->public()
+		$p = new PHPProperty('data')->public()
 			->setType('array');
 		$p->newGetHook()
 			->setExpression('$this->row[\'data\'] ?? []');

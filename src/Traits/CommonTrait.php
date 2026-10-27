@@ -23,7 +23,7 @@ trait CommonTrait
 {
 	public function __toString(): string
 	{
-		return (new PHPPrinter())->print($this);
+		return new PHPPrinter()->print($this);
 	}
 
 	public function __clone()

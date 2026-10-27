@@ -18,13 +18,13 @@ use OLIUP\CG\PHPConstant;
 use OLIUP\CG\PHPMethod;
 use OLIUP\CG\PHPPrinter;
 use OLIUP\CG\PHPProperty;
+use PHPUnit\Framework\Attributes\CoversNothing;
 use RuntimeException;
 
 /**
  * @internal
- *
- * @coversNothing
  */
+#[CoversNothing]
 final class PHPClassTest extends TestCase
 {
 	private PHPPrinter $printer;
@@ -41,31 +41,31 @@ final class PHPClassTest extends TestCase
 
 	public function testFinal(): void
 	{
-		$c = (new PHPClass('Bar'))->final();
+		$c = new PHPClass('Bar')->final();
 		$this->assertHasStr('final', 'final class Bar', $this->printer->printClass($c));
 	}
 
 	public function testAbstract(): void
 	{
-		$c = (new PHPClass('Base'))->abstract();
+		$c = new PHPClass('Base')->abstract();
 		$this->assertHasStr('abstract', 'abstract class Base', $this->printer->printClass($c));
 	}
 
 	public function testExtends(): void
 	{
-		$c = (new PHPClass('Child'))->extends('Parent');
+		$c = new PHPClass('Child')->extends('Parent');
 		$this->assertHasStr('extends', 'extends', $this->printer->printClass($c));
 	}
 
 	public function testImplementsSingle(): void
 	{
-		$c = (new PHPClass('MyClass'))->implements('Stringable');
+		$c = new PHPClass('MyClass')->implements('Stringable');
 		$this->assertHasStr('implements', 'implements', $this->printer->printClass($c));
 	}
 
 	public function testImplementsMultipleNoSpaceBeforeComma(): void
 	{
-		$c   = (new PHPClass('Multi'))->implements('Countable')->implements('Stringable');
+		$c   = new PHPClass('Multi')->implements('Countable')->implements('Stringable');
 		$out = $this->printer->printClass($c);
 		$this->assertHasStr('comma without leading space', 'Countable, Stringable', $out);
 		$this->assertNotHasStr('no space before comma', ' , ', $out);
@@ -78,7 +78,7 @@ final class PHPClassTest extends TestCase
 
 	public function testFinalAbstractConflict(): void
 	{
-		$c = (new PHPClass('X'))->final()->abstract();
+		$c = new PHPClass('X')->final()->abstract();
 		$this->assertThrows('final+abstract throws', RuntimeException::class, static fn () => $c->validate());
 	}
 
@@ -106,13 +106,13 @@ final class PHPClassTest extends TestCase
 
 	public function testIsAnonymous(): void
 	{
-		$this->assertEq('empty name = anonymous', true, (new PHPClass())->isAnonymous());
-		$this->assertEq('named = not anonymous', false, (new PHPClass('Foo'))->isAnonymous());
+		$this->assertEq('empty name = anonymous', true, new PHPClass()->isAnonymous());
+		$this->assertEq('named = not anonymous', false, new PHPClass('Foo')->isAnonymous());
 	}
 
 	public function testGetExtends(): void
 	{
-		$c = (new PHPClass('Child'))->extends('App\Base');
+		$c = new PHPClass('Child')->extends('App\Base');
 		$this->assertEq('parent name', 'Base', $c->getExtends()?->getName());
 	}
 }

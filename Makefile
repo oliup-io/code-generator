@@ -25,7 +25,7 @@ PSALM_CACHE ?=
 #
 # UPDATE_SNAPSHOTS=1 rewrites the snapshots the tests compare against.
 test:
-	vendor/bin/phpunit --testdox --do-not-cache-result $(if $(FILTER),--filter '$(FILTER)',) $(FILE)
+	vendor/bin/phpunit --testdox --do-not-record-test-run-history $(if $(FILTER),--filter '$(FILTER)',) $(FILE)
 
 # = Code style
 

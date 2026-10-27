@@ -20,12 +20,12 @@ use OLIUP\CG\PHPConstant;
 use OLIUP\CG\PHPMethod;
 use OLIUP\CG\PHPPrinter;
 use OLIUP\CG\PHPProperty;
+use PHPUnit\Framework\Attributes\CoversNothing;
 
 /**
  * @internal
- *
- * @coversNothing
  */
+#[CoversNothing]
 final class PHPAttributeTest extends TestCase
 {
 	private PHPPrinter $printer;
@@ -52,13 +52,13 @@ final class PHPAttributeTest extends TestCase
 
 	public function testAddArgument(): void
 	{
-		$a = (new PHPAttribute('Attr'))->addArgument('foo')->addArgument('bar');
+		$a = new PHPAttribute('Attr')->addArgument('foo')->addArgument('bar');
 		$this->assertEq('addArgument accumulates', ['foo', 'bar'], $a->getArguments());
 	}
 
 	public function testSetName(): void
 	{
-		$a = (new PHPAttribute('Old'))->setName('New');
+		$a = new PHPAttribute('Old')->setName('New');
 		$this->assertEq('setName', 'New', $a->getName());
 	}
 
@@ -76,7 +76,7 @@ final class PHPAttributeTest extends TestCase
 
 	public function testToStringAfterAddArgument(): void
 	{
-		$out = (string) (new PHPAttribute('Attr'))->addArgument("'x'")->addArgument("'y'");
+		$out = (string) new PHPAttribute('Attr')->addArgument("'x'")->addArgument("'y'");
 		$this->assertEq('addArgument renders', "#[Attr('x', 'y')]", $out);
 	}
 
@@ -84,7 +84,7 @@ final class PHPAttributeTest extends TestCase
 
 	public function testAddAttributeWithString(): void
 	{
-		$c   = (new PHPClass('Foo'))->addAttribute('Override');
+		$c   = new PHPClass('Foo')->addAttribute('Override');
 		$out = $this->printer->printClass($c);
 		$this->assertHasStr('attribute rendered', '#[Override]', $out);
 	}
@@ -107,7 +107,7 @@ final class PHPAttributeTest extends TestCase
 
 	public function testMultipleAttributesOnClass(): void
 	{
-		$c = (new PHPClass('Foo'))
+		$c = new PHPClass('Foo')
 			->addAttribute('ORM\Entity')
 			->addAttribute(new PHPAttribute('ORM\Table', "name: 'foo'"));
 		$out = $this->printer->printClass($c);
@@ -117,7 +117,7 @@ final class PHPAttributeTest extends TestCase
 
 	public function testAttributeAppearsBeforeClassKeyword(): void
 	{
-		$c   = (new PHPClass('Bar'))->addAttribute('Final');
+		$c   = new PHPClass('Bar')->addAttribute('Final');
 		$out = $this->printer->printClass($c);
 		$this->assertEq(
 			'#[Final] before class',
@@ -128,21 +128,21 @@ final class PHPAttributeTest extends TestCase
 
 	public function testAttributeOnAnonymousClassInline(): void
 	{
-		$c   = (new PHPClass())->addAttribute('Override');
+		$c   = new PHPClass()->addAttribute('Override');
 		$out = $this->printer->printClass($c);
 		$this->assertHasStr('inline on new class', 'new #[Override] class', $out);
 	}
 
 	public function testGetAttributesEmpty(): void
 	{
-		$this->assertEq('empty by default', [], (new PHPClass('X'))->getAttributes());
+		$this->assertEq('empty by default', [], new PHPClass('X')->getAttributes());
 	}
 
 	// --- on PHPMethod ---
 
 	public function testAttributeOnMethod(): void
 	{
-		$m   = (new PHPMethod('handle'))->public()->addAttribute('Override');
+		$m   = new PHPMethod('handle')->public()->addAttribute('Override');
 		$out = $this->printer->printMethod($m);
 		$this->assertHasStr('attr on method', '#[Override]', $out);
 		$this->assertEq(
@@ -156,7 +156,7 @@ final class PHPAttributeTest extends TestCase
 
 	public function testAttributeOnProperty(): void
 	{
-		$p   = (new PHPProperty('id'))->public()->setType('int')->addAttribute('ORM\Id');
+		$p   = new PHPProperty('id')->public()->setType('int')->addAttribute('ORM\Id');
 		$out = $this->printer->printProperty($p);
 		$this->assertHasStr('attr on property', '#[ORM\Id]', $out);
 		$this->assertEq(
@@ -170,7 +170,7 @@ final class PHPAttributeTest extends TestCase
 
 	public function testAttributeOnConstant(): void
 	{
-		$c   = (new PHPConstant('LIMIT', 50))->addAttribute('Deprecated');
+		$c   = new PHPConstant('LIMIT', 50)->addAttribute('Deprecated');
 		$out = $this->printer->printConstant($c);
 		$this->assertHasStr('attr on constant', '#[Deprecated]', $out);
 		$this->assertEq(
@@ -184,7 +184,7 @@ final class PHPAttributeTest extends TestCase
 
 	public function testAttributeOnArgument(): void
 	{
-		$m   = (new PHPMethod('show'))->public();
+		$m   = new PHPMethod('show')->public();
 		$arg = $m->newArgument('id')->setType('int')->addAttribute('MapEntity');
 		$out = $this->printer->printArgument($arg);
 		$this->assertHasStr('attr on arg', '#[MapEntity]', $out);
@@ -193,14 +193,14 @@ final class PHPAttributeTest extends TestCase
 
 	public function testMultipleAttributesOnArgument(): void
 	{
-		$arg = (new PHPArgument('val'))->addAttribute('NotNull')->addAttribute('Positive');
+		$arg = new PHPArgument('val')->addAttribute('NotNull')->addAttribute('Positive');
 		$out = $this->printer->printArgument($arg);
 		$this->assertHasStr('two attrs', '#[NotNull] #[Positive]', $out);
 	}
 
 	public function testArgumentAttributesOmittedInVirtualMethod(): void
 	{
-		$m = (new PHPMethod('handle'))->public()->setReturnType('void');
+		$m = new PHPMethod('handle')->public()->setReturnType('void');
 		$m->newArgument('id')->setType('int')->addAttribute('MapEntity');
 		$out = $this->printer->printMethod($m, ['virtual' => true]);
 		$this->assertHasStr('@method tag', '@method void handle(int $id)', $out);

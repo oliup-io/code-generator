@@ -25,12 +25,12 @@ use OLIUP\CG\PHPUseTrait;
 use OLIUP\CG\PHPUseTraitMethodRule;
 use OLIUP\CG\PHPValue;
 use OLIUP\CG\PHPVar;
+use PHPUnit\Framework\Attributes\CoversNothing;
 
 /**
  * @internal
- *
- * @coversNothing
  */
+#[CoversNothing]
 final class SnapshotTest extends TestCase
 {
 	private string $dir;
@@ -165,7 +165,7 @@ final class SnapshotTest extends TestCase
 		$handleMethod = $class->newMethod('handle');
 		$handleMethod->abstract()->public();
 		$handleMethod->newArgument('payload')->setType('mixed');
-		$handleMethod->setReturnType((new PHPType('string', 'int'))->nullable());
+		$handleMethod->setReturnType(new PHPType('string', 'int')->nullable());
 
 		$logMethod = $class->newMethod('log');
 		$logMethod->protected()->setReturnType('void');
@@ -203,7 +203,7 @@ final class SnapshotTest extends TestCase
 		$load->addChild('$this->data = require $path;');
 
 		$get = $class->newMethod('get');
-		$get->public()->setReturnType((new PHPType('mixed'))->nullable());
+		$get->public()->setReturnType(new PHPType('mixed')->nullable());
 		$get->newArgument('key')->setType('string');
 		$get->newArgument('default')->setType('mixed')->setValue(null);
 		$get->addChild('return $this->data[$key] ?? $default;');

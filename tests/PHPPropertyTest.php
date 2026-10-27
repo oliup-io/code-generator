@@ -16,12 +16,12 @@ namespace OLIUP\CG\Tests;
 use OLIUP\CG\PHPPrinter;
 use OLIUP\CG\PHPProperty;
 use OLIUP\CG\PHPValue;
+use PHPUnit\Framework\Attributes\CoversNothing;
 
 /**
  * @internal
- *
- * @coversNothing
  */
+#[CoversNothing]
 final class PHPPropertyTest extends TestCase
 {
 	private PHPPrinter $printer;

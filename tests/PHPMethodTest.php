@@ -15,13 +15,13 @@ namespace OLIUP\CG\Tests;
 
 use OLIUP\CG\PHPMethod;
 use OLIUP\CG\PHPPrinter;
+use PHPUnit\Framework\Attributes\CoversNothing;
 use RuntimeException;
 
 /**
  * @internal
- *
- * @coversNothing
  */
+#[CoversNothing]
 final class PHPMethodTest extends TestCase
 {
 	private PHPPrinter $printer;

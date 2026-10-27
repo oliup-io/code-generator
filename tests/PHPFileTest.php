@@ -17,12 +17,12 @@ use OLIUP\CG\PHPComment;
 use OLIUP\CG\PHPFile;
 use OLIUP\CG\PHPNamespace;
 use OLIUP\CG\PHPPrinter;
+use PHPUnit\Framework\Attributes\CoversNothing;
 
 /**
  * @internal
- *
- * @coversNothing
  */
+#[CoversNothing]
 final class PHPFileTest extends TestCase
 {
 	private PHPPrinter $printer;

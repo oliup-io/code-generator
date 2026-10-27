@@ -18,12 +18,12 @@ use OLIUP\CG\PHPClass;
 use OLIUP\CG\PHPFunction;
 use OLIUP\CG\PHPNamespace;
 use OLIUP\CG\PHPPrinter;
+use PHPUnit\Framework\Attributes\CoversNothing;
 
 /**
  * @internal
- *
- * @coversNothing
  */
+#[CoversNothing]
 final class PHPNamespaceTest extends TestCase
 {
 	private PHPPrinter $printer;
@@ -66,8 +66,8 @@ final class PHPNamespaceTest extends TestCase
 
 	public function testIsGlobal(): void
 	{
-		$this->assertEq('global namespace', true, (new PHPNamespace(''))->isGlobal());
-		$this->assertEq('non-global', false, (new PHPNamespace('App'))->isGlobal());
+		$this->assertEq('global namespace', true, new PHPNamespace('')->isGlobal());
+		$this->assertEq('non-global', false, new PHPNamespace('App')->isGlobal());
 	}
 
 	public function testIsChildOf(): void

@@ -15,13 +15,13 @@ namespace OLIUP\CG\Tests;
 
 use OLIUP\CG\PHPArgument;
 use OLIUP\CG\PHPPrinter;
+use PHPUnit\Framework\Attributes\CoversNothing;
 use RuntimeException;
 
 /**
  * @internal
- *
- * @coversNothing
  */
+#[CoversNothing]
 final class PHPArgumentTest extends TestCase
 {
 	private PHPPrinter $printer;

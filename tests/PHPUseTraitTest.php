@@ -17,12 +17,12 @@ use OLIUP\CG\PHPPrinter;
 use OLIUP\CG\PHPTrait;
 use OLIUP\CG\PHPUseTrait;
 use OLIUP\CG\PHPUseTraitMethodRule;
+use PHPUnit\Framework\Attributes\CoversNothing;
 
 /**
  * @internal
- *
- * @coversNothing
  */
+#[CoversNothing]
 final class PHPUseTraitTest extends TestCase
 {
 	private PHPPrinter $printer;
