@@ -14,6 +14,11 @@ before it is its history.
 
 ### Added
 
+- **The 8.5 syntax, written by the shared coding standard.** The floor moved to PHP 8.5 and the
+  fixer carried no version migration set, so each file kept the syntax of the year it was written.
+  The standard now applies the 8.5 migration: `$x::class` over `get_class($x)`, `0o755` over
+  `0755`, an arrow function over a closure that only returns, a heredoc indented with its code. One file here.
+
 - **Property hooks**: `PHPPropertyHook` is a `get` or a `set` hook in either body form PHP accepts,
   an expression (`=> $expr;`) or a block, with `PHPPropertyHook::setExpression()` and
   `PropertyHookKindEnum::GET` / `SET`; a property carries them through `PHPProperty::addHook()` and

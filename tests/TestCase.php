@@ -61,7 +61,7 @@ abstract class TestCase extends PHPUnitTestCase
 			throw $e;
 		} catch (Throwable $e) {
 			if (!$e instanceof $exceptionClass) {
-				self::fail($description . ' (wrong exception: ' . \get_class($e) . ')');
+				self::fail($description . ' (wrong exception: ' . $e::class . ')');
 			}
 			$this->addToAssertionCount(1);
 		}
