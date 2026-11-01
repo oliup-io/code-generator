@@ -28,6 +28,7 @@ final class PHPNamespaceTest extends TestCase
 {
 	private PHPPrinter $printer;
 
+	#[\Override]
 	protected function setUp(): void
 	{
 		$this->printer = new PHPPrinter();

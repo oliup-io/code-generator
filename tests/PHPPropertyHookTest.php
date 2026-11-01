@@ -29,6 +29,7 @@ final class PHPPropertyHookTest extends TestCase
 {
 	private PHPPrinter $printer;
 
+	#[\Override]
 	protected function setUp(): void
 	{
 		$this->printer = new PHPPrinter();
@@ -211,8 +212,15 @@ final class PHPPropertyHookTest extends TestCase
 
 		$this->assertEq('the printed property compiles', true, false !== @eval($source));
 
-		$probe       = new Probe();
-		$probe->data = ['a' => 1];
-		$this->assertEq('the set hook ran', ['a' => 1], $probe->data);
+		// Named at run time, because the class above exists only once the printed source has been
+		// evaluated: written as `new Probe()` it would be a class nothing declares until then.
+		$probe = 'Probe';
+
+		/** @var object $instance */
+		$instance = new $probe();
+
+		$instance->data = ['a' => 1];
+
+		$this->assertEq('the set hook ran', ['a' => 1], $instance->data);
 	}
 }

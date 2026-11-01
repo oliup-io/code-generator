@@ -35,6 +35,7 @@ final class SnapshotTest extends TestCase
 {
 	private string $dir;
 
+	#[\Override]
 	protected function setUp(): void
 	{
 		$this->dir = __DIR__ . '/snapshots';

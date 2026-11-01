@@ -63,7 +63,7 @@ abstract class TestCase extends PHPUnitTestCase
 			if (!$e instanceof $exceptionClass) {
 				self::fail($description . ' (wrong exception: ' . $e::class . ')');
 			}
-			$this->addToAssertionCount(1);
+			self::assertTrue(true, $description);
 		}
 	}
 
