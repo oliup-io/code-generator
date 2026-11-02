@@ -5,6 +5,26 @@ before it is its history.
 
 ## Unreleased (1.x-dev)
 
+### Fixed
+
+- **A node that is its own descendant exhausted the stack; now it is named.** Nothing refuses one
+  when the graph is built -- every `validateChild()` answers the child as given -- and the printer's
+  eight recursion sites carried no record of what they were inside, so `$class->addChild($class)`
+  and the two-node form recursed until the process died. `PHPPrinter::print()`, the single dispatch
+  point, now refuses a node it is already printing and says how many levels in it was found.
+  `clone` is bounded the same way (`CommonTrait`, 64 levels): a copy cannot be mapped back to its
+  original from inside `__clone()`, so what is bounded there is the depth.
+
+- **`getChildren()` rendered every child to deduplicate them.** It was `array_unique()`, whose
+  default flag is `SORT_STRING`: each child was cast to a string to be compared, which for these
+  objects means printing its whole subtree through `__toString()`, at every level, before the
+  printer's own walk even started -- so printing was exponential in depth. Children are now
+  deduplicated by identity. `SORT_REGULAR` would not have done: `==` on objects recurses into their
+  properties and ends a cyclic graph with "Nesting level too deep".
+
+  **One behaviour change**: two *distinct* children that render the same are now both kept, where
+  the string comparison collapsed them into one.
+
 ### Breaking changes
 
 - **PHP 8.5 is the minimum** (`"php": ">=8.5"`), and `silassare/php-utils` is `^2.0`.

@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace OLIUP\CG\Traits;
 
+use InvalidArgumentException;
 use OLIUP\CG\PHPPrinter;
 use UnitEnum;
 
@@ -26,7 +27,40 @@ trait CommonTrait
 		return new PHPPrinter()->print($this);
 	}
 
+	/**
+	 * How deep one `clone` may go before the graph is called cyclic.
+	 */
+	private const int MAX_CLONE_DEPTH = 64;
+
+	/**
+	 * How deep the current `clone` is: a copy cannot be mapped back to its original from inside
+	 * `__clone()`, so what is bounded is the depth.
+	 */
+	private static int $clone_depth = 0;
+
 	public function __clone()
+	{
+		if (self::$clone_depth >= self::MAX_CLONE_DEPTH) {
+			throw new InvalidArgumentException(\sprintf(
+				'Cloning "%s" went deeper than %d levels: the graph holds itself.',
+				static::class,
+				self::MAX_CLONE_DEPTH
+			));
+		}
+
+		++self::$clone_depth;
+
+		try {
+			$this->cloneChildren();
+		} finally {
+			--self::$clone_depth;
+		}
+	}
+
+	/**
+	 * Clones what this node holds, one level.
+	 */
+	private function cloneChildren(): void
 	{
 		// Enum are not cloneable
 		$cloneable = static fn ($v) => \is_object($v) && !($v instanceof UnitEnum);

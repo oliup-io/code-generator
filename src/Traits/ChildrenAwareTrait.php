@@ -24,11 +24,25 @@ trait ChildrenAwareTrait
 	protected array $children = [];
 
 	/**
+	 * The children, each once.
+	 *
+	 * Deduplicated by identity. It was `array_unique()`, whose default flag is `SORT_STRING`: every
+	 * child was **cast to a string** to be compared, which for these objects means rendering its
+	 * whole subtree through {@see CommonTrait::__toString()}, at every level, before the printer's
+	 * own walk even starts. `SORT_REGULAR` would be no better -- `==` on objects recurses into their
+	 * properties, so a graph holding itself ends in "Nesting level too deep".
+	 *
 	 * @return object[]
 	 */
 	public function getChildren(): array
 	{
-		return \array_unique($this->children);
+		$unique = [];
+
+		foreach ($this->children as $child) {
+			$unique[\spl_object_id($child)] = $child;
+		}
+
+		return \array_values($unique);
 	}
 
 	/**

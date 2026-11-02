@@ -25,6 +25,13 @@ use PHPUtils\Str;
  */
 class PHPPrinter
 {
+	/**
+	 * The nodes this printer is inside, right now, by object id: {@see self::print()}.
+	 *
+	 * @var array<int, true>
+	 */
+	private array $printing = [];
+
 	public function __construct(protected string $indent = "\t") {}
 
 	public function printArgument(PHPArgument $v, array $options = []): string
@@ -579,6 +586,34 @@ class PHPPrinter
 	}
 
 	public function print(object $param): string
+	{
+		// A node that is its own descendant: nothing refuses one when it is built -- every
+		// `validateChild()` answers the child as given -- so the first time anyone finds out is
+		// here. Printing used to recurse until the stack went, with no clue which node it was.
+		$id = \spl_object_id($param);
+
+		if (isset($this->printing[$id])) {
+			throw new InvalidArgumentException(\sprintf(
+				'object of type "%s" is already being printed: it is a child of itself, directly or'
+					. ' through %d other node(s).',
+				\get_debug_type($param),
+				\count($this->printing) - 1
+			));
+		}
+
+		$this->printing[$id] = true;
+
+		try {
+			return $this->dispatch($param);
+		} finally {
+			unset($this->printing[$id]);
+		}
+	}
+
+	/**
+	 * Prints one node, once {@see self::print()} has said it is not already printing it.
+	 */
+	private function dispatch(object $param): string
 	{
 		return match (true) {
 			$param instanceof PHPFile         => $this->printFile($param),

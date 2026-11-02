@@ -113,6 +113,15 @@ $printer->printArgument($arg, ['allow_promoted' => true]);
 
 `PHPNamespace::validateChild()` automatically calls `$child->setNamespace($this)` for any child that uses `NamespaceAwareTrait`. Adding a class to a namespace sets its namespace automatically.
 
+## Cycles
+
+- **`PHPPrinter::print()` is the one place a cycle is caught**: it keeps the ids of the nodes it is
+  inside and refuses a node it is already printing. Nothing rejects a cyclic graph at construction
+  time, so a new walk over children (an inspector, a second printer) needs its own such guard.
+- **Never compare or deduplicate nodes by casting them to strings**: that renders the subtree.
+  `getChildren()` deduplicates by `spl_object_id()`. `==` on nodes is worse -- it recurses into
+  properties.
+
 ## Known Limitation
 
 `PHPPrinter::printEnum()` currently returns `''` - enum printing is not yet implemented.
