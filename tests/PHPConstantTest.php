@@ -90,4 +90,16 @@ final class PHPConstantTest extends TestCase
 		$c = new PHPConstant('X', 0);
 		$this->assertEq('zero is valid', 0, $c->getValue()?->getValue());
 	}
+
+	public function testTheValueAConstantMustHaveIsTheOneItHolds(): void
+	{
+		$c = new PHPConstant('X', 0);
+
+		$this->assertEq('the wrapper itself', $c->getValue(), $c->requireValue());
+
+		// A constant built with no value holds a value that is null, which is why the refusal
+		// beside this is unreachable and the printer still answers `const X = null;`.
+		$this->assertEq('null is a value', null, new PHPConstant('Y')->requireValue()
+			->getValue());
+	}
 }

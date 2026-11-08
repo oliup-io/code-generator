@@ -7,6 +7,12 @@ before it is its history.
 
 ### Fixed
 
+- **`PHPConstant::requireValue()`**, which the printer uses where it was reading a value that its
+  own validation had already refused as null. The printer reaches that validation through a trait
+  test no analyser can follow, so the one place a constant's value cannot be null read as possibly
+  null. The refusal keeps its single owner and its message; nothing reaches it as the class stands,
+  since `setValue()` wraps even a null in a `PHPValue`.
+
 - **A node that is its own descendant exhausted the stack; now it is named.** Nothing refuses one
   when the graph is built -- every `validateChild()` answers the child as given -- and the printer's
   eight recursion sites carried no record of what they were inside, so `$class->addChild($class)`

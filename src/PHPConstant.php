@@ -51,9 +51,23 @@ class PHPConstant
 	#[Override]
 	public function validate(): void
 	{
-		if (null === $this->getValue()) {
-			throw new RuntimeException('a constant should have a value.');
-		}
+		$this->requireValue();
+	}
+
+	/**
+	 * The value a constant must have.
+	 *
+	 * What {@see self::validate()} refuses, said as an accessor, for a caller that is about to use
+	 * the value: a printer reaches `validate()` through a trait test no analyser can follow, so
+	 * without this the value reads as possibly null at the one place it cannot be.
+	 *
+	 * Nothing reaches the refusal as the class stands, since `setValue()` wraps even a null in a
+	 * {@see PHPValue}, so a constant built with no value holds a value that is null. It is kept
+	 * because the property it reads is nullable and a subclass's `validateValue()` may answer null.
+	 */
+	public function requireValue(): PHPValue
+	{
+		return $this->getValue() ?? throw new RuntimeException('a constant should have a value.');
 	}
 
 	#[Override]
